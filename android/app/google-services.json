@@ -1,0 +1,154 @@
+{
+  "project_info": {
+    "project_number": "606703598389",
+    "project_id": "outpatientavisena",
+    "storage_bucket": "outpatientavisena.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606703598389:android:39ae7c52292758a4d32a7c",
+        "android_client_info": {
+          "package_name": "com.avisena.flutter_avisena"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCQCiksb_9D4e7WH7_WPfcfvnq-1_DoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "606703598389-bhfar0g7oj501tu24rc2f0qqktgujv1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.avisenahealthc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606703598389:android:ca0371bc58ff820fd32a7c",
+        "android_client_info": {
+          "package_name": "com.avisena.outpatient.avisenaoutpatient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCQCiksb_9D4e7WH7_WPfcfvnq-1_DoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "606703598389-bhfar0g7oj501tu24rc2f0qqktgujv1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.avisenahealthc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606703598389:android:81ba9b8c51810d89d32a7c",
+        "android_client_info": {
+          "package_name": "com.avisena.outpatient.avisenaoutpatient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCQCiksb_9D4e7WH7_WPfcfvnq-1_DoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "606703598389-bhfar0g7oj501tu24rc2f0qqktgujv1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.avisenahealthc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606703598389:android:39ae7c52292758a4d32a7c",
+        "android_client_info": {
+          "package_name": "com.example.fcm_noti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCQCiksb_9D4e7WH7_WPfcfvnq-1_DoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "606703598389-bhfar0g7oj501tu24rc2f0qqktgujv1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.avisenahealthc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
