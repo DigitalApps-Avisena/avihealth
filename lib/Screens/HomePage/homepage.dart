@@ -1,8 +1,7 @@
 import 'dart:async';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import '../../const.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage();
@@ -14,6 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var opacity = 0.0;
   bool position = false;
+  dynamic _height;
+  dynamic _width;
 
   @override
   void initState() {
@@ -40,294 +41,137 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: Colors.white,
           child: Stack(
             children: [
-              //bg header
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 400),
-                top: position ? 0 : 100,
-                right: 0,
-                left: 0,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 400),
-                  opacity: opacity,
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        //Expanded widget must be wrapped in Row, Column or Flex
-                        child: Container(
-                          height: size.height * 0.3 - 100,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFa4278d),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(45),
-                              bottomRight: Radius.circular(45),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(width: 25),
-                                  ClipOval(
-                                    child: SizedBox.fromSize(
-                                      size: const Size.fromRadius(40),
-                                      child: Image(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            'assets/images/profile_ayu.jpg'),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text("Hi, ",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                  SizedBox(height: 10),
-                                  Text("Ayu Nabilah",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                ],
-                              ),
-                              const Icon(Icons.notifications,
-                                  color: Colors.white)
-                            ],
-                          ),
-                        ),
+              Opacity(
+                opacity: 1,
+                child: ClipPath(
+                  child: Container(
+                    height: _height / 7,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(32),
+                        bottomRight: Radius.circular(32),
                       ),
-                    ],
+                      color: violet,
+                    ),
                   ),
                 ),
               ),
-              //Top Banner
-              AnimatedPositioned(
-                  top: position ? 120 : 220,
-                  right: 20,
-                  left: 20,
-                  duration: const Duration(milliseconds: 400),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 400),
-                    opacity: opacity,
-                    child: Card(
-                      elevation: 10.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Container(
-                        height: 120,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: 25,
-                                left: 20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text("You're invited to the live"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text("Stream with  "),
-                                            Text("Dr.Navida"),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 140,
-                                    ),
-                                    const CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 30,
-                                      child: Center(
-                                        child: Image(
-                                          fit: BoxFit.fill,
-                                          image: AssetImage(
-                                              'assets/images/appointment.png'),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )),
-              //Text above banner
-              AnimatedPositioned(
-                  top: position ? 200 : 300,
-                  left: 20,
-                  right: 20,
-                  duration: const Duration(milliseconds: 100),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 100),
-                    opacity: opacity,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "My Appointments",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              animator();
-                              setState(() {});
-                              // Timer(Duration(seconds: 1),() {
-                              //   Navigator.push(context, MaterialPageRoute(builder: (context) => SeeAll(),));
-                              //   animator();
-                              // },);
-                              await Future.delayed(
-                                  const Duration(milliseconds: 500));
-
-                              setState(() {
-                                animator();
-                              });
-                            },
-                          ),
-                          // child: TextWidget("See all", 15, Colors.blue.shade600.withOpacity(.8), FontWeight.bold,letterSpace: 0,)),
-                        ],
-                      ),
-                    ),
-                  )),
-              //bottom banner
-              AnimatedPositioned(
-                  top: position ? 200 : 320,
-                  right: 20,
-                  left: 20,
-                  duration: const Duration(milliseconds: 400),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 400),
-                    opacity: opacity,
-                    child: Card(
-                      elevation: 10.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Container(
-                        height: 150,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: 25,
-                                left: 20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 30,
-                                      child: Center(
-                                          // child: Image(
-                                          //   fit: BoxFit.fill,
-                                          //   image: AssetImage(
-                                          //       'assets/images/p1.png'),
-                                          // ),
-                                          ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text("You're invited to the live"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text("Stream with  "),
-                                            Text("Dr.Navida"),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )),
-                            Positioned(
-                                top: 100,
-                                left: 20,
-                                child: Container(
-                                  height: 1,
-                                  width: 300,
-                                  color: Colors.white.withOpacity(.5),
-                                )),
-                            Positioned(
-                                top: 115,
-                                left: 20,
-                                right: 1,
-                                child: Container(
-                                  width: double.infinity,
-                                  child: Row(
-                                    children: [
-                                      Text("120K people join live Stream!"),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            const Positioned(
-                                top: 10,
-                                right: 10,
-                                child: Icon(
-                                  Icons.close_outlined,
-                                  color: Colors.white,
-                                  size: 15,
-                                ))
-                          ],
-                        ),
-                      ),
-                    ),
-                  )),
-              categoryRow(),
-              // doctorList(),
+              patientProfile(),
+              topBanner()
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget patientProfile() {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10, top: _height / 80),
+      width: _width,
+      height: _height / 15,
+      padding: EdgeInsets.only(top: 0, right: 10, left: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: new BorderRadius.all(Radius.circular(50.0)),
+              border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
+              color: Colors.transparent,
+              image: DecorationImage(
+                  image: AssetImage('assets/images/profile_ayu.jpg'),
+                  fit: BoxFit.fill),
+            ),
+          ),
+          SizedBox(
+            width: _width * 0.02,
+          ),
+          Container(
+            height: _height * 0.4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Hi, Ayu Nabilah",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            width: _width * 0.45,
+          ),
+          GestureDetector(
+            onTap: () {
+              // scaffoldKey.currentState.openEndDrawer();
+            },
+            child: Icon(
+              Icons.notifications,
+              color: Colors.white,
+              size: 32,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget topBanner() {
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: const Offset(
+                  4.0,
+                  4.0,
+                ),
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+              )
+            ]),
+        height: 100,
+        margin: EdgeInsets.only(
+            left: _width / 18, right: _width / 18, top: _height / 10),
+        child: new Column(
+          children: [
+            Image.asset(
+              'assets/images/appointment.png',
+              fit: BoxFit.cover,
+            ),
+          ],
+        )
+        // child: ClipRRect(
+        //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        //     child: Stack(
+        //       children: <Widget>[
+        //         Image.asset(
+        //           'assets/images/doctor-services.png',
+        //           fit: BoxFit.cover,
+        //         ),
+        //       ],
+        //     )),
+        );
   }
 
   Widget doctorList() {
