@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-const violet = const Color(0xFFa4278d);
+const violet = const Color(0xFFA92389);
+const turquoise = const Color(0xFF2290AA);
 const kAnimationDuration = Duration(milliseconds: 200);
 
 //avatarsize
 const avatarsize = 18.0;
 
 class Constants {
-  static Color violet = const Color(0xFFa4278d);
+  static Color violet = const Color(0xFFA92389);
   static Color deepblue = const Color(0xFF2e92b0);
   static Color skyblue = const Color(0xff5dbad4);
   static double? height;

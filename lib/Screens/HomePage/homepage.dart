@@ -1,8 +1,13 @@
 import 'dart:async';
-
-import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_avisena/Screens/HomePage/categories.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../components/section_title.dart';
+import '../../const.dart';
+import '../../size_config.dart';
+import 'needHelp.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage();
@@ -14,6 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var opacity = 0.0;
   bool position = false;
+  dynamic _height;
+  dynamic _width;
 
   @override
   void initState() {
@@ -40,451 +47,547 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: Stack(
-            children: [
-              //bg header
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 400),
-                top: position ? 0 : 100,
-                right: 0,
-                left: 0,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 400),
-                  opacity: opacity,
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        //Expanded widget must be wrapped in Row, Column or Flex
-                        child: Container(
-                          height: size.height * 0.3 - 100,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFa4278d),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(45),
-                              bottomRight: Radius.circular(45),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(width: 25),
-                                  ClipOval(
-                                    child: SizedBox.fromSize(
-                                      size: const Size.fromRadius(40),
-                                      child: Image(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            'assets/images/profile_ayu.jpg'),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text("Hi, ",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                  SizedBox(height: 10),
-                                  Text("Ayu Nabilah",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                ],
-                              ),
-                              const Icon(Icons.notifications,
-                                  color: Colors.white)
-                            ],
-                          ),
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Stack(
+              children: [
+                Opacity(
+                  opacity: 1,
+                  child: ClipPath(
+                    child: Container(
+                      height: _height / 6,
+                      decoration: BoxDecoration(
+                        gradient:
+                            LinearGradient(begin: Alignment.topCenter, colors: [
+                          Color(0xFFA92389),
+                          Color(0xFF2290AA),
+                        ]),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
                         ),
+                        // color: violet,
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              //Top Banner
-              AnimatedPositioned(
-                  top: position ? 120 : 220,
-                  right: 20,
-                  left: 20,
-                  duration: const Duration(milliseconds: 400),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 400),
-                    opacity: opacity,
-                    child: Card(
-                      elevation: 10.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Container(
-                        height: 120,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: 25,
-                                left: 20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text("You're invited to the live"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text("Stream with  "),
-                                            Text("Dr.Navida"),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 140,
-                                    ),
-                                    const CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 30,
-                                      child: Center(
-                                        child: Image(
-                                          fit: BoxFit.fill,
-                                          image: AssetImage(
-                                              'assets/images/appointment.png'),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )),
-              //Text above banner
-              AnimatedPositioned(
-                  top: position ? 200 : 300,
-                  left: 20,
-                  right: 20,
-                  duration: const Duration(milliseconds: 100),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 100),
-                    opacity: opacity,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "My Appointments",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              animator();
-                              setState(() {});
-                              // Timer(Duration(seconds: 1),() {
-                              //   Navigator.push(context, MaterialPageRoute(builder: (context) => SeeAll(),));
-                              //   animator();
-                              // },);
-                              await Future.delayed(
-                                  const Duration(milliseconds: 500));
+                patientProfile(),
+                bellNotification(),
+                topBanner(),
+                headerMyAppointments(),
+                appointmentBanner(),
+                appointmentDetails(),
+                myAppointmentsButtons(),
+                discoverMoreTitle(),
+                discoverMoreBanner1(),
+                discoverMoreBanner2(),
+                discoverMoreBanner3(),
+                needHelpTitle(),
+                needHelpCard(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
-                              setState(() {
-                                animator();
-                              });
-                            },
-                          ),
-                          // child: TextWidget("See all", 15, Colors.blue.shade600.withOpacity(.8), FontWeight.bold,letterSpace: 0,)),
-                        ],
-                      ),
-                    ),
-                  )),
-              //bottom banner
-              AnimatedPositioned(
-                  top: position ? 200 : 320,
-                  right: 20,
-                  left: 20,
-                  duration: const Duration(milliseconds: 400),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 400),
-                    opacity: opacity,
-                    child: Card(
-                      elevation: 10.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Container(
-                        height: 150,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: 25,
-                                left: 20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 30,
-                                      child: Center(
-                                          // child: Image(
-                                          //   fit: BoxFit.fill,
-                                          //   image: AssetImage(
-                                          //       'assets/images/p1.png'),
-                                          // ),
-                                          ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text("You're invited to the live"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text("Stream with  "),
-                                            Text("Dr.Navida"),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )),
-                            Positioned(
-                                top: 100,
-                                left: 20,
-                                child: Container(
-                                  height: 1,
-                                  width: 300,
-                                  color: Colors.white.withOpacity(.5),
-                                )),
-                            Positioned(
-                                top: 115,
-                                left: 20,
-                                right: 1,
-                                child: Container(
-                                  width: double.infinity,
-                                  child: Row(
-                                    children: [
-                                      Text("120K people join live Stream!"),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            const Positioned(
-                                top: 10,
-                                right: 10,
-                                child: Icon(
-                                  Icons.close_outlined,
-                                  color: Colors.white,
-                                  size: 15,
-                                ))
-                          ],
-                        ),
-                      ),
-                    ),
-                  )),
-              categoryRow(),
-              // doctorList(),
+  Widget patientProfile() {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10, top: _height / 80),
+      width: _width,
+      height: _height / 15,
+      padding: EdgeInsets.only(top: 0, right: 10, left: 20),
+      child: Flex(
+        direction: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: new BorderRadius.all(Radius.circular(50.0)),
+              border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
+              color: Colors.transparent,
+              image: DecorationImage(
+                  image: AssetImage('assets/images/profile_ayu.jpg'),
+                  fit: BoxFit.fill),
+            ),
+          ),
+          SizedBox(
+            width: _width * 0.02,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Expanded(
+              child: Text(
+                "Hi, Ayu Nabilah",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'WorkSans'),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bellNotification() {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10, top: _height / 80),
+      width: _width,
+      height: _height / 15,
+      padding: EdgeInsets.only(top: 0, right: 10, left: 80),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                child: Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                  size: 32,
+                ),
+                onTap: () {
+                  // scaffoldKey.currentState.openEndDrawer();
+                },
+              ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
 
-  Widget doctorList() {
-    return AnimatedPositioned(
-        top: position ? 460 : 550,
-        left: 20,
-        right: 20,
-        duration: const Duration(milliseconds: 400),
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 400),
-          opacity: opacity,
-          child: AnimatedOpacity(
-            opacity: opacity,
-            duration: const Duration(milliseconds: 300),
-            child: SizedBox(
-              height: 270,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // doctorCard(names[0], spacilality[0], images[0]),
-                    // doctorCard(names[1], spacilality[1], images[1]),
-                    // doctorCard(names[2], spacilality[2], images[2]),
-                  ],
-                ),
+  Widget topBanner() {
+    List<Map<String, dynamic>> categories = [
+      {
+        "image": "assets/images/shortcut_medical_appointment.png",
+        "text": "Appointment",
+        "press": ""
+      },
+      {
+        "image": "assets/images/shortcut_doctor.png",
+        "text": "Doctors",
+        "press": ""
+      },
+      {
+        "image": "assets/images/shortcut_services.png",
+        "text": "Services",
+        "press": ""
+      },
+      {
+        "image": "assets/images/shortcut_dependent.png",
+        "text": "Dependents",
+        "press": ""
+      },
+    ];
+    return Container(
+      padding: EdgeInsets.only(top: 0, right: 10, left: 5),
+      child: GridView.builder(
+        itemCount: categories.length,
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, childAspectRatio: 1.0), //jarak between cards
+        itemBuilder: (context, index) {
+          return CategoryCard(
+            image: categories[index]["image"],
+            text: categories[index]["text"],
+            press: () {
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => categories[index]["press"]));
+            },
+          );
+        },
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+          // image: DecorationImage(
+          //     image: AssetImage('assets/images/appointment-guide-bgr.jpg'),
+          //     fit: BoxFit.cover),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: const Offset(
+                4.0,
+                4.0,
               ),
-            ),
-          ),
-        ));
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+            )
+          ]),
+      height: 120,
+      margin: EdgeInsets.only(
+          left: _width / 18, right: _width / 18, top: _height / 10),
+    );
   }
 
-  Widget doctorCard(String name, String specialist, AssetImage image) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+  Widget headerMyAppointments() {
+    return Container(
+      margin: EdgeInsets.only(left: 30, right: 30, top: 250),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('My Appointments',
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'WorkSans')),
+          GestureDetector(
+            child: Text(
+              "More >",
+              style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  color: Colors.blue.shade600,
+                  fontSize: 16),
+            ),
+            // onTap: viewallapp,
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget appointmentBanner() {
+    return Container(
+      padding: EdgeInsets.only(top: 0, right: 10, left: 20, bottom: 20),
+      child: Row(
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Image.asset(
+                'assets/images/specialist.png',
+                height: 80,
+                width: 80,
+              )),
+        ],
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+          // image: DecorationImage(
+          //     image: AssetImage('assets/images/specialist.png')),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: const Offset(
+                4.0,
+                4.0,
+              ),
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+            )
+          ]),
+      height: 160,
+      margin: EdgeInsets.only(
+          left: _width / 18, right: _width / 18, top: _height / 3.2),
+    );
+  }
+
+  Widget myAppointmentsButtons() {
+    return Container(
+      padding: EdgeInsets.only(top: 400, right: 0, left: 50),
+      child: Row(
+        children: <Widget>[
+          FlatButton(
+            child: Text("Reschedule",
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontSize: 15,
+                )),
+            onPressed: () {},
+            color: Theme.of(context).primaryColor,
+            height: 35,
+            minWidth: 180,
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          SizedBox(
+            width: 18,
+          ),
+          FlatButton(
+            child: Text("Details",
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontSize: 15,
+                )),
+            onPressed: () {},
+            color: Theme.of(context).primaryColor,
+            height: 35,
+            minWidth: 180,
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget appointmentDetails() {
+    return Container(
+      padding: EdgeInsets.only(top: 19, right: 10, left: 140),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Dato' Dr. Abdul Razak Rahman Hamzah",
+            style: TextStyle(
+                color: Colors.blueGrey,
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18.5),
+            textAlign: TextAlign.start,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: 5),
+          Text(
+            "Ear, Nose and Throat Clinic",
+            style: TextStyle(
+                color: Colors.grey, fontFamily: 'WorkSans', fontSize: 12),
+            textAlign: TextAlign.start,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: 5),
+          Text(
+            "20 April 2024, AM Session",
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'WorkSans',
+                fontSize: 13),
+            textAlign: TextAlign.start,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: 5),
+        ],
+      ),
+      margin: EdgeInsets.only(left: 0, right: _width / 18, top: _height / 3.2),
+    );
+  }
+
+  Widget discoverMoreTitle() {
+    return Container(
+      margin: EdgeInsets.only(left: 30, right: 30, top: 470),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('Discover More',
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'WorkSans')),
+          GestureDetector(
+            child: Text(
+              "More >",
+              style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  color: Colors.blue.shade600,
+                  fontSize: 16),
+            ),
+            // onTap: viewallapp,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget discoverMoreBanner1() {
+    return Container(
+      padding: EdgeInsets.only(top: 0, right: 10, left: 50),
+      child: Row(
+        children: [
+          Text(
+            "Book an \nAppointment",
+            style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 25),
+            textAlign: TextAlign.start,
+          )
+        ],
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+          image: DecorationImage(
+              image: AssetImage('assets/images/appointment-guide-bgr.jpg'),
+              fit: BoxFit.cover),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: const Offset(
+                4.0,
+                4.0,
+              ),
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+            )
+          ]),
+      height: 120,
+      margin: EdgeInsets.only(
+          left: _width / 18, right: _width / 18, top: _height / 1.8),
+    );
+  }
+
+  Widget discoverMoreBanner2() {
+    return Container(
+      padding: EdgeInsets.only(top: 0, right: 10, left: 50),
+      child: Row(
+        children: [
+          Text(
+            "Paediatric Suction \nRecovery Package",
+            style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 25),
+            textAlign: TextAlign.start,
+          )
+        ],
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          // gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+          //   Color(0xFFa4278d),
+          //   Color(0xffffffff),
+          //   Color(0xffffffff),
+          // ]),
+          image: DecorationImage(
+              image:
+                  AssetImage('assets/images/paediatric-suction-recovery.jpg'),
+              fit: BoxFit.cover),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: const Offset(
+                4.0,
+                4.0,
+              ),
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+            )
+          ]),
+      height: 120,
+      margin: EdgeInsets.only(
+          left: _width / 18, right: _width / 18, top: _height / 1.4),
+    );
+  }
+
+  Widget discoverMoreBanner3() {
+    return Container(
+      padding: EdgeInsets.only(top: 0, right: 10, left: 50),
+      child: Row(
+        children: [
+          Text(
+            "Fertility Services",
+            style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 25),
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+          image: DecorationImage(
+              image: AssetImage('assets/images/fertility-services-intro.jpg'),
+              fit: BoxFit.cover),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: const Offset(
+                4.0,
+                4.0,
+              ),
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+            )
+          ]),
+      height: 120,
+      margin: EdgeInsets.only(
+          left: _width / 18, right: _width / 18, top: _height / 1.14),
+    );
+  }
+
+  Widget needHelpTitle() {
+    return Container(
+      margin: EdgeInsets.only(left: 30, right: 30, top: _height / 0.93),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('Need Help?',
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'WorkSans')),
+        ],
+      ),
+    );
+  }
+
+  Widget needHelpCard() {
+    int currentPage = 0;
+    List<Map<String, dynamic>> webData = [
+      {
+        "text": "Admission & Discharge \nDepartment Contact \nInformation",
+        "press": ""
+      },
+      {"text": "View Room Rates", "press": ""},
+      {"text": "Patient & Family Rights", "press": ""},
+      {"text": "Contact Us", "press": ""},
+    ];
+    return Container(
       child: SizedBox(
-        height: 120,
-        width: double.infinity,
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-            ),
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: image,
-              backgroundColor: Colors.blue,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(name),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(specialist),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: Colors.orangeAccent,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.orangeAccent,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.orangeAccent,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.orangeAccent,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.orangeAccent,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const Spacer(),
-            const Icon(
-              Icons.navigation_sharp,
-              color: Colors.blue,
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-          ],
-        ),
+        width: (350),
+        height: (150),
+        child: ListView.builder(
+            // onPageChanged: (value) {
+            //   setState(() {
+            //     currentPage = value;
+            //   });
+            // },
+            scrollDirection: Axis.horizontal,
+            itemCount: webData.length,
+            itemBuilder: (context, index) => needHelp(
+                  text: webData[index]["text"],
+                  press: () {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => webData[index]["press"]));
+                  },
+                )),
       ),
-    );
-  }
-
-  Widget categoryRow() {
-    return AnimatedPositioned(
-        top: position ? 500 : 620,
-        left: 25,
-        right: 25,
-        duration: const Duration(milliseconds: 400),
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 400),
-          opacity: opacity,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                category("assets/images/logo.png", "Drug", 5),
-                category("assets/images/logo.png", "Virus", 10),
-                category("assets/images/logo.png", "Physo", 10),
-                category("assets/images/logo.png", "Other", 12),
-              ],
-            ),
-          ),
-        ));
-  }
-
-  Widget category(String asset, String txt, double padding) {
-    return Column(
-      children: [
-        InkWell(
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Container(
-              padding: EdgeInsets.all(padding),
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                  // child: Image(
-                  //   image: AssetImage(asset),
-                  // ),
-                  ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(txt),
-      ],
+      margin: EdgeInsets.only(
+          left: _width / 18, right: _width / 18, top: _height / 0.90),
     );
   }
 }
