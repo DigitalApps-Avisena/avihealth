@@ -19,6 +19,7 @@ import '../../components/auth.dart';
 import '../../const.dart';
 import '../../shared_configs.dart';
 import '../HomePage/homepage.dart';
+import '../OnboardPage/onboard.dart';
 import '../SignUp/SignUpPage.dart';
 import 'package:flutter_avisena/Screens/ForgotPassword/ForgotPasswordPage.dart';
 
@@ -311,13 +312,6 @@ class _LoginSignupPageState extends State<LoginPage> {
                     color: Colors.white,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.bold)),
-            SizedBox(
-              width: 10,
-            ),
-            // Icon(
-            //   Icons.arrow_forward,
-            //   color: deeppurple,
-            // )
           ],
         ),
       ),
@@ -328,9 +322,9 @@ class _LoginSignupPageState extends State<LoginPage> {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Color(0xFFa4278d),
-          Color(0xff5dbad4),
-          Color(0xFF2e92b0),
+          Color(0xFFA92389),
+          Color(0xFF2290AA),
+          Color(0xFF2290AA),
         ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -500,7 +494,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                                     children: [
                                       TextButton(
                                         style: TextButton.styleFrom(
-                                          primary: Color(0xFFa4278d),
+                                          primary: Color(0xFFA92389),
                                         ),
                                         child: const Text(
                                           'Biometric Login',
@@ -528,7 +522,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                                               fontSize: 15)),
                                       TextButton(
                                         style: TextButton.styleFrom(
-                                          primary: Color(0xFFa4278d),
+                                          primary: Color(0xFFA92389),
                                         ),
                                         child: const Text(
                                           'Sign Up',
@@ -553,11 +547,6 @@ class _LoginSignupPageState extends State<LoginPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text('Don\'t have an account?',
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15)),
                                       TextButton(
                                         style: TextButton.styleFrom(
                                           primary: Color(0xFFa4278d),
@@ -577,6 +566,33 @@ class _LoginSignupPageState extends State<LoginPage> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     HomePage(),
+                                              ));
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          primary: Color(0xFFA92389),
+                                        ),
+                                        child: const Text(
+                                          'Go to Onboard Screen',
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.w900,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OnboardPage(),
                                               ));
                                         },
                                       )

@@ -248,7 +248,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final signUpButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xFFa4278d),
+      color: Color(0xFFA92389),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -299,9 +299,9 @@ class _SignUpPageState extends State<SignUpPage> {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Color(0xFFa4278d),
-          Color(0xff5dbad4),
-          Color(0xFF2e92b0),
+          Color(0xFFA92389),
+          Color(0xFF2290AA),
+          Color(0xFF2290AA),
         ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -421,7 +421,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           style: TextStyle(color: Colors.grey)),
                                       TextButton(
                                         style: TextButton.styleFrom(
-                                          primary: Color(0xFFa4278d),
+                                          primary: Color(0xFFA92389),
                                         ),
                                         child: const Text(
                                           'Login Here',

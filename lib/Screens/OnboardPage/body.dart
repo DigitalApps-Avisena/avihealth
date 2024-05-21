@@ -10,7 +10,7 @@ class UnbordingContent {
 List<UnbordingContent> contents = [
   UnbordingContent(
       title: 'Online Appointment',
-      lottie: 'assets/images/onboard_online_appointment.json',
+      lottie: 'assets/images/onboard_online_appointment_new.json',
       description:
           "View, manage and book an appointment whenever you need from the "
           "convenience of your mobile device. With real-time scheduling, "
@@ -34,6 +34,6 @@ List<UnbordingContent> contents = [
           "Offering a convenient method for accessing your health record. "),
   UnbordingContent(
       title: 'Welcome',
-      lottie: 'assets/images/onboard_welcome.json',
+      lottie: 'assets/images/onboard_doctor_welcoming.json',
       description: "With Us, It’s Always Personal. "),
 ];
