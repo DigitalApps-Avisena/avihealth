@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.4
   webview_flutter: ^3.0.0
   encrypt: ^5.0.1
+  keyboard_dismisser: ^2.0.1
 
   #onboard
   lottie: ^1.4.0
@@ -58,6 +59,7 @@ dependencies:
   # firebase
   firebase_messaging: ^11.2.11
   firebase_core: ^1.13.1
+  firebase_core_platform_interface: ^4.2.1
   flutter_local_notifications: ^9.4.0
   cloud_firestore: ^3.1.10
   firebase_auth: ^3.3.20
@@ -118,19 +120,19 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Oswald
-       fonts:
-         - asset: assets/fonts/Oswald-Regular.ttf
-           weight: 100
-     - family: Rubik
-       fonts:
-         - asset: assets/fonts/Rubik-Light.ttf
-     - family: Roboto
-       fonts:
-         - asset: assets/fonts/Roboto-Regular.ttf
-     - family: WorkSans
-       fonts:
-         - asset: assets/fonts/WorkSans-Medium.ttf
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald-Regular.ttf
+          weight: 100
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik-Light.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/WorkSans-Medium.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_icons:

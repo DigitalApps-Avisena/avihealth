@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   var opacity = 0.0;
   bool position = false;
   dynamic _height;
@@ -46,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -61,9 +61,9 @@ class _HomePageState extends State<HomePage> {
                   child: ClipPath(
                     child: Container(
                       height: _height / 6,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient:
-                            LinearGradient(begin: Alignment.topCenter, colors: [
+                        LinearGradient(begin: Alignment.topCenter, colors: [
                           Color(0xFFA92389),
                           Color(0xFF2290AA),
                         ]),
@@ -76,19 +76,21 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                patientProfile(),
-                bellNotification(),
-                topBanner(),
-                headerMyAppointments(),
-                appointmentBanner(),
-                appointmentDetails(),
-                myAppointmentsButtons(),
-                discoverMoreTitle(),
-                discoverMoreBanner1(),
-                discoverMoreBanner2(),
-                discoverMoreBanner3(),
-                needHelpTitle(),
-                needHelpCard(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    patientProfile(),
+                    topBanner(),
+                    headerMyAppointments(),
+                    appointmentBanner(),
+                    discoverMoreTitle(),
+                    discoverMoreBanner1(),
+                    discoverMoreBanner2(),
+                    discoverMoreBanner3(),
+                    needHelpTitle(),
+                    needHelpCard()
+                  ],
+                ),
               ],
             ),
           ),
@@ -98,78 +100,67 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget patientProfile() {
-    return Container(
-      margin: EdgeInsets.only(left: 10, right: 10, top: _height / 80),
-      width: _width,
-      height: _height / 15,
-      padding: EdgeInsets.only(top: 0, right: 10, left: 20),
-      child: Flex(
-        direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: new BorderRadius.all(Radius.circular(50.0)),
-              border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
-              color: Colors.transparent,
-              image: DecorationImage(
-                  image: AssetImage('assets/images/profile_ayu.jpg'),
-                  fit: BoxFit.fill),
-            ),
-          ),
-          SizedBox(
-            width: _width * 0.02,
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Expanded(
-              child: Text(
-                "Hi, Ayu Nabilah",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'WorkSans'),
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: _height / 80),
+          // width: _width,
+          height: _height / 15,
+          // padding: const EdgeInsets.only(top: 0, right: 10, left: 20),
+          child: Flex(
+            direction: Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+                  border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
+                  color: Colors.transparent,
+                  image: const DecorationImage(
+                      image: AssetImage('assets/images/profile_ayu.jpg'),
+                      fit: BoxFit.fill),
+                ),
               ),
-            ),
+              SizedBox(
+                width: _width * 0.02,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: const Expanded(
+                  child: Text(
+                    "Hi, Ayu Nabilah",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'WorkSans'),
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        bellNotification()
+      ],
     );
   }
 
   Widget bellNotification() {
-    return Container(
-      margin: EdgeInsets.only(left: 10, right: 10, top: _height / 80),
-      width: _width,
-      height: _height / 15,
-      padding: EdgeInsets.only(top: 0, right: 10, left: 80),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                child: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                  size: 32,
-                ),
-                onTap: () {
-                  // scaffoldKey.currentState.openEndDrawer();
-                },
-              ),
-            ],
-          ),
-        ],
+    return GestureDetector(
+      child: const Icon(
+        Icons.notifications,
+        color: Colors.white,
+        size: 32,
       ),
+      onTap: () {
+        // scaffoldKey.currentState.openEndDrawer();
+      },
     );
   }
 
@@ -197,11 +188,11 @@ class _HomePageState extends State<HomePage> {
       },
     ];
     return Container(
-      padding: EdgeInsets.only(top: 0, right: 10, left: 5),
+      padding: const EdgeInsets.only(top: 0, right: 10, left: 5),
       child: GridView.builder(
         itemCount: categories.length,
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, childAspectRatio: 1.0), //jarak between cards
         itemBuilder: (context, index) {
           return CategoryCard(
@@ -222,10 +213,10 @@ class _HomePageState extends State<HomePage> {
           // image: DecorationImage(
           //     image: AssetImage('assets/images/appointment-guide-bgr.jpg'),
           //     fit: BoxFit.cover),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey,
-              offset: const Offset(
+              offset: Offset(
                 4.0,
                 4.0,
               ),
@@ -233,30 +224,34 @@ class _HomePageState extends State<HomePage> {
               spreadRadius: 2.0,
             )
           ]),
-      height: 120,
+      height: _height * 0.15,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 10),
+          left: _width / 18, right: _width / 18, top: _height / 40),
     );
   }
 
   Widget headerMyAppointments() {
     return Container(
-      margin: EdgeInsets.only(left: 30, right: 30, top: 250),
+      margin: EdgeInsets.only(left: 30, right: 30, top: _height * 0.045),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('My Appointments',
-              style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'WorkSans')),
+          const Text(
+            'My Appointments',
+            style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'WorkSans'
+            ),
+          ),
           GestureDetector(
             child: Text(
               "More >",
               style: TextStyle(
                   fontFamily: 'WorkSans',
                   color: Colors.blue.shade600,
-                  fontSize: 16),
+                  fontSize: 16
+              ),
             ),
             // onTap: viewallapp,
           ),
@@ -267,96 +262,65 @@ class _HomePageState extends State<HomePage> {
 
   Widget appointmentBanner() {
     return Container(
-      padding: EdgeInsets.only(top: 0, right: 10, left: 20, bottom: 20),
-      child: Row(
+      padding: EdgeInsets.only(top: _height * 0.004, right: 10, left: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Image.asset(
-                'assets/images/specialist.png',
-                height: 80,
-                width: 80,
-              )),
+          Row(
+            children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.asset(
+                    'assets/images/specialist.png',
+                    height: 80,
+                    width: 80,
+                  )
+              ),
+              SizedBox(
+                width: _width * 0.01,
+              ),
+              appointmentDetails(),
+            ],
+          ),
+          myAppointmentsButtons(),
         ],
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
-          // image: DecorationImage(
-          //     image: AssetImage('assets/images/specialist.png')),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey,
-              offset: const Offset(
+              offset: Offset(
                 4.0,
                 4.0,
               ),
               blurRadius: 10.0,
               spreadRadius: 2.0,
             )
-          ]),
-      height: 160,
+          ]
+      ),
+      height: _height * 0.23,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 3.2),
-    );
-  }
-
-  Widget myAppointmentsButtons() {
-    return Container(
-      padding: EdgeInsets.only(top: 400, right: 0, left: 50),
-      child: Row(
-        children: <Widget>[
-          FlatButton(
-            child: Text("Reschedule",
-                style: TextStyle(
-                  fontFamily: 'WorkSans',
-                  fontSize: 15,
-                )),
-            onPressed: () {},
-            color: Theme.of(context).primaryColor,
-            height: 35,
-            minWidth: 180,
-            textColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          SizedBox(
-            width: 18,
-          ),
-          FlatButton(
-            child: Text("Details",
-                style: TextStyle(
-                  fontFamily: 'WorkSans',
-                  fontSize: 15,
-                )),
-            onPressed: () {},
-            color: Theme.of(context).primaryColor,
-            height: 35,
-            minWidth: 180,
-            textColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ],
+          left: _width / 18, right: _width / 18, top: _height / 35
       ),
     );
   }
 
   Widget appointmentDetails() {
-    return Container(
-      padding: EdgeInsets.only(top: 19, right: 10, left: 140),
+    return SizedBox(
+      width: _width * 0.59,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Text(
             "Dato' Dr. Abdul Razak Rahman Hamzah",
             style: TextStyle(
                 color: Colors.blueGrey,
                 fontFamily: 'WorkSans',
                 fontWeight: FontWeight.bold,
-                fontSize: 18.5),
+                fontSize: 18.5
+            ),
             textAlign: TextAlign.start,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
@@ -365,7 +329,10 @@ class _HomePageState extends State<HomePage> {
           Text(
             "Ear, Nose and Throat Clinic",
             style: TextStyle(
-                color: Colors.grey, fontFamily: 'WorkSans', fontSize: 12),
+                color: Colors.grey,
+                fontFamily: 'WorkSans',
+                fontSize: 12
+            ),
             textAlign: TextAlign.start,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
@@ -377,7 +344,8 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'WorkSans',
-                fontSize: 13),
+                fontSize: 13
+            ),
             textAlign: TextAlign.start,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
@@ -385,28 +353,76 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 5),
         ],
       ),
-      margin: EdgeInsets.only(left: 0, right: _width / 18, top: _height / 3.2),
+      // margin: EdgeInsets.only(left: 0, right: _width / 18),
+    );
+  }
+
+  Widget myAppointmentsButtons() {
+    return Row(
+      children: <Widget>[
+        FlatButton(
+          child: const Text(
+            "Reschedule",
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              fontSize: 15,
+            ),
+          ),
+          onPressed: () {},
+          color: Theme.of(context).primaryColor,
+          height: 35,
+          minWidth: _width * 0.38,
+          textColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        const SizedBox(
+          width: 18,
+        ),
+        FlatButton(
+          child: const Text(
+            "Details",
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              fontSize: 15,
+            ),
+          ),
+          onPressed: () {},
+          color: Theme.of(context).primaryColor,
+          height: 35,
+          minWidth: _width * 0.38,
+          textColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      ],
     );
   }
 
   Widget discoverMoreTitle() {
     return Container(
-      margin: EdgeInsets.only(left: 30, right: 30, top: 470),
+      margin: EdgeInsets.only(left: 30, right: 30, top: _height * 0.045),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Discover More',
-              style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'WorkSans')),
+          const Text(
+            'Discover More',
+            style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'WorkSans'
+            ),
+          ),
           GestureDetector(
             child: Text(
               "More >",
               style: TextStyle(
                   fontFamily: 'WorkSans',
                   color: Colors.blue.shade600,
-                  fontSize: 16),
+                  fontSize: 16
+              ),
             ),
             // onTap: viewallapp,
           ),
@@ -417,9 +433,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget discoverMoreBanner1() {
     return Container(
-      padding: EdgeInsets.only(top: 0, right: 10, left: 50),
+      padding: const EdgeInsets.only(top: 0, right: 10, left: 50),
       child: Row(
-        children: [
+        children: const [
           Text(
             "Book an \nAppointment",
             style: TextStyle(
@@ -434,31 +450,33 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
-          image: DecorationImage(
+          image: const DecorationImage(
               image: AssetImage('assets/images/appointment-guide-bgr.jpg'),
               fit: BoxFit.cover),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey,
-              offset: const Offset(
+              offset: Offset(
                 4.0,
                 4.0,
               ),
               blurRadius: 10.0,
               spreadRadius: 2.0,
             )
-          ]),
+          ]
+      ),
       height: 120,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 1.8),
+          left: _width / 18, right: _width / 18, top: _height / 35
+      ),
     );
   }
 
   Widget discoverMoreBanner2() {
     return Container(
-      padding: EdgeInsets.only(top: 0, right: 10, left: 50),
+      padding: const EdgeInsets.only(top: 0, right: 10, left: 50),
       child: Row(
-        children: [
+        children: const [
           Text(
             "Paediatric Suction \nRecovery Package",
             style: TextStyle(
@@ -472,44 +490,42 @@ class _HomePageState extends State<HomePage> {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          // gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          //   Color(0xFFa4278d),
-          //   Color(0xffffffff),
-          //   Color(0xffffffff),
-          // ]),
-          image: DecorationImage(
-              image:
-                  AssetImage('assets/images/paediatric-suction-recovery.jpg'),
-              fit: BoxFit.cover),
-          boxShadow: [
+          image: const DecorationImage(
+              image: AssetImage('assets/images/paediatric-suction-recovery.jpg'),
+              fit: BoxFit.cover
+          ),
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey,
-              offset: const Offset(
+              offset: Offset(
                 4.0,
                 4.0,
               ),
               blurRadius: 10.0,
               spreadRadius: 2.0,
             )
-          ]),
+          ]
+      ),
       height: 120,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 1.4),
+          left: _width / 18, right: _width / 18, top: _height / 35
+      ),
     );
   }
 
   Widget discoverMoreBanner3() {
     return Container(
-      padding: EdgeInsets.only(top: 0, right: 10, left: 50),
+      padding: const EdgeInsets.only(top: 0, right: 10, left: 50),
       child: Row(
-        children: [
+        children: const [
           Text(
             "Fertility Services",
             style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'WorkSans',
                 fontWeight: FontWeight.bold,
-                fontSize: 25),
+                fontSize: 25
+            ),
             textAlign: TextAlign.center,
           )
         ],
@@ -517,37 +533,42 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
-          image: DecorationImage(
+          image: const DecorationImage(
               image: AssetImage('assets/images/fertility-services-intro.jpg'),
               fit: BoxFit.cover),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey,
-              offset: const Offset(
+              offset: Offset(
                 4.0,
                 4.0,
               ),
               blurRadius: 10.0,
               spreadRadius: 2.0,
             )
-          ]),
+          ]
+      ),
       height: 120,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 1.14),
+          left: _width / 18, right: _width / 18, top: _height / 35
+      ),
     );
   }
 
   Widget needHelpTitle() {
     return Container(
-      margin: EdgeInsets.only(left: 30, right: 30, top: _height / 0.93),
+      margin: EdgeInsets.only(left: 30, right: 30, top: _height * 0.045),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Need Help?',
-              style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'WorkSans')),
+        children: const <Widget>[
+          Text(
+            'Need Help?',
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'WorkSans',
+            ),
+          ),
         ],
       ),
     );
@@ -569,25 +590,29 @@ class _HomePageState extends State<HomePage> {
         width: (350),
         height: (150),
         child: ListView.builder(
-            // onPageChanged: (value) {
-            //   setState(() {
-            //     currentPage = value;
-            //   });
-            // },
-            scrollDirection: Axis.horizontal,
-            itemCount: webData.length,
-            itemBuilder: (context, index) => needHelp(
-                  text: webData[index]["text"],
-                  press: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => webData[index]["press"]));
-                  },
-                )),
+          // onPageChanged: (value) {
+          //   setState(() {
+          //     currentPage = value;
+          //   });
+          // },
+          scrollDirection: Axis.horizontal,
+          itemCount: webData.length,
+          itemBuilder: (context, index) => needHelp(
+            text: webData[index]["text"],
+            press: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => webData[index]["press"],
+                ),
+              );
+            },
+          ),
+        ),
       ),
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 0.90),
+          left: _width / 18, right: _width / 18, top: _height / 35
+      ),
     );
   }
 }

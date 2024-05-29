@@ -50,7 +50,7 @@ class CategoryCard extends StatelessWidget {
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontFamily: 'WorkSans', fontSize: 14.5, color: Colors.black),
+                fontFamily: 'WorkSans', fontSize: MediaQuery.of(context).size.width * 0.028, color: Colors.black),
             maxLines: 2,
           )
         ],
