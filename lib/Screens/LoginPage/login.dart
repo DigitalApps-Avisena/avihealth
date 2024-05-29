@@ -123,7 +123,7 @@ class _LoginSignupPageState extends State<LoginPage> {
 
       if (authenticated) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     } on PlatformException catch (e) {
       print(e);
@@ -154,10 +154,7 @@ class _LoginSignupPageState extends State<LoginPage> {
     print('receiveData == $receiveData');
 
     if (receiveData["status"] == "1") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+
 
       FirebaseFirestore.instance
           .collection('users')
@@ -174,6 +171,10 @@ class _LoginSignupPageState extends State<LoginPage> {
         'dateOfBirth': receiveData["dateOfBirth"],
         'createdAt': FieldValue.serverTimestamp(),
       });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage(name: receiveData["name"],)),
+      );
     } else if (receiveData["respond"] == "Login fail, email not found") {
       AwesomeDialog(
         padding: const EdgeInsets.all(20),

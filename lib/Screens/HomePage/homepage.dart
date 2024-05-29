@@ -10,7 +10,8 @@ import '../../size_config.dart';
 import 'needHelp.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage();
+  HomePage({Key? key, this.name}) : super(key: key);
+  String? name;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   var opacity = 0.0;
+  var namelength;
   bool position = false;
   dynamic _height;
   dynamic _width;
@@ -130,9 +132,9 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 alignment: Alignment.center,
-                child: const Expanded(
+                child: Expanded(
                   child: Text(
-                    "Hi, Ayu Nabilah",
+                    (widget.name!.length > 12) ? "Hi, ${widget.name!.substring(0, 12)}..." : "${widget.name}",
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
