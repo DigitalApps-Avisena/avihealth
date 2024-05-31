@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:lottie/lottie.dart';
@@ -41,6 +42,7 @@ enum SupportState {
 
 class _LoginSignupPageState extends State<LoginPage> {
 
+  final storage = FlutterSecureStorage();
   final LocalAuthentication auth = LocalAuthentication();
   SupportState supportState = SupportState.unknown;
   List<BiometricType>? availableBiometrics;
@@ -109,6 +111,7 @@ class _LoginSignupPageState extends State<LoginPage> {
   }
 
   Future<void> authenticateWithBiometrics() async {
+    var cacheName = await storage.read(key: 'name');
     try {
       final authenticated = await auth.authenticate(
           localizedReason: 'Authenticate with fingerprint or Face ID',
@@ -122,8 +125,29 @@ class _LoginSignupPageState extends State<LoginPage> {
       }
 
       if (authenticated) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        if(cacheName != null) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage(name: cacheName)));
+        } else {
+          return AwesomeDialog(
+            padding: const EdgeInsets.all(20),
+            context: context,
+            dialogType: DialogType.warning,
+            animType: AnimType.topSlide,
+            showCloseIcon: true,
+            title: "Biometric Authentication",
+            btnOkColor: violet,
+            btnOkText: "Okay",
+            desc:
+            "Please login by using email for first time login",
+            btnOkOnPress: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ).show();
+        }
       }
     } on PlatformException catch (e) {
       print(e);
@@ -171,10 +195,7 @@ class _LoginSignupPageState extends State<LoginPage> {
         'dateOfBirth': receiveData["dateOfBirth"],
         'createdAt': FieldValue.serverTimestamp(),
       });
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage(name: receiveData["name"],)),
-      );
+      await storage.write(key: 'name', value: receiveData["name"]);
     } else if (receiveData["respond"] == "Login fail, email not found") {
       AwesomeDialog(
         padding: const EdgeInsets.all(20),
@@ -378,7 +399,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                   child: Padding(
                     padding: EdgeInsets.all(screenWidth * 0.075),
                     child: SingleChildScrollView(
-                      // physics: NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       child: Column(
                         children: <Widget>[
                           SizedBox(height: screenHeight * 0.01),
@@ -433,7 +454,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: screenHeight * 0.025),
                             child: SingleChildScrollView(
-                              // physics: NeverScrollableScrollPhysics(),
+                              physics: NeverScrollableScrollPhysics(),
                               child: Column(
                                 children: <Widget>[
                                   Row(
