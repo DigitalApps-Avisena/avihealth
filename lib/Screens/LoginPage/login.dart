@@ -167,7 +167,7 @@ class _LoginSignupPageState extends State<LoginPage> {
         'IC': receiveData["IC"],
         'phone': receiveData["phone"],
         'gender': receiveData["gender"],
-        'dependent': receiveData["dependent"],
+        'dependant': receiveData["dependent"],
         'dateOfBirth': receiveData["dateOfBirth"],
         'createdAt': FieldValue.serverTimestamp(),
       });
@@ -378,7 +378,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                   child: Padding(
                     padding: EdgeInsets.all(screenWidth * 0.075),
                     child: SingleChildScrollView(
-                      physics: NeverScrollableScrollPhysics(),
+                      // physics: NeverScrollableScrollPhysics(),
                       child: Column(
                         children: <Widget>[
                           SizedBox(height: screenHeight * 0.01),
@@ -433,7 +433,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: screenHeight * 0.025),
                             child: SingleChildScrollView(
-                              physics: NeverScrollableScrollPhysics(),
+                              // physics: NeverScrollableScrollPhysics(),
                               child: Column(
                                 children: <Widget>[
                                   Row(
