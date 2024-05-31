@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_avisena/Screens/Dependants/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -133,7 +134,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 alignment: Alignment.center,
                 child: Expanded(
-                  child: Text(
+                  child: (widget.name != null) ? Text(
                     (widget.name!.length > 12) ? "Hi, ${widget.name!.substring(0, 12)}..." : "${widget.name}",
                     style: TextStyle(
                         fontSize: 20,
@@ -142,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                         fontFamily: 'WorkSans'),
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
-                  ),
+                  ) : Text('null'),
                 ),
               ),
             ],
@@ -185,8 +186,8 @@ class _HomePageState extends State<HomePage> {
       },
       {
         "image": "assets/images/shortcut_dependent.png",
-        "text": "Dependents",
-        "press": ""
+        "text": "Dependants",
+        "press": AddDependants()
       },
     ];
     return Container(
@@ -202,9 +203,11 @@ class _HomePageState extends State<HomePage> {
             text: categories[index]["text"],
             press: () {
               Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) => categories[index]["press"]));
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => categories[index]["press"]
+                ),
+              );
             },
           );
         },
