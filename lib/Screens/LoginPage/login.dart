@@ -179,7 +179,6 @@ class _LoginSignupPageState extends State<LoginPage> {
 
     if (receiveData["status"] == "1") {
 
-
       FirebaseFirestore.instance
           .collection('users')
           .doc(receiveData["MRN"])
@@ -196,6 +195,13 @@ class _LoginSignupPageState extends State<LoginPage> {
         'createdAt': FieldValue.serverTimestamp(),
       });
       await storage.write(key: 'name', value: receiveData["name"]);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(name: receiveData["name"]),
+        )
+      );
     } else if (receiveData["respond"] == "Login fail, email not found") {
       AwesomeDialog(
         padding: const EdgeInsets.all(20),
