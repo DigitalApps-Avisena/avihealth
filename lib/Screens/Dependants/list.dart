@@ -97,51 +97,41 @@ class _ListDependantsState extends State<ListDependants> {
             var name = categories[index]['name'];
             var press = categories[index]['press'];
 
-            return InkWell(
-              onTap: () {
-                setState(() {
-                  for(var i = 0; i < categories.length; i++) {
-                    categories[i]["press"] = i == index;
-                  }
-                  selected = true;
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: _height * 0.01, horizontal: _width * 0.08),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: press ? turquoise : Colors.white,
-                  elevation: 5.0,
-                  child: SizedBox(
-                    height: _height * 0.1,
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: _width * 0.03,
-                        ),
-                        Icon(
-                          CupertinoIcons.person_solid,
-                          color: press ? Colors.white : Colors.grey.shade700,
-                          size: _width * 0.08,
-                        ),
-                        SizedBox(
-                          width: _width * 0.03,
-                        ),
-                        SizedBox(
-                          width: _width * 0.5,
-                          child: Text(
-                            name,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: press ? Colors.white : Colors.black
-                            ),
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: _height * 0.01, horizontal: _width * 0.08),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                color: press ? turquoise : Colors.white,
+                elevation: 5.0,
+                child: SizedBox(
+                  height: _height * 0.1,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: _width * 0.03,
+                      ),
+                      Icon(
+                        CupertinoIcons.person_solid,
+                        color: press ? Colors.white : Colors.grey.shade700,
+                        size: _width * 0.08,
+                      ),
+                      SizedBox(
+                        width: _width * 0.03,
+                      ),
+                      SizedBox(
+                        width: _width * 0.5,
+                        child: Text(
+                          name,
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: press ? Colors.white : Colors.black
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -150,7 +140,7 @@ class _ListDependantsState extends State<ListDependants> {
         ),
         bottomNavigationBar: Container(
           margin: const EdgeInsets.only(bottom: 20, left: 35, right: 35),
-          child: (selected == true) ? ElevatedButton(
+          child: ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name)));
             },
@@ -171,30 +161,6 @@ class _ListDependantsState extends State<ListDependants> {
             style: ElevatedButton.styleFrom(
               elevation: 5,
               primary: Constants.violet,
-              padding: EdgeInsets.all(_width * 0.05),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
-              ),
-            ),
-          ) : ElevatedButton(
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.add,
-                ),
-                Text(
-                  'Add New',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ],
-            ),
-            style: ElevatedButton.styleFrom(
-              elevation: 5,
-              primary: Colors.grey,
               padding: EdgeInsets.all(_width * 0.05),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30)
