@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/LoginPage/login.dart';
 import 'package:flutter_avisena/Screens/OnboardPage/onboard.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../Helperfunctions.dart';
 
@@ -15,6 +16,7 @@ class AnimatedSplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<AnimatedSplashScreen>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  final storage = FlutterSecureStorage();
   bool? userIsLoggedIn;
   var image;
   var _visible = true;
@@ -27,12 +29,15 @@ class SplashScreenState extends State<AnimatedSplashScreen>
   }
 
   getLoggedInState() async {
-    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+    var name = await storage.read(key: 'name');
       setState(() {
-        userIsLoggedIn = value;
-        print("USER LOG IN VALUE HERE >>> $userIsLoggedIn");
+        if(name != null) {
+          userIsLoggedIn = true;
+          print("USER LOG IN VALUE HERE >>> $userIsLoggedIn");
+        } else {
+          userIsLoggedIn;
+        }
       });
-    });
   }
 
   Future<void> navigationPage() async {

@@ -4,7 +4,8 @@ import 'package:flutter_avisena/const.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class AddDependants extends StatefulWidget {
-  const AddDependants();
+  AddDependants({Key? key, this.name}) : super(key: key);
+  String? name;
 
   @override
   State<AddDependants> createState() => _AddDependantsState();
@@ -33,67 +34,32 @@ class _AddDependantsState extends State<AddDependants> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Row(
-            children: [
-              SizedBox(
-                width: _width * 0.13,
-              ),
-              Text(
-                "Add Dependant",
-                style: TextStyle(
-                    fontSize: _width * 0.05,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'WorkSans'
-                ),
-              ),
-            ],
+          backgroundColor: Constants.violet,
+          title: Text(
+            "Add Dependant",
+            style: TextStyle(
+              fontSize: _width * 0.05,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'WorkSans'
+            ),
           ),
+          centerTitle: true,
           leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.black,
-                size: _width * 0.07
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: _width * 0.06
             ),
           ),
-          elevation: 0,
+          elevation: 10,
         ),
         backgroundColor: Colors.grey.shade200,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // SizedBox(
-              //   height: _height * 0.05,
-              // ),
-              // Row(
-              //   children: [
-              //     IconButton(
-              //       onPressed: () => Navigator.of(context).pop(),
-              //       icon: Icon(
-              //         Icons.arrow_back_rounded,
-              //         color: Colors.black,
-              //         size: _width * 0.07
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: _width * 0.2,
-              //     ),
-              //     Text(
-              //       "Add Dependent",
-              //       style: TextStyle(
-              //         fontSize: _width * 0.05,
-              //         color: Colors.black,
-              //         fontWeight: FontWeight.bold,
-              //         fontFamily: 'WorkSans'
-              //       ),
-              //       maxLines: 5,
-              //       overflow: TextOverflow.ellipsis,
-              //     ),
-              //   ],
-              // ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Card(
@@ -169,12 +135,12 @@ class _AddDependantsState extends State<AddDependants> {
           ),
         ),
         bottomNavigationBar: Container(
-          margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-          child: ElevatedButton(
+          margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
+          child: (controller.text.length != null) ? ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context, MaterialPageRoute(
-                  builder: (context) => ListDependants(),
+                  builder: (context) => ListDependants(name: widget.name),
                 ),
               );
             },
@@ -194,7 +160,28 @@ class _AddDependantsState extends State<AddDependants> {
               primary: Constants.violet,
               padding: EdgeInsets.all(_width * 0.05),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)
+                borderRadius: BorderRadius.circular(30)
+              ),
+            ),
+          ) : ElevatedButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'Submit',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ],
+            ),
+            style: ElevatedButton.styleFrom(
+              elevation: 5,
+              primary: Colors.grey,
+              padding: EdgeInsets.all(_width * 0.05),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)
               ),
             ),
           ),

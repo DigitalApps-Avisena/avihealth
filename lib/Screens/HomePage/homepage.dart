@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
+import 'package:flutter_avisena/Screens/Services/chooseHospital.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../components/section_title.dart';
@@ -182,12 +183,12 @@ class _HomePageState extends State<HomePage> {
       {
         "image": "assets/images/shortcut_services.png",
         "text": "Services",
-        "press": ""
+        "press": ChooseHospital(name: widget.name)
       },
       {
         "image": "assets/images/shortcut_dependent.png",
         "text": "Dependants",
-        "press": AddDependants()
+        "press": AddDependants(name: widget.name)
       },
     ];
     return Container(
