@@ -79,6 +79,10 @@ dependencies:
 
   provider: ^6.0.1
 
+  # dwi-language
+  flutter_localization:
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -96,6 +100,8 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  generate: true
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -106,6 +112,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/languages/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
