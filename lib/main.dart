@@ -99,7 +99,7 @@ void main() async {
     sound: true,
   );
 
-  runApp(MaterialApp(home: MyApp(),));
+  runApp(MyApp());
 }
 
 Route _generateRoute(RouteSettings settings) {
