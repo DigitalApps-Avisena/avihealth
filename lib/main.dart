@@ -4,7 +4,9 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_avisena/Screens/HomePage/homepage.dart';
+import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +17,7 @@ import 'Screens/LoginPage/login.dart';
 import 'Screens/OnboardPage/onboard.dart';
 import 'components/animated_splash_screen.dart';
 import 'components/localnotification.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'const.dart';
@@ -96,7 +99,7 @@ void main() async {
     sound: true,
   );
 
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp(),));
 }
 
 Route _generateRoute(RouteSettings settings) {
@@ -129,19 +132,79 @@ Route _generateRoute(RouteSettings settings) {
   throw '';
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  final storage = FlutterSecureStorage();
+
+  var language;
+  var global;
+
+  @override
+  void initState() {
+    defaultLanguage();
+    changeLanguage();
+    super.initState();
+  }
+
+  defaultLanguage() async {
+    var lang = await storage.read(key: 'language');
+    switch (lang) {
+      case "en" :
+        await storage.write(key: 'language', value: 'en');
+        await storage.write(key: 'global', value: 'US');
+        break;
+      case "ms" :
+        await storage.write(key: 'language', value: 'ms');
+        await storage.write(key: 'global', value: 'MY');
+        break;
+      default :
+        await storage.write(key: 'language', value: 'en');
+        await storage.write(key: 'global', value: 'US');
+    }
+    print('Current Language: $lang');
+  }
+
+  changeLanguage() async {
+    language = await storage.read(key: 'language');
+    global = await storage.read(key: 'global');
+    setState(() {
+      language;
+      global;
+    });
+    print('Language $language,$global');
+  }
+
   @override
   Widget build(BuildContext context) {
     LocalNotificationService.initialize(context);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'AviHealth',
-        theme: ThemeData(
-          primaryColor: violet,
-        ),
-        home: AnimatedSplashScreen(),
-        // home: MyHomePage(title: 'truecare2u',),
-        onGenerateRoute: _generateRoute,
-        initialRoute: '/');
+      locale: Locale(language, global),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ms'),
+      ],
+      debugShowCheckedModeBanner: false,
+      title: 'AviHealth',
+      theme: ThemeData(
+        primaryColor: violet,
+      ),
+
+      // home: MyHomePage(),
+      home: AnimatedSplashScreen(),
+      // home: MyHomePage(title: 'truecare2u',),
+      onGenerateRoute: _generateRoute,
+      initialRoute: '/'
+    );
   }
 }

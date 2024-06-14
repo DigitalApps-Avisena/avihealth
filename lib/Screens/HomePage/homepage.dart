@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
-import 'package:flutter_avisena/Screens/Services/chooseHospital.dart';
+import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../components/section_title.dart';
@@ -20,6 +21,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final storage = const FlutterSecureStorage();
 
   var opacity = 0.0;
   var namelength;
@@ -137,14 +140,14 @@ class _HomePageState extends State<HomePage> {
                 child: Expanded(
                   child: (widget.name != null) ? Text(
                     (widget.name!.length > 12) ? "Hi, ${widget.name!.substring(0, 12)}..." : "${widget.name}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'WorkSans'),
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
-                  ) : Text('null'),
+                  ) : const Text('null'),
                 ),
               ),
             ],
@@ -172,22 +175,22 @@ class _HomePageState extends State<HomePage> {
     List<Map<String, dynamic>> categories = [
       {
         "image": "assets/images/shortcut_medical_appointment.png",
-        "text": "Appointment",
+        "text": AppLocalizations.of(context)!.translate('Appointment')!,
         "press": ""
       },
       {
         "image": "assets/images/shortcut_doctor.png",
-        "text": "Doctors",
+        "text": AppLocalizations.of(context)!.translate('Doctors')!,
         "press": ""
       },
       {
         "image": "assets/images/shortcut_services.png",
-        "text": "Services",
-        "press": ChooseHospital(name: widget.name)
+        "text": AppLocalizations.of(context)!.translate('Services')!,
+        "press": ""
       },
       {
         "image": "assets/images/shortcut_dependent.png",
-        "text": "Dependants",
+        "text": AppLocalizations.of(context)!.translate('Dependants')!,
         "press": AddDependants(name: widget.name)
       },
     ];
@@ -242,9 +245,9 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          const Text(
-            'My Appointments',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.translate('My Appointments')!,
+            style: const TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'WorkSans'
@@ -252,7 +255,7 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             child: Text(
-              "More >",
+              "${AppLocalizations.of(context)!.translate('More')!} >",
               style: TextStyle(
                   fontFamily: 'WorkSans',
                   color: Colors.blue.shade600,
@@ -367,14 +370,19 @@ class _HomePageState extends State<HomePage> {
     return Row(
       children: <Widget>[
         FlatButton(
-          child: const Text(
-            "Reschedule",
-            style: TextStyle(
+          child: Text(
+            AppLocalizations.of(context)!.translate('Reschedule')!,
+            style: const TextStyle(
               fontFamily: 'WorkSans',
               fontSize: 15,
             ),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            await storage.write(key: 'language', value: 'en');
+            await storage.write(key: 'global', value: 'US');
+            var batista = await storage.read(key: 'language');
+            print('HohohOHOHOH $batista');
+          },
           color: Theme.of(context).primaryColor,
           height: 35,
           minWidth: _width * 0.38,
@@ -387,14 +395,17 @@ class _HomePageState extends State<HomePage> {
           width: 18,
         ),
         FlatButton(
-          child: const Text(
-            "Details",
-            style: TextStyle(
+          child: Text(
+            AppLocalizations.of(context)!.translate('Details')!,
+            style: const TextStyle(
               fontFamily: 'WorkSans',
               fontSize: 15,
             ),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            await storage.write(key: 'language', value: 'ms');
+            await storage.write(key: 'global', value: 'MY');
+          },
           color: Theme.of(context).primaryColor,
           height: 35,
           minWidth: _width * 0.38,
@@ -413,9 +424,9 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          const Text(
-            'Discover More',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.translate('Discover More')!,
+            style: const TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'WorkSans'
@@ -423,7 +434,7 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             child: Text(
-              "More >",
+              '${AppLocalizations.of(context)!.translate('More')!} >',
               style: TextStyle(
                   fontFamily: 'WorkSans',
                   color: Colors.blue.shade600,
@@ -566,10 +577,10 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.only(left: 30, right: 30, top: _height * 0.045),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const <Widget>[
+        children: <Widget>[
           Text(
-            'Need Help?',
-            style: TextStyle(
+            '${AppLocalizations.of(context)!.translate('Need Help')!} ?',
+            style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.bold,
               fontFamily: 'WorkSans',

@@ -1,6 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/list.dart';
 import 'package:flutter_avisena/const.dart';
+import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class AddDependants extends StatefulWidget {
@@ -16,9 +19,19 @@ class _AddDependantsState extends State<AddDependants> {
   TextEditingController controller = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  final storage = FlutterSecureStorage();
 
   dynamic _height;
   dynamic _width;
+
+  String number = '1234';
+
+  List<TextSpan> _getStyledTextSpans() {
+    return [
+      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction')!, style: TextStyle(color: Colors.black)),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +49,7 @@ class _AddDependantsState extends State<AddDependants> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            "Add Dependant",
+            AppLocalizations.of(context)!.translate('Add Dependant')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -71,7 +84,6 @@ class _AddDependantsState extends State<AddDependants> {
                   child: SizedBox(
                     width: _width * 0.9,
                     height: _height * 0.3,
-                    // height: 500,
                     child: Column(
                       children: [
                         SizedBox(
@@ -83,10 +95,9 @@ class _AddDependantsState extends State<AddDependants> {
                               width: _width * 0.08,
                             ),
                             Text(
-                              'IC Number',
+                              AppLocalizations.of(context)!.translate('Personal Verification List')!,
                               style: TextStyle(
-                                fontSize: _width * 0.045,
-                                fontWeight: FontWeight.bold,
+                                fontSize: _width * 0.04,
                               ),
                             ),
                           ],
@@ -122,9 +133,14 @@ class _AddDependantsState extends State<AddDependants> {
                         SizedBox(
                           height: _height * 0.04,
                         ),
-                        const Text(
-                          'Please bring the physical IC card\nfor the review and approvsl\nprocess​',
-                          textAlign: TextAlign.center,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: _width * 0.15),
+                          child: RichText(
+                            text: TextSpan(
+                              children: _getStyledTextSpans(),
+                            ),
+                            textAlign: TextAlign.center
+                          ),
                         ),
                       ],
                     ),
@@ -136,20 +152,41 @@ class _AddDependantsState extends State<AddDependants> {
         ),
         bottomNavigationBar: Container(
           margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
-          child: (controller.text.length != null) ? ElevatedButton(
+          child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context, MaterialPageRoute(
-                  builder: (context) => ListDependants(name: widget.name),
-                ),
-              );
+              if(controller.text == number) {
+                Navigator.push(
+                  context, MaterialPageRoute(
+                    builder: (context) => ListDependants(name: widget.name),
+                  ),
+                );
+              } else {
+                AwesomeDialog(
+                  padding: const EdgeInsets.all(20),
+                  context: context,
+                  dialogType: DialogType.warning,
+                  animType: AnimType.topSlide,
+                  showCloseIcon: true,
+                  title: "Number Not Register",
+                  btnOkColor: violet,
+                  btnOkText: "Okay",
+                  desc:
+                  "Please register new dependant at Avisena Healthcare registration counter.",
+                  btnOkOnPress: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddDependants(name: widget.name,)),
+                    );
+                  },
+                ).show();
+              }
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Submit',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.translate('Submit')!,
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -158,27 +195,6 @@ class _AddDependantsState extends State<AddDependants> {
             style: ElevatedButton.styleFrom(
               elevation: 5,
               primary: Constants.violet,
-              padding: EdgeInsets.all(_width * 0.05),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
-              ),
-            ),
-          ) : ElevatedButton(
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ],
-            ),
-            style: ElevatedButton.styleFrom(
-              elevation: 5,
-              primary: Colors.grey,
               padding: EdgeInsets.all(_width * 0.05),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30)
