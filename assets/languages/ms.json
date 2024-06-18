@@ -1,4 +1,8 @@
 {
+  "Add Dependant" : "Tambah Tanggungan",
+  "Add Dependant Instruction" : "untuk bawa IC/myKid/MyKad/sijil lahir/passport untuk proses pengesahan dan kelulusan.",
+  "Add Dependant Instruction Mandatory" : "WAJIB ",
+  "Add Dependant Warning" : "Sila daftar tanggungan baru di kaunter pendaftaran Avisena Healthcare.",
   "Admission & Discharge Department Contact Information" : "Maklumat Perhubungan Jabatan Kemasukan & Pelepasan",
   "Appointment" : "Temu Janji",
   "Book an Appointment" : "Tempah Temu Janji",
@@ -11,9 +15,13 @@
   "More" : "Lagi",
   "My Appointments" : "Temu Janji Saya",
   "Need Help" : "Perlukan Pertolongan",
+  "Number Not Register" : "Nombor Belum Didaftar",
+  "Okay" : "Okey",
   "Patient & Family Rights": "Hak Pesakit & Keluarga",
-  "Paediatric Suction Recovery Package" : "\nPakej Pemulihan Sedutan Pediatrik",
+  "Paediatric Suction Recovery Package" : "Pakej Pemulihan Sedutan Pediatrik",
+  "Personal Verification List" : "Sila masukkan Nombor IC",
   "Reschedule" : "Jadual Semula",
   "Services" : "Servis",
+  "Submit" : "Hantar",
   "View Room Rates" : "Lihar Harga Bilik"
 }

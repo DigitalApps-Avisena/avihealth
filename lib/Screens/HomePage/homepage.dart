@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
       {
         "image": "assets/images/shortcut_dependent.png",
         "text": AppLocalizations.of(context)!.translate('Dependants')!,
-        "press": AddDependants()
+        "press": AddDependants(name: widget.name)
       },
     ];
     return Container(
@@ -380,6 +380,8 @@ class _HomePageState extends State<HomePage> {
           onPressed: () async {
             await storage.write(key: 'language', value: 'en');
             await storage.write(key: 'global', value: 'US');
+            var batista = await storage.read(key: 'language');
+            print('HohohOHOHOH $batista');
           },
           color: Theme.of(context).primaryColor,
           height: 35,

@@ -1,4 +1,8 @@
 {
+  "Add Dependant" : "Add Dependant",
+  "Add Dependant Instruction" : "to bring IC/myKid/myKad/birth certificate/passport for validation and approval process.",
+  "Add Dependant Instruction Mandatory" : "MANDATORY ",
+  "Add Dependant Warning" : "Please register new dependant at Avisena Healthcare registration counter.",
   "Admission & Discharge Department Contact Information" : "Admission & Discharge Department Contact Information",
   "Appointment" : "Appointment",
   "Book an Appointment" : "Book an Appointment",
@@ -11,9 +15,13 @@
   "More" : "More",
   "My Appointments" : "My Appointments",
   "Need Help" : "Need Help",
+  "Number Not Register" : "Number Not Register",
+  "Okay" : "Okay",
   "Patient & Family Rights": "Patient & Family Rights",
   "Paediatric Suction Recovery Package" : "Paediatric Suction Recovery Package",
+  "Personal Verification List" : "Fill Your IC Number",
   "Reschedule" : "Reschedule",
   "Services" : "Services",
+  "Submit" : "Submit",
   "View Room Rates" : "View Room Rates"
 }
