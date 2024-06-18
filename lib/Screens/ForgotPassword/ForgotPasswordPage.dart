@@ -99,7 +99,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(name: '', email: '', phone: '',)),
           );
         },
       ).show();
@@ -268,9 +268,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             IconButton(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: Icon(
-                  Icons.arrow_back_rounded,
+                  Icons.arrow_back_ios_rounded,
                   color: Colors.white,
-                  size: 18,
+                  size: _width * 0.05,
                 )),
             Padding(
               padding: EdgeInsets.all(20),

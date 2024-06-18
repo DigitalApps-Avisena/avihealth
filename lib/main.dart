@@ -106,7 +106,7 @@ Route _generateRoute(RouteSettings settings) {
           builder: (_) => OnboardPage(), settings: settings);
     case '/LOGIN':
       return CupertinoPageRoute(
-          builder: (_) => LoginPage(), settings: settings);
+          builder: (_) => LoginPage(name: '', email: '', phone: '',), settings: settings);
     // case '/REGISTER_PAGE':
     //   return CupertinoPageRoute(
     //       builder: (_) => RegisterPage(), settings: settings);
@@ -117,7 +117,7 @@ Route _generateRoute(RouteSettings settings) {
     //   return CupertinoPageRoute(
     //       builder: (_) => NotificationDetailsPage(), settings: settings);
     case '/INDEX':
-      return CupertinoPageRoute(builder: (_) => HomePage(), settings: settings);
+      return CupertinoPageRoute(builder: (_) => HomePage(name: '', email: '', phone: '',), settings: settings);
     // case '/LOCATION_PAGE':
     //   return CupertinoPageRoute(
     //       builder: (_) => LocationPage(), settings: settings);

@@ -103,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(name: '', email: '', phone: '',)),
           );
         },
       ).show();
@@ -436,7 +436,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    LoginPage(),
+                                                    LoginPage(name: '', email: '', phone: '',),
                                               ));
                                         },
                                       )

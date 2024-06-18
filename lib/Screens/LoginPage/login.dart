@@ -24,8 +24,15 @@ import '../SignUp/SignUpPage.dart';
 import 'package:flutter_avisena/Screens/ForgotPassword/ForgotPasswordPage.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage();
-
+  LoginPage({
+    Key? key,
+    required this.name,
+    required this.email,
+    required this.phone
+  }) : super(key: key);
+  String name;
+  String email;
+  String phone;
   // final VoidCallback loginCallback;
 
   @override
@@ -64,6 +71,7 @@ class _LoginSignupPageState extends State<LoginPage> {
   bool iserror = false;
   var token;
   var mrn;
+  // var receiveData;
 
   @override
   void initState() {
@@ -125,7 +133,12 @@ class _LoginSignupPageState extends State<LoginPage> {
 
       if (authenticated) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(
+            builder: (context) => HomePage(
+                name: widget.name,
+                email: widget.email,
+                phone: widget.phone,
+            )));
       }
     } on PlatformException catch (e) {
       print(e);
@@ -156,11 +169,6 @@ class _LoginSignupPageState extends State<LoginPage> {
     print('receiveData == $receiveData');
 
     if (receiveData["status"] == "1") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-
       FirebaseFirestore.instance
           .collection('users')
           .doc(receiveData["MRN"])
@@ -176,6 +184,11 @@ class _LoginSignupPageState extends State<LoginPage> {
         'dateOfBirth': receiveData["dateOfBirth"],
         'createdAt': FieldValue.serverTimestamp(),
       });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage(name: receiveData["name"], email: receiveData["email"], phone: receiveData["phone"],)),
+      );
+      print("RECEIVE DATA NAME");
     } else if (receiveData["respond"] == "Login fail, email not found") {
       AwesomeDialog(
         padding: EdgeInsets.all(20),
@@ -191,7 +204,11 @@ class _LoginSignupPageState extends State<LoginPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(
+                name: receiveData["name"],
+                email: receiveData["email"],
+                phone: receiveData["phone"],
+            )),
           );
         },
       ).show();
@@ -210,7 +227,11 @@ class _LoginSignupPageState extends State<LoginPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(
+                name: receiveData["name"],
+                email: receiveData["email"],
+                phone: receiveData["phone"],
+            )),
           );
         },
       ).show();
@@ -565,7 +586,7 @@ class _LoginSignupPageState extends State<LoginPage> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomePage(),
+                                                    HomePage(name:widget.name, email: widget.email, phone: widget.phone,),
                                               ));
                                         },
                                       )

@@ -8,18 +8,10 @@ import 'package:flutter_avisena/Screens/HomePage/categories.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Helperfunctions.dart';
-import '../../components/Database.dart';
-import '../../components/section_title.dart';
-import '../../components/user.dart';
-import '../../const.dart';
-import '../../size_config.dart';
-import '../LoginPage/login.dart';
-import '../ProfilePage/profilepage.dart';
-import 'needHelp.dart';
+import '../profilepage.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({
+class myAccountPage extends StatefulWidget {
+  myAccountPage({
     Key? key,
     required this.name,
     required this.email,
@@ -31,10 +23,10 @@ class HomePage extends StatefulWidget {
   String phone;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<myAccountPage> createState() => _myAccountPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _myAccountPageState extends State<myAccountPage> {
   var opacity = 0.0;
   bool position = false;
   dynamic _height;
@@ -69,7 +61,6 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
             child: Stack(
               children: [
                 Opacity(
@@ -83,28 +74,12 @@ class _HomePageState extends State<HomePage> {
                           Color(0xFFA92389),
                           Color(0xFF2290AA),
                         ]),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        ),
                         // color: violet,
                       ),
                     ),
                   ),
                 ),
-                patientProfile(),
                 bellNotification(),
-                topBanner(),
-                headerMyAppointments(),
-                appointmentBanner(),
-                appointmentDetails(),
-                myAppointmentsButtons(),
-                discoverMoreTitle(),
-                discoverMoreBanner1(),
-                discoverMoreBanner2(),
-                discoverMoreBanner3(),
-                needHelpTitle(),
-                needHelpCard(),
               ],
             ),
           ),
@@ -559,60 +534,6 @@ class _HomePageState extends State<HomePage> {
       height: 120,
       margin: EdgeInsets.only(
           left: _width / 18, right: _width / 18, top: _height / 1.14),
-    );
-  }
-
-  Widget needHelpTitle() {
-    return Container(
-      margin: EdgeInsets.only(left: 30, right: 30, top: _height / 0.93),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Need Help?',
-              style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'WorkSans')),
-        ],
-      ),
-    );
-  }
-
-  Widget needHelpCard() {
-    int currentPage = 0;
-    List<Map<String, dynamic>> webData = [
-      {
-        "text": "Admission & Discharge \nDepartment Contact \nInformation",
-        "press": ""
-      },
-      {"text": "View Room Rates", "press": ""},
-      {"text": "Patient & Family Rights", "press": ""},
-      {"text": "Contact Us", "press": ""},
-    ];
-    return Container(
-      child: SizedBox(
-        width: (350),
-        height: (150),
-        child: ListView.builder(
-          // onPageChanged: (value) {
-          //   setState(() {
-          //     currentPage = value;
-          //   });
-          // },
-            scrollDirection: Axis.horizontal,
-            itemCount: webData.length,
-            itemBuilder: (context, index) => needHelp(
-              text: webData[index]["text"],
-              press: () {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => webData[index]["press"]));
-              },
-            )),
-      ),
-      margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 0.90),
     );
   }
 }

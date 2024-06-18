@@ -46,9 +46,9 @@ class HelperFunctions {
     return await preferences.setString(sharedPreferenceUserNameKey, userName);
   }
 
-  static Future<bool> saveNameSharedPreference(String userFullName) async {
+  static Future<bool> saveNameSharedPreference(String name) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setString(sharedPreferenceNameKey, userFullName);
+    return await preferences.setString(sharedPreferenceNameKey, name);
   }
 
   static Future<bool> saveUserEmailSharedPreference(String userEmail) async {
@@ -113,7 +113,7 @@ class HelperFunctions {
     return preferences.getBool(sharedPreferenceUserLoggedInKey);
   }
 
-  static Future<String?> getUserNameSharedPreference() async {
+  static Future<String?> getUserNameSharedPreference() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(sharedPreferenceUserNameKey);
   }
@@ -188,16 +188,16 @@ class HelperFunctions {
   }
   // saveUserOccupationPreference
 
-  // saveUserMRNNoPreference
-  // static Future<bool> saveUserMRNNoPreference(String rnno) async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   return await preferences.setString(sharedPreferenceMRNKey, rnno);
-  // }
-  //
-  // static Future<String?> getUserMRNNoSharedPreference() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   return preferences.getString(sharedPreferenceMRNKey);
-  // }
+
+  static Future<bool> saveUserMRNNoPreference(String rnno) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setString(sharedPreferenceMRNKey, rnno);
+  }
+
+  static Future<String?> getUserMRNNoSharedPreference() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(sharedPreferenceMRNKey);
+  }
   // MRNNO
   // Gender
 

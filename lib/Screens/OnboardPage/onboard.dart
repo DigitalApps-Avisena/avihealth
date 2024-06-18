@@ -104,7 +104,7 @@ class _OnboardPageState extends State<OnboardPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => LoginPage(),
+                      builder: (_) => LoginPage(name: '', email: '', phone: '',),
                     ),
                   );
                 }
