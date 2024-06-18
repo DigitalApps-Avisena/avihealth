@@ -30,14 +30,14 @@ class SplashScreenState extends State<AnimatedSplashScreen>
 
   getLoggedInState() async {
     var name = await storage.read(key: 'name');
-      setState(() {
-        if(name != null) {
-          userIsLoggedIn = true;
-          print("USER LOG IN VALUE HERE >>> $userIsLoggedIn");
-        } else {
-          userIsLoggedIn;
-        }
-      });
+    setState(() {
+      if(name != null) {
+        userIsLoggedIn = true;
+        print("USER LOG IN VALUE HERE >>> $userIsLoggedIn");
+      } else {
+        userIsLoggedIn;
+      }
+    });
   }
 
   Future<void> navigationPage() async {
@@ -63,7 +63,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
     animationController = new AnimationController(
         vsync: this, duration: new Duration(seconds: 2));
     animation =
-        new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
+    new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
 
     animation.addListener(() => this.setState(() {}));
     animationController.forward();

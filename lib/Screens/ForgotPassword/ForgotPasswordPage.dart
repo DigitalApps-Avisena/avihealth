@@ -95,7 +95,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         btnOkColor: violet,
         btnOkText: "Okay",
         desc:
-            "Please follow the instruction and the link received in your email to reset your password",
+        "Please follow the instruction and the link received in your email to reset your password",
         btnOkOnPress: () {
           Navigator.push(
             context,
@@ -142,7 +142,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         btnOkColor: violet,
         btnOkText: "Okay",
         desc:
-            "Please make sure you use the email that has been registered with us",
+        "Please make sure you use the email that has been registered with us",
         btnOkOnPress: () {
           Navigator.push(
             context,
@@ -172,14 +172,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       style: style,
       validator: (val) {
         return RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(val!)
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(val!)
             ? null
             : "Please Enter Correct Email";
       },
       decoration: InputDecoration(
           contentPadding:
-              EdgeInsets.only(top: 20), // add padding to adjust text
+          EdgeInsets.only(top: 20), // add padding to adjust text
           isDense: true,
           prefixIcon: Padding(
             padding: EdgeInsets.only(top: 10), // add padding to adjust icon
@@ -199,14 +199,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       style: style,
       validator: (val) {
         return RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(val!)
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(val!)
             ? null
             : "Please Enter Correct Email";
       },
       decoration: InputDecoration(
           contentPadding:
-              EdgeInsets.only(top: 20), // add padding to adjust text
+          EdgeInsets.only(top: 20), // add padding to adjust text
           isDense: true,
           prefixIcon: Padding(
             padding: EdgeInsets.only(top: 10), // add padding to adjust icon
@@ -255,10 +255,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Color(0xFFA92389),
-          Color(0xFF2290AA),
-          Color(0xFF2290AA),
-        ])),
+              Color(0xFFA92389),
+              Color(0xFF2290AA),
+              Color(0xFF2290AA),
+            ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

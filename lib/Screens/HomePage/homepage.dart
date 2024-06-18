@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => categories[index]["press"]
+                    builder: (context) => categories[index]["press"]
                 ),
               );
             },

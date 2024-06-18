@@ -197,10 +197,10 @@ class _LoginSignupPageState extends State<LoginPage> {
       await storage.write(key: 'name', value: receiveData["name"]);
 
       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(name: receiveData["name"]),
-        )
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(name: receiveData["name"]),
+          )
       );
     } else if (receiveData["respond"] == "Login fail, email not found") {
       AwesomeDialog(

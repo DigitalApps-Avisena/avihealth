@@ -1,3 +1,16 @@
+// class User {
+//   final int id;
+//   final String code;
+//   final String name;
+//   final String passportNumber;
+//
+//   User.fromJson(Map<String, dynamic> json)
+//       : id = json['id'] ?? 0,
+//         code = json['code'] ?? '',
+//         name = json['name'] ?? '',
+//         passportNumber = json['passport_number'] ?? '';
+// }
+
 class User {
   String? uid;
   String? name;

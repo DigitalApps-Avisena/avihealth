@@ -99,7 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
         btnOkColor: violet,
         btnOkText: "Okay",
         desc:
-            "We've sent you an email. Please check your email for verification to continue",
+        "We've sent you an email. Please check your email for verification to continue",
         btnOkOnPress: () {
           Navigator.push(
             context,
@@ -178,14 +178,14 @@ class _SignUpPageState extends State<SignUpPage> {
       style: style,
       validator: (val) {
         return RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(val!)
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(val!)
             ? null
             : "Please Enter Correct Email";
       },
       decoration: InputDecoration(
           contentPadding:
-              EdgeInsets.only(top: 20), // add padding to adjust text
+          EdgeInsets.only(top: 20), // add padding to adjust text
           isDense: true,
           prefixIcon: Padding(
             padding: EdgeInsets.only(top: 10), // add padding to adjust icon
@@ -205,14 +205,14 @@ class _SignUpPageState extends State<SignUpPage> {
       style: style,
       validator: (val) {
         return RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(val!)
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(val!)
             ? null
             : "Please Enter Correct Email";
       },
       decoration: InputDecoration(
           contentPadding:
-              EdgeInsets.only(top: 20), // add padding to adjust text
+          EdgeInsets.only(top: 20), // add padding to adjust text
           isDense: true,
           prefixIcon: Padding(
             padding: EdgeInsets.only(top: 10), // add padding to adjust icon
@@ -299,10 +299,10 @@ class _SignUpPageState extends State<SignUpPage> {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Color(0xFFA92389),
-          Color(0xFF2290AA),
-          Color(0xFF2290AA),
-        ])),
+              Color(0xFFA92389),
+              Color(0xFF2290AA),
+              Color(0xFF2290AA),
+            ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -428,7 +428,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w900,
                                             decoration:
-                                                TextDecoration.underline,
+                                            TextDecoration.underline,
                                           ),
                                         ),
                                         onPressed: () {
