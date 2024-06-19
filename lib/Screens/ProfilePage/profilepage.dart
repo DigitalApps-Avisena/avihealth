@@ -131,7 +131,6 @@ class _ProfilePageState extends State<ProfilePage> {
                    child: Column(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: <Widget>[
-                           // Icon(Icons.person,color: Colors.white,size: 14,),
                            Text(widget.name,
                              style: TextStyle(
                                  fontSize: 20,
@@ -146,7 +145,6 @@ class _ProfilePageState extends State<ProfilePage> {
                        Row(
                          mainAxisAlignment: MainAxisAlignment.center,
                          children: [
-                           // Icon(Icons.email,color: Colors.white,size: 14,),
                            SizedBox(width: 5,),
                            Text(widget.email,
                              style: TextStyle(
