@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/list.dart';
@@ -5,10 +7,13 @@ import 'package:flutter_avisena/const.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:http/http.dart' as http;
 
 class AddDependants extends StatefulWidget {
-  AddDependants({Key? key, this.name}) : super(key: key);
-  String? name;
+  AddDependants({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
+  String name;
+  String email;
+  String phone;
 
   @override
   State<AddDependants> createState() => _AddDependantsState();
@@ -31,6 +36,67 @@ class _AddDependantsState extends State<AddDependants> {
       TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction')!, style: TextStyle(color: Colors.black)),
     ];
+  }
+
+  _getData() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
+        body: {
+          'passCode' : 'Avi@2024',
+          'reqNumber' : '7',
+          'icAccHolder' : '970617016588',
+          'icDependent' : controller.text
+        },
+      );
+      final responseBody = response.body;
+      final responseData = jsonDecode(responseBody);
+      final dataCode = responseData['code'];
+      print('A $responseBody');
+      print('B $responseData');
+      print('C $dataCode');
+      if(dataCode == 'E01') {
+        print('wohoo');
+        Navigator.push(
+          context, MaterialPageRoute(
+            builder: (context) => ListDependants(name: widget.name, email: widget.email, phone: widget.phone),
+          ),
+        );
+      } else {
+        print('Woopd');
+        AwesomeDialog(
+          padding: const EdgeInsets.all(20),
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.topSlide,
+          showCloseIcon: true,
+          title: "Registration dependent fail!",
+          btnOkColor: violet,
+          btnOkText: "Okay",
+          desc:
+          "Please fill correct number",
+          btnOkOnPress: () {
+            Navigator.of(context).pop();
+          },
+        ).show();
+      }
+    } catch(e) {
+      AwesomeDialog(
+        padding: const EdgeInsets.all(20),
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: "IC number does not register with our system!",
+        btnOkColor: violet,
+        btnOkText: "Okay",
+        desc:
+        "Please register first through our app",
+        btnOkOnPress: () {
+          Navigator.of(context).pop();
+        },
+      ).show();
+    }
   }
 
   @override
@@ -61,9 +127,8 @@ class _AddDependantsState extends State<AddDependants> {
           leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: _width * 0.06
+              Icons.arrow_back_ios_new_rounded,
+              size: _width * 0.05,
             ),
           ),
           elevation: 10,
@@ -154,32 +219,7 @@ class _AddDependantsState extends State<AddDependants> {
           margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
           child: ElevatedButton(
             onPressed: () {
-              if(controller.text == number) {
-                Navigator.push(
-                  context, MaterialPageRoute(
-                    builder: (context) => ListDependants(name: widget.name),
-                  ),
-                );
-              } else {
-                AwesomeDialog(
-                  padding: const EdgeInsets.all(20),
-                  context: context,
-                  dialogType: DialogType.warning,
-                  animType: AnimType.topSlide,
-                  showCloseIcon: true,
-                  title: "Number Not Register",
-                  btnOkColor: violet,
-                  btnOkText: "Okay",
-                  desc:
-                  "Please register new dependant at Avisena Healthcare registration counter.",
-                  btnOkOnPress: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddDependants(name: widget.name,)),
-                    );
-                  },
-                ).show();
-              }
+              _getData();
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
