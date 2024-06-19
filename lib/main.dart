@@ -67,7 +67,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,7 +88,7 @@ void main() async {
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+      AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   /// Update the iOS foreground notification presentation options to allow
@@ -110,23 +110,23 @@ Route _generateRoute(RouteSettings settings) {
     case '/LOGIN':
       return CupertinoPageRoute(
           builder: (_) => LoginPage(), settings: settings);
-    // case '/REGISTER_PAGE':
-    //   return CupertinoPageRoute(
-    //       builder: (_) => RegisterPage(), settings: settings);
-    // case '/MAIN_UI':
-    //   return CupertinoPageRoute(
-    //       builder: (_) => LoginSignupPage(), settings: settings);
-    // case '/NOTI_DETAILS':
-    //   return CupertinoPageRoute(
-    //       builder: (_) => NotificationDetailsPage(), settings: settings);
+  // case '/REGISTER_PAGE':
+  //   return CupertinoPageRoute(
+  //       builder: (_) => RegisterPage(), settings: settings);
+  // case '/MAIN_UI':
+  //   return CupertinoPageRoute(
+  //       builder: (_) => LoginSignupPage(), settings: settings);
+  // case '/NOTI_DETAILS':
+  //   return CupertinoPageRoute(
+  //       builder: (_) => NotificationDetailsPage(), settings: settings);
     case '/INDEX':
-      return CupertinoPageRoute(builder: (_) => HomePage(), settings: settings);
-    // case '/LOCATION_PAGE':
-    //   return CupertinoPageRoute(
-    //       builder: (_) => LocationPage(), settings: settings);
-    // default:
-    //   return CupertinoPageRoute(
-    //       builder: (_) => AnimatedSplashScreen(), settings: settings);
+      return CupertinoPageRoute(builder: (_) => HomePage(name: '', phone: '', email: '',), settings: settings);
+  // case '/LOCATION_PAGE':
+  //   return CupertinoPageRoute(
+  //       builder: (_) => LocationPage(), settings: settings);
+  // default:
+  //   return CupertinoPageRoute(
+  //       builder: (_) => AnimatedSplashScreen(), settings: settings);
 
   }
   throw '';
@@ -141,8 +141,8 @@ class _MyAppState extends State<MyApp> {
 
   final storage = FlutterSecureStorage();
 
-  var language;
-  var global;
+  dynamic language;
+  dynamic global;
 
   @override
   void initState() {
@@ -183,28 +183,28 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     LocalNotificationService.initialize(context);
     return MaterialApp(
-      locale: Locale(language, global),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ms'),
-      ],
-      debugShowCheckedModeBanner: false,
-      title: 'AviHealth',
-      theme: ThemeData(
-        primaryColor: violet,
-      ),
+        locale: Locale(language, global),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ms'),
+        ],
+        debugShowCheckedModeBanner: false,
+        title: 'AviHealth',
+        theme: ThemeData(
+          primaryColor: violet,
+        ),
 
-      // home: MyHomePage(),
-      home: AnimatedSplashScreen(),
-      // home: MyHomePage(title: 'truecare2u',),
-      onGenerateRoute: _generateRoute,
-      initialRoute: '/'
+        // home: MyHomePage(),
+        home: AnimatedSplashScreen(),
+        // home: MyHomePage(title: 'truecare2u',),
+        onGenerateRoute: _generateRoute,
+        initialRoute: '/'
     );
   }
 }

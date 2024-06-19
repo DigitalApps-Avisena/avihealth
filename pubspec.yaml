@@ -73,7 +73,6 @@ dependencies:
   # config
   flutter_secure_storage: ^5.0.2
   shared_preferences: ^2.0.11
-
   # audio
   flutter_ringtone_player: ^3.1.1
 

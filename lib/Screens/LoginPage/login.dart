@@ -111,7 +111,9 @@ class _LoginSignupPageState extends State<LoginPage> {
   }
 
   Future<void> authenticateWithBiometrics() async {
-    var cacheName = await storage.read(key: 'name');
+    var name = await storage.read(key: 'name');
+    var email = await storage.read(key: 'email');
+    var phone = await storage.read(key: 'phone');
     try {
       final authenticated = await auth.authenticate(
           localizedReason: 'Authenticate with fingerprint or Face ID',
@@ -125,9 +127,9 @@ class _LoginSignupPageState extends State<LoginPage> {
       }
 
       if (authenticated) {
-        if(cacheName != null) {
+        if(name != null) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage(name: cacheName)));
+              context, MaterialPageRoute(builder: (context) => HomePage(name: name, email: email.toString(), phone: phone.toString(),)));
         } else {
           return AwesomeDialog(
             padding: const EdgeInsets.all(20),
@@ -195,12 +197,14 @@ class _LoginSignupPageState extends State<LoginPage> {
         'createdAt': FieldValue.serverTimestamp(),
       });
       await storage.write(key: 'name', value: receiveData["name"]);
+      await storage.write(key: 'email', value: receiveData["email"]);
+      await storage.write(key: 'phone', value: receiveData["phone"]);
 
       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(name: receiveData["name"]),
-        )
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(name: receiveData["name"], email: receiveData["email"], phone: receiveData["phone"],),
+          )
       );
     } else if (receiveData["respond"] == "Login fail, email not found") {
       AwesomeDialog(
@@ -564,58 +568,6 @@ class _LoginSignupPageState extends State<LoginPage> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) => SignUpPage(),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          primary: Color(0xFFa4278d),
-                                        ),
-                                        child: const Text(
-                                          'Go to Home Screen',
-                                          style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.w900,
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => HomePage(),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          primary: Color(0xFFA92389),
-                                        ),
-                                        child: const Text(
-                                          'Go to Onboard Screen',
-                                          style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.w900,
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => OnboardPage(),
                                             ),
                                           );
                                         },
