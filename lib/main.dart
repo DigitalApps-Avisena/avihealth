@@ -120,7 +120,7 @@ Route _generateRoute(RouteSettings settings) {
   //   return CupertinoPageRoute(
   //       builder: (_) => NotificationDetailsPage(), settings: settings);
     case '/INDEX':
-      return CupertinoPageRoute(builder: (_) => HomePage(), settings: settings);
+      return CupertinoPageRoute(builder: (_) => HomePage(name: '', phone: '', email: '',), settings: settings);
   // case '/LOCATION_PAGE':
   //   return CupertinoPageRoute(
   //       builder: (_) => LocationPage(), settings: settings);
@@ -141,8 +141,8 @@ class _MyAppState extends State<MyApp> {
 
   final storage = FlutterSecureStorage();
 
-  var language;
-  var global;
+  dynamic language;
+  dynamic global;
 
   @override
   void initState() {

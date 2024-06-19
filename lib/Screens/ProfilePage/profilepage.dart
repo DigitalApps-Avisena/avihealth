@@ -133,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
                      children: <Widget>[
                            Text(widget.name,
                              style: TextStyle(
-                                 fontSize: 20,
+                                 fontSize: 18,
                                  color: Colors.black,
                                  fontWeight: FontWeight.bold,
                                  fontFamily: 'WorkSans'

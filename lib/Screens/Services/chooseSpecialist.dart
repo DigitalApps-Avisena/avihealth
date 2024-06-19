@@ -5,8 +5,8 @@ import 'package:flutter_avisena/const.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class ChooseSpecialist extends StatefulWidget {
-  ChooseSpecialist({Key? key, this.name}) : super(key: key);
-  String? name;
+  ChooseSpecialist({Key? key, required this.name}) : super(key: key);
+  String name;
 
   @override
   State<ChooseSpecialist> createState() => _ChooseSpecialistState();
@@ -153,7 +153,7 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
           margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
           child: (selected == true) ? ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name, email: '', phone: '',)));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

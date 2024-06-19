@@ -10,11 +10,20 @@ import 'package:flutter_svg/svg.dart';
 import '../../components/section_title.dart';
 import '../../const.dart';
 import '../../size_config.dart';
+import '../ProfilePage/profilepage.dart';
 import 'needHelp.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key, this.name}) : super(key: key);
-  String? name;
+  HomePage({
+    Key? key, 
+    required this.name,
+    required this.email,
+    required this.phone,
+    }) : super(key: key);
+
+  String name;
+  String email;
+  String phone;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -119,18 +128,27 @@ class _HomePageState extends State<HomePage> {
             direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-                  border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
-                  color: Colors.transparent,
-                  image: const DecorationImage(
-                      image: AssetImage('assets/images/profile_ayu.jpg'),
-                      fit: BoxFit.fill),
+              GestureDetector(
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: new BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
+                    color: Colors.transparent,
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/profile_ayu.jpg'),
+                        fit: BoxFit.fill),
+                  ),
                 ),
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProfilePage(name: widget.name, email: widget.email, phone: widget.phone),
+                      ));
+                },
               ),
               SizedBox(
                 width: _width * 0.02,

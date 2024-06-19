@@ -116,7 +116,7 @@ class _myAccountPageState extends State<myAccountPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfilePage(phone: '', name: '', email: '',),
+                    builder: (context) => ProfilePage(name: widget.name, email: widget.email, phone: widget.phone),
                   ));
             },
           ),

@@ -142,7 +142,7 @@ class _ListDependantsState extends State<ListDependants> {
           margin: const EdgeInsets.only(bottom: 20, left: 35, right: 35),
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: '', phone: '', email: '',)));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
