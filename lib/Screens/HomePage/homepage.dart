@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/add.dart';
+import 'package:flutter_avisena/Screens/Dependants/list.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
+import 'package:flutter_avisena/Screens/Services/chooseHospital.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
@@ -204,12 +206,12 @@ class _HomePageState extends State<HomePage> {
       {
         "image": "assets/images/shortcut_services.png",
         "text": AppLocalizations.of(context)!.translate('Services')!,
-        "press": ""
+        "press": ChooseHospital(name: widget.name,)
       },
       {
         "image": "assets/images/shortcut_dependent.png",
         "text": AppLocalizations.of(context)!.translate('Dependants')!,
-        "press": AddDependants(name: widget.name)
+        "press": ListDependants(name: widget.name, email: widget.email, phone: widget.phone)
       },
     ];
     return Container(

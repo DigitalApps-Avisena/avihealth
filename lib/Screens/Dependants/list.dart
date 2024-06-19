@@ -1,12 +1,20 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_avisena/Screens/Dependants/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/homepage.dart';
 import 'package:flutter_avisena/const.dart';
+import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:http/http.dart' as http;
 
 class ListDependants extends StatefulWidget {
-  ListDependants({Key? key, this.name}) : super(key: key);
-  String? name;
+  ListDependants({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
+  String name;
+  String email;
+  String phone;
 
   @override
   State<ListDependants> createState() => _ListDependantsState();
@@ -17,49 +25,86 @@ class _ListDependantsState extends State<ListDependants> {
   dynamic _height;
   dynamic _width;
 
+  var dataList = [];
+
   bool selected = false;
 
-  List<Map<String, dynamic>> categories = [
-    {
-      "name": "Calvin Klein",
-      "press": false
-    },
-    {
-      "name": "Rizman Abdullah",
-      "press": false
-    },
-    {
-      "name": "Asmawi Ani",
-      "press": false
-    },
-    {
-      "name": "Kazim Alias",
-      "press": false
-    },
-    {
-      "name": "David Arumugam",
-      "press": false
-    },
-    {
-      "name": "Karim Benzema",
-      "press": false
-    },
-    {
-      "name": "Iris Henry Marshall Fahmi Brian bin Mark Victor Minho Lee",
-      "press": false
-    },
-    {
-      "name": "Stephen Curry",
-      "press": false
-    },
-  ];
+  @override
+  void initState() {
+    _getData();
+    super.initState();
+  }
+
+  _getData() async {
+    try{
+      final response = await http.post(
+        Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
+        body: {
+          'passCode' : 'Avi@2024',
+          'reqNumber' : '8',
+          'icAccHolder' : '970617016588'
+        },
+      );
+      final responseBody = response.body;
+      final responseData = jsonDecode(responseBody);
+      final dataCode = responseData['code'];
+      print('ADAM $responseBody');
+      print('Hillman $responseData');
+      print('Tya $dataCode');
+      if(dataCode == "F01") {
+        setState(() {
+          dataList = responseData['list'];
+        });
+        print('Didi $dataList');
+        print('Atan');
+      } else {
+        AwesomeDialog(
+          padding: const EdgeInsets.all(20),
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.topSlide,
+          showCloseIcon: true,
+          title: "Registration dependent fail!",
+          btnOkColor: violet,
+          btnOkText: "Okay",
+          desc:
+          "Please fill correct number",
+          btnOkOnPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListDependants(name: widget.name, email: widget.email, phone: widget.phone)),
+            );
+          },
+        ).show();
+        print('Gebu');
+      }
+    } catch(e) {
+      AwesomeDialog(
+        padding: const EdgeInsets.all(20),
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: "Fail!",
+        btnOkColor: violet,
+        btnOkText: "Okay",
+        desc:
+        "Please fill correct number",
+        btnOkOnPress: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddDependants(name: widget.name, email: widget.email, phone: widget.phone)),
+          );
+        },
+      ).show();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
-    TextStyle style = TextStyle(fontSize: _width * 0.04);
 
     return KeyboardDismisser(
       gestures: const [
@@ -70,7 +115,7 @@ class _ListDependantsState extends State<ListDependants> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            "Dependant",
+            AppLocalizations.of(context)!.translate('Dependants')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -82,20 +127,20 @@ class _ListDependantsState extends State<ListDependants> {
           leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: _width * 0.06
+              Icons.arrow_back_ios_new_rounded,
+              size: _width * 0.05,
             ),
           ),
           elevation: 10,
         ),
         backgroundColor : Colors.grey.shade200,
         body: ListView.builder(
-          itemCount: categories.length,
+          itemCount: dataList.length,
           itemBuilder: (BuildContext context, index) {
 
-            var name = categories[index]['name'];
-            var press = categories[index]['press'];
+            var dependant = dataList[index];
+
+            print('Bacarat $dependant');
 
             return Padding(
               padding: EdgeInsets.symmetric(vertical: _height * 0.01, horizontal: _width * 0.08),
@@ -103,7 +148,7 @@ class _ListDependantsState extends State<ListDependants> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                color: press ? turquoise : Colors.white,
+                color: Colors.white,
                 elevation: 5.0,
                 child: SizedBox(
                   height: _height * 0.1,
@@ -114,21 +159,38 @@ class _ListDependantsState extends State<ListDependants> {
                       ),
                       Icon(
                         CupertinoIcons.person_solid,
-                        color: press ? Colors.white : Colors.grey.shade700,
+                        color: Colors.grey.shade700,
                         size: _width * 0.08,
                       ),
                       SizedBox(
                         width: _width * 0.03,
                       ),
                       SizedBox(
-                        width: _width * 0.5,
-                        child: Text(
-                          name,
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: press ? Colors.white : Colors.black
-                          ),
+                        width: _width * 0.6,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              dependant['name'],
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.black
+                              ),
+                            ),
+                            SizedBox(
+                              height: _height * 0.01,
+                            ),
+                            Text(
+                              dependant['IC'],
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.black
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -142,17 +204,17 @@ class _ListDependantsState extends State<ListDependants> {
           margin: const EdgeInsets.only(bottom: 20, left: 35, right: 35),
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: '', phone: '', email: '',)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDependants(name: widget.name, email: widget.email, phone: widget.phone)));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.add,
                 ),
                 Text(
-                  'Add New',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.translate('Add New')!,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
                 ),
