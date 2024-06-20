@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/list.dart';
+import 'package:flutter_avisena/Screens/Language.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profileMenu.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/user.dart';
@@ -248,8 +249,12 @@ class _ProfilePageState extends State<ProfilePage> {
             text: "Language",
             icon: Icons.translate_rounded,
             press: () {
-              // Navigator.push(context,
-              //     CupertinoPageRoute(builder: (context) => SendEmail()));
+              Navigator.push(
+                context, CupertinoPageRoute(
+                  builder: (context) => Language(name: widget.name, email: widget.email, phone: widget.phone),
+                // builder: (context) => LangLang(),
+                ),
+              );
             },
           ),
           profileMenu(
