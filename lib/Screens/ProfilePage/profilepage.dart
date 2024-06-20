@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/list.dart';
-import 'package:flutter_avisena/Screens/Language.dart';
+import 'package:flutter_avisena/Screens/ProfilePage/component/language.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profileMenu.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/user.dart';
