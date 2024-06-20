@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.center,
                 child: Expanded(
                   child: (widget.name != null) ? Text(
-                    (widget.name!.length > 12) ? "Hi, ${widget.name!.substring(0, 12)}..." : "${widget.name}",
+                    (widget.name.length > 12) ? "Hi, ${widget.name.substring(0, 12)}..." : "${widget.name}",
                     style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,

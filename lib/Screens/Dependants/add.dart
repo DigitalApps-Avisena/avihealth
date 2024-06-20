@@ -33,8 +33,8 @@ class _AddDependantsState extends State<AddDependants> {
 
   List<TextSpan> _getStyledTextSpans() {
     return [
-      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction')!, style: TextStyle(color: Colors.black)),
+      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans', fontWeight: FontWeight.bold)),
+      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans')),
     ];
   }
 
@@ -227,6 +227,7 @@ class _AddDependantsState extends State<AddDependants> {
                 Text(
                   AppLocalizations.of(context)!.translate('Submit')!,
                   style: const TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold
                   ),
                 ),
