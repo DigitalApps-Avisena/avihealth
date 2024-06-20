@@ -7,6 +7,7 @@ import 'package:flutter_avisena/Screens/Dependants/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/homepage.dart';
 import 'package:flutter_avisena/const.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:http/http.dart' as http;
 
@@ -76,7 +77,6 @@ class _ListDependantsState extends State<ListDependants> {
             );
           },
         ).show();
-        print('Gebu');
       }
     } catch(e) {
       AwesomeDialog(
@@ -140,8 +140,6 @@ class _ListDependantsState extends State<ListDependants> {
 
             var dependant = dataList[index];
 
-            print('Bacarat $dependant');
-
             return Padding(
               padding: EdgeInsets.symmetric(vertical: _height * 0.01, horizontal: _width * 0.08),
               child: Card(
@@ -157,11 +155,16 @@ class _ListDependantsState extends State<ListDependants> {
                       SizedBox(
                         width: _width * 0.03,
                       ),
-                      Icon(
-                        CupertinoIcons.person_solid,
-                        color: Colors.grey.shade700,
-                        size: _width * 0.08,
+                      ProfilePicture(
+                            name: dependant['name'],
+                            radius: 25,
+                            fontsize: 21,
+                            tooltip: true,
                       ),
+                      // CircleAvatar(
+                      //   backgroundColor: Color(0xFF512c7c),
+                      //   child: Text(dependant['name']),
+                      // ),
                       SizedBox(
                         width: _width * 0.03,
                       ),
@@ -176,7 +179,10 @@ class _ListDependantsState extends State<ListDependants> {
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                color: Colors.black
+                                color: Colors.black,
+                                fontFamily: 'Roboto',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
                             SizedBox(
@@ -187,7 +193,9 @@ class _ListDependantsState extends State<ListDependants> {
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  color: Colors.black
+                                  color: Colors.grey,
+                                  fontFamily: 'WorkSans',
+                                  fontSize: 17,
                               ),
                             ),
                           ],

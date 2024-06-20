@@ -1,9 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_avisena/Screens/ProfilePage/component/myAccount.dart';
 
-import '../../components/user.dart';
 import '../../const.dart';
 
 class profileMenu extends StatelessWidget {
