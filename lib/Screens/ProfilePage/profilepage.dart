@@ -3,7 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/list.dart';
+import 'package:flutter_avisena/Screens/LoginPage/login.dart';
+import 'package:flutter_avisena/Screens/ProfilePage/component/language.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profileMenu.dart';
+import 'package:flutter_avisena/components/auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/user.dart';
 import '../../const.dart';
@@ -26,7 +30,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   List<User> users = [];
+
+  final storage = FlutterSecureStorage();
+
   var opacity = 0.0;
   bool position = false;
   dynamic _height;
@@ -113,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child:  profileMenuListing(),
                 ),
                 Container(//blur box - user details
-                    margin: EdgeInsets.only(top: _height / 5.8),
+                    margin: EdgeInsets.only(top: _height * 0.18),
                          padding: EdgeInsets.symmetric(horizontal: 1),
                          width: 350,
                          height: 175,
@@ -176,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 Container(//profile image
                     height: 145, width: 145,
-                    margin: EdgeInsets.only(top: _height / 14.5),
+                    margin: EdgeInsets.only(top: _height * 0.05),
                       // child: Image.asset('assets/images/profile_ayu.jpg', height: 160, width: 160),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(70),
@@ -206,7 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         children: [
           SizedBox(
-            height: _height / 10,
+            height: _height * 0.15,
           ),
           profileMenu(
             text: "My Account",
@@ -248,8 +256,12 @@ class _ProfilePageState extends State<ProfilePage> {
             text: "Language",
             icon: Icons.translate_rounded,
             press: () {
-              // Navigator.push(context,
-              //     CupertinoPageRoute(builder: (context) => SendEmail()));
+              Navigator.push(
+                context, CupertinoPageRoute(
+                  builder: (context) => Language(name: widget.name, email: widget.email, phone: widget.phone),
+                // builder: (context) => LangLang(),
+                ),
+              );
             },
           ),
           profileMenu(
@@ -263,9 +275,16 @@ class _ProfilePageState extends State<ProfilePage> {
           profileMenu(
             text: "Sign Out",
             icon: Icons.logout,
-            press: () {
-              // Navigator.push(context,
-              //     CupertinoPageRoute(builder: (context) => SendEmail()));
+            press: () async {
+              await storage.delete(key: 'name');
+              await storage.delete(key: 'email');
+              await storage.delete(key: 'phone');
+              Auth().signOut();
+              Navigator.push(
+                context, CupertinoPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
             },
           ),
         ],
