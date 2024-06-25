@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependants/list.dart';
 import 'package:flutter_avisena/Screens/LoginPage/login.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/component/language.dart';
+import 'package:flutter_avisena/Screens/ProfilePage/component/my_account.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profileMenu.dart';
 import 'package:flutter_avisena/components/auth.dart';
+import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/user.dart';
@@ -16,14 +18,11 @@ import '../../size_config.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({
-    Key? key,
-    required this.name,
-    required this.email,
-    required this.phone
-  }) : super(key: key);
+    Key? key, required this.name, required this.email, required this.phone, required this.mrn}) : super(key: key);
   String name;
   String email;
   String phone;
+  String mrn;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -72,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         backgroundColor: violet,
         title: Text(
-            'Profile',
+            AppLocalizations.of(context)!.translate("Profile")!,
           style: TextStyle(
             fontSize: _width * 0.05,
             fontFamily: 'WorkSans',
@@ -217,17 +216,19 @@ class _ProfilePageState extends State<ProfilePage> {
             height: _height * 0.15,
           ),
           profileMenu(
-            text: "My Account",
+            text: AppLocalizations.of(context)!.translate("My Account")!,
             icon: Icons.person,
             press: () {
-              // Navigator.push(context,
-              //     CupertinoPageRoute(builder: (context) => myAccountPage(email: '', name: '', phone: '',)
-              //     )
-              // );
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MyAccount(name: widget.name, email: widget.email, phone: widget.phone, mrn: widget.mrn,)
+                )
+              );
             },
           ),
           profileMenu(
-            text: "Dependent",
+            text: AppLocalizations.of(context)!.translate("Dependants")!,
             icon: Icons.family_restroom_rounded,
             press: () {
               Navigator.push(
@@ -253,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           profileMenu(
-            text: "Language",
+            text: AppLocalizations.of(context)!.translate("Language")!,
             icon: Icons.translate_rounded,
             press: () {
               Navigator.push(

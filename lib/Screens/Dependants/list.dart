@@ -115,7 +115,7 @@ class _ListDependantsState extends State<ListDependants> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('Dependants')!,
+            AppLocalizations.of(context)!.translate('My Dependants')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
