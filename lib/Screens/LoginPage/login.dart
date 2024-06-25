@@ -192,7 +192,7 @@ class _LoginSignupPageState extends State<LoginPage> {
         'IC': receiveData["IC"],
         'phone': receiveData["phone"],
         'gender': receiveData["gender"],
-        'dependant': receiveData["dependent"],
+        'dependent': receiveData["dependent"],
         'dateOfBirth': receiveData["dateOfBirth"],
         'createdAt': FieldValue.serverTimestamp(),
       });

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_avisena/Screens/Dependants/list.dart';
+import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/Screens/LoginPage/login.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/component/language.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/component/my_account.dart';
@@ -228,12 +228,12 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           profileMenu(
-            text: AppLocalizations.of(context)!.translate("Dependants")!,
+            text: AppLocalizations.of(context)!.translate("Dependents")!,
             icon: Icons.family_restroom_rounded,
             press: () {
               Navigator.push(
                 context, MaterialPageRoute(
-                  builder: (context) => ListDependants(name: widget.name, email: widget.email, phone: widget.phone)
+                  builder: (context) => ListDependents(name: widget.name, email: widget.email, phone: widget.phone)
                 )
               );
             },

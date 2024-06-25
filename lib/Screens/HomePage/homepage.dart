@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_avisena/Screens/Dependants/add.dart';
-import 'package:flutter_avisena/Screens/Dependants/list.dart';
+import 'package:flutter_avisena/Screens/Dependents/add.dart';
+import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
 import 'package:flutter_avisena/Screens/Services/chooseHospital.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
@@ -212,8 +212,8 @@ class _HomePageState extends State<HomePage> {
       },
       {
         "image": "assets/images/shortcut_dependent.png",
-        "text": AppLocalizations.of(context)!.translate('Dependants')!,
-        "press": ListDependants(name: widget.name, email: widget.email, phone: widget.phone)
+        "text": AppLocalizations.of(context)!.translate('Dependents')!,
+        "press": ListDependents(name: widget.name, email: widget.email, phone: widget.phone)
       },
     ];
     return Container(

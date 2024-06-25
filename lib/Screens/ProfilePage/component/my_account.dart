@@ -383,7 +383,7 @@ class _MyAccountState extends State<MyAccount> {
           child: ElevatedButton(
             onPressed: () {
               _postData();
-              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDependants(name: widget.name, email: widget.email, phone: widget.phone)));
+              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDependents(name: widget.name, email: widget.email, phone: widget.phone)));
             },
             child: Text(
               AppLocalizations.of(context)!.translate('Save')!,

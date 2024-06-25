@@ -2,24 +2,24 @@ import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_avisena/Screens/Dependants/list.dart';
+import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/const.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:http/http.dart' as http;
 
-class AddDependants extends StatefulWidget {
-  AddDependants({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
+class AddDependents extends StatefulWidget {
+  AddDependents({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
   String name;
   String email;
   String phone;
 
   @override
-  State<AddDependants> createState() => _AddDependantsState();
+  State<AddDependents> createState() => _AddDependentsState();
 }
 
-class _AddDependantsState extends State<AddDependants> {
+class _AddDependentsState extends State<AddDependents> {
 
   TextEditingController controller = TextEditingController();
 
@@ -33,8 +33,8 @@ class _AddDependantsState extends State<AddDependants> {
 
   List<TextSpan> _getStyledTextSpans() {
     return [
-      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans', fontWeight: FontWeight.bold)),
-      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependant Instruction')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans')),
+      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependent Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans', fontWeight: FontWeight.bold)),
+      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependent Instruction')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans')),
     ];
   }
 
@@ -59,7 +59,7 @@ class _AddDependantsState extends State<AddDependants> {
         print('wohoo');
         Navigator.push(
           context, MaterialPageRoute(
-            builder: (context) => ListDependants(name: widget.name, email: widget.email, phone: widget.phone),
+            builder: (context) => ListDependents(name: widget.name, email: widget.email, phone: widget.phone),
           ),
         );
       } else {
@@ -115,7 +115,7 @@ class _AddDependantsState extends State<AddDependants> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('Add Dependant')!,
+            AppLocalizations.of(context)!.translate('Add Dependent')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
