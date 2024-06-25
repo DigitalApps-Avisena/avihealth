@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_avisena/Screens/Dependants/add.dart';
-import 'package:flutter_avisena/Screens/Dependants/list.dart';
+import 'package:flutter_avisena/Screens/Dependents/add.dart';
+import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
 import 'package:flutter_avisena/Screens/Services/chooseHospital.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
@@ -21,11 +21,13 @@ class HomePage extends StatefulWidget {
     required this.name,
     required this.email,
     required this.phone,
+    required this.mrn
     }) : super(key: key);
 
   String name;
   String email;
   String phone;
+  String mrn;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -148,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ProfilePage(name: widget.name, email: widget.email, phone: widget.phone),
+                        builder: (context) => ProfilePage(name: widget.name, email: widget.email, phone: widget.phone, mrn: widget.mrn),
                       ));
                 },
               ),
@@ -210,8 +212,8 @@ class _HomePageState extends State<HomePage> {
       },
       {
         "image": "assets/images/shortcut_dependent.png",
-        "text": AppLocalizations.of(context)!.translate('Dependants')!,
-        "press": ListDependants(name: widget.name, email: widget.email, phone: widget.phone)
+        "text": AppLocalizations.of(context)!.translate('Dependents')!,
+        "press": ListDependents(name: widget.name, email: widget.email, phone: widget.phone)
       },
     ];
     return Container(
@@ -253,9 +255,10 @@ class _HomePageState extends State<HomePage> {
               spreadRadius: 2.0,
             )
           ]),
-      height: _height * 0.15,
+      height: _height * 0.13,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 40),
+         left: _width * 0.05, right: _width * 0.05, top: _height * 0.01
+      ),
     );
   }
 
@@ -331,7 +334,7 @@ class _HomePageState extends State<HomePage> {
       ),
       height: _height * 0.23,
       margin: EdgeInsets.only(
-          left: _width / 18, right: _width / 18, top: _height / 35
+          left: _width * 0.047, right: _width * 0.047, top: _height / 35
       ),
     );
   }
@@ -397,12 +400,7 @@ class _HomePageState extends State<HomePage> {
               fontSize: 15,
             ),
           ),
-          onPressed: () async {
-            await storage.write(key: 'language', value: 'en');
-            await storage.write(key: 'global', value: 'US');
-            var batista = await storage.read(key: 'language');
-            print('HohohOHOHOH $batista');
-          },
+          onPressed: () async {},
           color: Theme.of(context).primaryColor,
           height: 35,
           minWidth: _width * 0.38,
@@ -422,10 +420,7 @@ class _HomePageState extends State<HomePage> {
               fontSize: 15,
             ),
           ),
-          onPressed: () async {
-            await storage.write(key: 'language', value: 'ms');
-            await storage.write(key: 'global', value: 'MY');
-          },
+          onPressed: () async {},
           color: Theme.of(context).primaryColor,
           height: 35,
           minWidth: _width * 0.38,

@@ -63,7 +63,6 @@ class _LoginSignupPageState extends State<LoginPage> {
   String? _errorMessage;
   bool iserror = false;
   var token;
-  var mrn;
 
   @override
   void initState() {
@@ -114,6 +113,7 @@ class _LoginSignupPageState extends State<LoginPage> {
     var name = await storage.read(key: 'name');
     var email = await storage.read(key: 'email');
     var phone = await storage.read(key: 'phone');
+    var mrn = await storage.read(key: 'mrn');
     try {
       final authenticated = await auth.authenticate(
           localizedReason: 'Authenticate with fingerprint or Face ID',
@@ -129,7 +129,7 @@ class _LoginSignupPageState extends State<LoginPage> {
       if (authenticated) {
         if(name != null) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage(name: name, email: email.toString(), phone: phone.toString(),)));
+              context, MaterialPageRoute(builder: (context) => HomePage(name: name, email: email.toString(), phone: phone.toString(), mrn: mrn.toString())));
         } else {
           return AwesomeDialog(
             padding: const EdgeInsets.all(20),
@@ -192,18 +192,19 @@ class _LoginSignupPageState extends State<LoginPage> {
         'IC': receiveData["IC"],
         'phone': receiveData["phone"],
         'gender': receiveData["gender"],
-        'dependant': receiveData["dependent"],
+        'dependent': receiveData["dependent"],
         'dateOfBirth': receiveData["dateOfBirth"],
         'createdAt': FieldValue.serverTimestamp(),
       });
       await storage.write(key: 'name', value: receiveData["name"]);
       await storage.write(key: 'email', value: receiveData["email"]);
       await storage.write(key: 'phone', value: receiveData["phone"]);
+      await storage.write(key: 'mrn', value: receiveData["MRN"]);
 
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(name: receiveData["name"], email: receiveData["email"], phone: receiveData["phone"],),
+            builder: (context) => HomePage(name: receiveData["name"], email: receiveData["email"], phone: receiveData["phone"], mrn: receiveData["MRN"]),
           )
       );
     } else if (receiveData["respond"] == "Login fail, email not found") {

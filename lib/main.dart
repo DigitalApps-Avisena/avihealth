@@ -120,7 +120,7 @@ Route _generateRoute(RouteSettings settings) {
   //   return CupertinoPageRoute(
   //       builder: (_) => NotificationDetailsPage(), settings: settings);
     case '/INDEX':
-      return CupertinoPageRoute(builder: (_) => HomePage(name: '', phone: '', email: '',), settings: settings);
+      return CupertinoPageRoute(builder: (_) => HomePage(name: '', phone: '', email: '', mrn: ''), settings: settings);
   // case '/LOCATION_PAGE':
   //   return CupertinoPageRoute(
   //       builder: (_) => LocationPage(), settings: settings);
@@ -141,49 +141,67 @@ class _MyAppState extends State<MyApp> {
 
   final storage = FlutterSecureStorage();
 
-  dynamic language;
-  dynamic global;
+  String? language;
+  String? global;
 
   @override
   void initState() {
-    defaultLanguage();
-    changeLanguage();
     super.initState();
+    initializeLanguageSettings();
   }
 
-  defaultLanguage() async {
+  void initializeLanguageSettings() async {
+    await defaultLanguage();
+    await changeLanguage();
+  }
+
+  // defaultLanguage() async {
+  //   var lang = await storage.read(key: 'language');
+  //   switch (lang) {
+  //     case "en" :
+  //       await storage.write(key: 'language', value: 'en');
+  //       await storage.write(key: 'global', value: 'US');
+  //       break;
+  //     case "ms" :
+  //       await storage.write(key: 'language', value: 'ms');
+  //       await storage.write(key: 'global', value: 'MY');
+  //       break;
+  //     default :
+  //       await storage.write(key: 'language', value: 'en');
+  //       await storage.write(key: 'global', value: 'US');
+  //   }
+  //   print('Current Language: $lang');
+  // }
+
+  Future<void> defaultLanguage() async {
     var lang = await storage.read(key: 'language');
-    switch (lang) {
-      case "en" :
-        await storage.write(key: 'language', value: 'en');
-        await storage.write(key: 'global', value: 'US');
-        break;
-      case "ms" :
-        await storage.write(key: 'language', value: 'ms');
-        await storage.write(key: 'global', value: 'MY');
-        break;
-      default :
-        await storage.write(key: 'language', value: 'en');
-        await storage.write(key: 'global', value: 'US');
+    if (lang == null) {
+      await storage.write(key: 'language', value: 'en');
+      await storage.write(key: 'global', value: 'US');
     }
-    print('Current Language: $lang');
   }
 
-  changeLanguage() async {
+  Future<void> changeLanguage() async {
     language = await storage.read(key: 'language');
     global = await storage.read(key: 'global');
-    setState(() {
-      language;
-      global;
-    });
-    print('Language $language,$global');
+    if (language == null || global == null) {
+      language = 'en';
+      global = 'US';
+    }
+    setState(() {});
+    print('Language $language, $global');
   }
 
   @override
   Widget build(BuildContext context) {
+
     LocalNotificationService.initialize(context);
+
+    String localeLanguage = language ?? 'en';
+    String localeGlobal = global ?? 'US';
+
     return MaterialApp(
-        locale: Locale(language, global),
+        locale: Locale(localeLanguage, localeGlobal),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

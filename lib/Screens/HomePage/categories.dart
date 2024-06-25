@@ -45,7 +45,7 @@ class CategoryCard extends StatelessWidget {
             ),
             child: Image.asset(image),
           ),
-          SizedBox(height: 10),
+          // SizedBox(height: 10),
           Text(
             text,
             textAlign: TextAlign.center,

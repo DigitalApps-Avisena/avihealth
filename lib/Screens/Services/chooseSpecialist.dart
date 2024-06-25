@@ -153,7 +153,7 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
           margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
           child: (selected == true) ? ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name, email: '', phone: '',)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name, email: '', phone: '', mrn: '')));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

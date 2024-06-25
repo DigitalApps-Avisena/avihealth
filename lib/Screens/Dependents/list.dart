@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_avisena/Screens/Dependants/add.dart';
+import 'package:flutter_avisena/Screens/Dependents/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/homepage.dart';
 import 'package:flutter_avisena/const.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
@@ -11,17 +11,17 @@ import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:http/http.dart' as http;
 
-class ListDependants extends StatefulWidget {
-  ListDependants({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
+class ListDependents extends StatefulWidget {
+  ListDependents({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
   String name;
   String email;
   String phone;
 
   @override
-  State<ListDependants> createState() => _ListDependantsState();
+  State<ListDependents> createState() => _ListDependentsState();
 }
 
-class _ListDependantsState extends State<ListDependants> {
+class _ListDependentsState extends State<ListDependents> {
 
   dynamic _height;
   dynamic _width;
@@ -73,7 +73,7 @@ class _ListDependantsState extends State<ListDependants> {
           btnOkOnPress: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ListDependants(name: widget.name, email: widget.email, phone: widget.phone)),
+              MaterialPageRoute(builder: (context) => ListDependents(name: widget.name, email: widget.email, phone: widget.phone)),
             );
           },
         ).show();
@@ -93,7 +93,7 @@ class _ListDependantsState extends State<ListDependants> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddDependants(name: widget.name, email: widget.email, phone: widget.phone)),
+            MaterialPageRoute(builder: (context) => AddDependents(name: widget.name, email: widget.email, phone: widget.phone)),
           );
         },
       ).show();
@@ -115,7 +115,7 @@ class _ListDependantsState extends State<ListDependants> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('Dependants')!,
+            AppLocalizations.of(context)!.translate('My Dependents')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -138,7 +138,7 @@ class _ListDependantsState extends State<ListDependants> {
           itemCount: dataList.length,
           itemBuilder: (BuildContext context, index) {
 
-            var dependant = dataList[index];
+            var dependent = dataList[index];
 
             return Padding(
               padding: EdgeInsets.symmetric(vertical: _height * 0.01, horizontal: _width * 0.08),
@@ -156,14 +156,14 @@ class _ListDependantsState extends State<ListDependants> {
                         width: _width * 0.03,
                       ),
                       ProfilePicture(
-                            name: dependant['name'],
+                            name: dependent['name'],
                             radius: 25,
                             fontsize: 21,
                             tooltip: true,
                       ),
                       // CircleAvatar(
                       //   backgroundColor: Color(0xFF512c7c),
-                      //   child: Text(dependant['name']),
+                      //   child: Text(dependent['name']),
                       // ),
                       SizedBox(
                         width: _width * 0.03,
@@ -175,7 +175,7 @@ class _ListDependantsState extends State<ListDependants> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              dependant['name'],
+                              dependent['name'],
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -189,7 +189,7 @@ class _ListDependantsState extends State<ListDependants> {
                               height: _height * 0.01,
                             ),
                             Text(
-                              dependant['IC'],
+                              dependent['IC'],
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -212,7 +212,7 @@ class _ListDependantsState extends State<ListDependants> {
           margin: const EdgeInsets.only(bottom: 20, left: 35, right: 35),
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDependants(name: widget.name, email: widget.email, phone: widget.phone)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDependents(name: widget.name, email: widget.email, phone: widget.phone)));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

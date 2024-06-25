@@ -83,7 +83,7 @@ dependencies:
   flutter_localization:
   intl: ^0.17.0
 
-  #dependants
+  #dependents
   flutter_profile_picture: ^2.0.0
 
 dev_dependencies:
