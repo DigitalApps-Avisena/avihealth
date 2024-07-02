@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage> {
       {
         "image": "assets/images/shortcut_services.png",
         "text": AppLocalizations.of(context)!.translate('Services')!,
-        "press": ChooseHospital(name: widget.name,)
+        "press": ChooseHospital(name: widget.name, email: widget.email, phone: widget.phone, mrn: widget.mrn)
       },
       {
         "image": "assets/images/shortcut_dependent.png",

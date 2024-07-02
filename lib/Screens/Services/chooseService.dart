@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:ui';
-
+import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Services/chooseSpecialist.dart';
@@ -7,8 +9,12 @@ import 'package:flutter_avisena/const.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class ChooseService extends StatefulWidget {
-  ChooseService({Key? key, this.name}) : super(key: key);
-  String? name;
+  ChooseService({Key? key, required this.name, required this.email, required this.phone, required this.mrn, required this.hospitalId}) : super(key: key);
+  String name;
+  String email;
+  String phone;
+  String mrn;
+  String hospitalId;
 
   @override
   State<ChooseService> createState() => _ChooseServiceState();
@@ -16,10 +22,16 @@ class ChooseService extends StatefulWidget {
 
 class _ChooseServiceState extends State<ChooseService> {
 
-  bool selected = false;
+  List<dynamic> clinics = [];
 
   dynamic _height;
   dynamic _width;
+
+  bool selected = false;
+
+  String? selectedClinicName;
+  String? selectedLocationGroup;
+  String? selectedHospitalId;
 
   List<Map<String, dynamic>> categories = [
     {
@@ -32,132 +44,28 @@ class _ChooseServiceState extends State<ChooseService> {
       "text": "Avisena Care (Home Care)",
       "press": false
     },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Child Development",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Child Psychology",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Dentistry",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Image",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Laboratory",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "General Obstetrics and Gynaecology",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Accident & Emergency",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Avisena Care (Home Care)",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Child Development",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Child Psychology",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Dentistry",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Image",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Laboratory",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "General Obstetrics and Gynaecology",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Accident & Emergency",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Avisena Care (Home Care)",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Child Development",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Child Psychology",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Dentistry",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Image",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Laboratory",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "General Obstetrics and Gynaecology",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Image",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Diagnotic Laboratory",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "General Obstetrics and Gynaecology",
-      "press": false
-    },
   ];
+
+  @override
+  void initState() {
+    _fetchData();
+    super.initState();
+  }
+
+  Future<void> _fetchData() async {
+    final response = await http.post(
+      Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
+      body: {
+        'passCode' : 'Avi@2024',
+        'reqNumber' : '2',
+        'hospitalId' : widget.hospitalId
+      },
+    );
+    final responseBody = json.decode(response.body);
+    setState(() {
+      clinics = responseBody['list'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +82,7 @@ class _ChooseServiceState extends State<ChooseService> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            "Choose Service",
+            AppLocalizations.of(context)!.translate('Choose Service')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -199,76 +107,78 @@ class _ChooseServiceState extends State<ChooseService> {
           child: Container(
             color: Colors.white,
             child: GridView.builder(
-                itemCount: categories.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: _width * 0.002
-                ),
-                itemBuilder: (context, index) {
+              itemCount: clinics.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1, childAspectRatio: _width * 0.004
+              ),
+              itemBuilder: (context, index) {
 
-                  var text = categories[index]['text'];
-                  var image = categories[index]['image'];
-                  var press = categories[index]['press'];
-                  var textlength = categories[index]['text'].length;
+                final clinic = clinics[index];
+                final isSelected = clinic['clinicName'] == selectedClinicName;
 
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        for(var i = 0; i < categories.length; i++) {
-                          categories[i]['press'] = i == index;
-                        }
-                        selected = true;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        color: press ? turquoise : Colors.white,
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                  scale: 50,
-                                  image: AssetImage(
-                                    image,
-                                  ),
-                                  fit: BoxFit.cover,
-                                  opacity: press ? 200 : 1
-                                )
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      selectedClinicName = clinic['clinicName'];
+                      selectedLocationGroup = clinic['locationGroup'];
+                      selectedHospitalId = clinic['hospitalId'];
+                      selected = true;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      color: isSelected ? turquoise : Colors.white,
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                scale: 50,
+                                image: const AssetImage(
+                                  "assets/images/service_accidentemergency.jpeg",
+                                ),
+                                fit: BoxFit.cover,
+                                opacity: isSelected ? 200 : 1
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: _width * 0.02),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: _height / 5),
-                                    child: Text(
-                                      (text.length > 17) ? '${text.substring(0, 17)}\n${text.substring(17, textlength)}' : text,
-                                      style: const TextStyle(
-                                        color: Colors.white
-                                      ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: _width * 0.02),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: _height / 5),
+                                  color: violet,
+                                  child: Text(
+                                    clinic['clinicName'],
+                                    style: const TextStyle(
+                                      color: Colors.white
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: _height / 5),
-                                    child: Icon(CupertinoIcons.arrow_right_circle, color: Colors.white,)
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: _height / 5),
+                                  child: const Icon(
+                                    CupertinoIcons.arrow_right_circle,
+                                    color: Colors.white
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
+              }
             ),
           ),
         ),
@@ -276,15 +186,27 @@ class _ChooseServiceState extends State<ChooseService> {
           margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
           child: (selected == true) ? ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChooseSpecialist(name: '')));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChooseSpecialist(
+                    name: widget.name,
+                    email: widget.email,
+                    phone: widget.phone,
+                    mrn: widget.mrn,
+                    hospitalId: selectedHospitalId!,
+                    clinicName: selectedClinicName!,
+                    locationGroup: selectedLocationGroup!,
+                  ),
+                ),
+              );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Next',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
+                  AppLocalizations.of(context)!.translate('Next')!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold
                   ),
                 ),
               ],
@@ -301,11 +223,11 @@ class _ChooseServiceState extends State<ChooseService> {
             onPressed: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Next',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
+                  AppLocalizations.of(context)!.translate('Next')!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold
                   ),
                 ),
               ],

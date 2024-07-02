@@ -1,12 +1,21 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/HomePage/homepage.dart';
 import 'package:flutter_avisena/const.dart';
+import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:http/http.dart' as http;
 
 class ChooseSpecialist extends StatefulWidget {
-  ChooseSpecialist({Key? key, required this.name}) : super(key: key);
+  ChooseSpecialist({Key? key, required this.name, required this.email, required this.phone, required this.mrn, required this.hospitalId, required this.clinicName, required this.locationGroup}) : super(key: key);
   String name;
+  String email;
+  String phone;
+  String mrn;
+  String hospitalId;
+  String clinicName;
+  String locationGroup;
 
   @override
   State<ChooseSpecialist> createState() => _ChooseSpecialistState();
@@ -14,10 +23,21 @@ class ChooseSpecialist extends StatefulWidget {
 
 class _ChooseSpecialistState extends State<ChooseSpecialist> {
 
-  bool selected = false;
+  List<dynamic> specialists = [];
 
   dynamic _height;
   dynamic _width;
+
+  bool selected = false;
+
+  String? selectedDoctorName;
+  String? selectedDoctorImage;
+  String? selectedClinicName;
+  String? selectedCtpcp;
+  String? selectedDoctorResource;
+  String? selectedLocation;
+  String? selectedLocationGroup;
+  String? selectedHospitalId;
 
   List<Map<String, dynamic>> categories = [
     {
@@ -41,6 +61,28 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
   ];
 
   @override
+  void initState() {
+    _fetchData();
+    super.initState();
+  }
+
+  Future<void> _fetchData() async {
+    final response = await http.post(
+      Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
+      body: {
+        'passCode' : 'Avi@2024',
+        'reqNumber' : '3',
+        'hospitalId' : widget.hospitalId,
+        'locationGroup' : widget.locationGroup
+      },
+    );
+    final responseBody = json.decode(response.body);
+    setState(() {
+      specialists = responseBody['list'];
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     _height = MediaQuery.of(context).size.height;
@@ -55,7 +97,7 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            "Choose Specialists",
+            AppLocalizations.of(context)!.translate('Choose Specialists')!,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -78,19 +120,22 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
         body: Padding(
           padding: EdgeInsets.only(top: _height * 0.025),
           child: ListView.builder(
-            itemCount: categories.length,
+            itemCount: specialists.length,
             itemBuilder: (BuildContext context, index) {
-              var image = categories[index]['image'];
-              var name = categories[index]['name'];
-              var role = categories[index]['role'];
-              var press = categories[index]['press'];
+              final specialist = specialists[index];
+              final isSelected = specialist['doctorName'] == selectedDoctorName;
 
               return InkWell(
                 onTap: () {
                   setState(() {
-                    for(var i = 0; i < categories.length; i++) {
-                      categories[i]['press'] = i == index;
-                    }
+                    selectedDoctorName = specialist['doctorName'];
+                    selectedDoctorImage = specialist['doctorImage'];
+                    selectedClinicName = specialist['clinicName'];
+                    selectedCtpcp = specialist['ctpcp'];
+                    selectedDoctorResource = specialist['doctorResource'];
+                    selectedLocation = specialist['location'];
+                    selectedLocationGroup = specialist['locationGroup'];
+                    selectedHospitalId = specialist['hospitalId'];
                     selected = true;
                   });
                 },
@@ -100,7 +145,7 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                     ),
-                    color: (press) ? turquoise : Colors.white,
+                    color: (isSelected) ? turquoise : Colors.white,
                     elevation: 5.0,
                     child: Padding(
                       padding: EdgeInsets.all(_width * 0.03),
@@ -111,8 +156,10 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                             width: _width * 0.2,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(image),
-                                fit: BoxFit.cover
+                                image: NetworkImage(
+                                  specialist['doctorImage'],
+                                ),
+                                fit: BoxFit.contain
                               )
                             ),
                           ),
@@ -122,19 +169,19 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  name,
+                                  specialist['doctorName'],
                                   style: TextStyle(
                                     fontSize: _width * 0.045,
                                     fontWeight: FontWeight.bold,
-                                    color: press ? Colors.white : turquoise,
+                                    color: isSelected ? Colors.white : turquoise,
                                   ),
                                 ),
                                 SizedBox(height: _height * 0.02),
                                 Text(
-                                  role,
+                                  specialist['clinicName'],
                                   style: TextStyle(
                                     fontSize: _width * 0.035,
-                                    color: press ? Colors.white : Colors.grey.shade600,
+                                    color: isSelected ? Colors.white : Colors.grey.shade600,
                                   ),
                                 ),
                               ],
@@ -157,10 +204,10 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Next',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.translate('Next')!,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
                 ),
@@ -178,10 +225,10 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
             onPressed: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Next',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.translate('Next')!,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
                 ),
