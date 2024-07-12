@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/Screens/LoginPage/login.dart';
+import 'package:flutter_avisena/Screens/ProfilePage/component/help_center.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/component/language.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/component/my_account.dart';
+import 'package:flutter_avisena/Screens/ProfilePage/component/pdf_privacy_policy.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profileMenu.dart';
 import 'package:flutter_avisena/components/auth.dart';
 import 'package:flutter_avisena/l10n/localization.dart';
@@ -14,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../components/user.dart';
 import '../../const.dart';
 import '../../size_config.dart';
+import 'component/pdf_terms_of_use.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -249,8 +252,16 @@ class _ProfilePageState extends State<ProfilePage> {
             text: "Privacy Policy",
             icon: Icons.description,
             press: () {
-              // Navigator.push(context,
-              //     CupertinoPageRoute(builder: (context) => SendEmail()));
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => PdfPrivacyPolicy()));
+            },
+          ),
+          profileMenu(
+            text: "Terms of Use",
+            icon: Icons.description,
+            press: () {
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => PdfTermsofUse()));
             },
           ),
           profileMenu(
@@ -269,8 +280,8 @@ class _ProfilePageState extends State<ProfilePage> {
             text: "Help Center",
             icon: Icons.help_outline_rounded,
             press: () {
-              // Navigator.push(context,
-              //     CupertinoPageRoute(builder: (context) => SendEmail()));
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => HelpCenter()));
             },
           ),
           profileMenu(

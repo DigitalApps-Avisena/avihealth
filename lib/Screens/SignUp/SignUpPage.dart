@@ -143,7 +143,7 @@ class _SignUpPageState extends State<SignUpPage> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('User already registered.'),
+            title: Text('IC number does not registered on our system.'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Ok'),

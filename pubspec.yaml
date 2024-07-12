@@ -2,7 +2,7 @@ name: flutter_avisena
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+# pub.dev using flutter pub publish. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -23,10 +23,10 @@ environment:
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# consider running flutter pub upgrade --major-versions. Alternatively,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+# versions available, run flutter pub outdated.
 dependencies:
   flutter:
     sdk: flutter
@@ -83,8 +83,21 @@ dependencies:
   flutter_localization:
   intl: ^0.17.0
 
+  #pdf
+  pdfx: ^2.0.0
+
   #dependents
   flutter_profile_picture: ^2.0.0
+
+  #googlemap
+  google_maps_flutter: 2.2.3
+
+  #call
+  flutter_phone_direct_caller: ^2.1.1
+
+  #sendemail
+  flutter_email_sender: ^6.0.3
+
 
 dev_dependencies:
   flutter_test:
@@ -92,7 +105,7 @@ dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
+  # activated in the analysis_options.yaml file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
@@ -116,6 +129,7 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/languages/
+    - assets/pdf/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

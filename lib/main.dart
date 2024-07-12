@@ -50,14 +50,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   print('Handling a background message ${message.messageId}');
   print("data == ${message.notification?.title}");
-  var iOSChannelSpecifics = IOSInitializationSettings();
+  // var iOSChannelSpecifics = IOSInitializationSettings();
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
-  var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid, iOS: iOSChannelSpecifics);
-  flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  // var initializationSettings = InitializationSettings(
+      // android: initializationSettingsAndroid, iOS: iOSChannelSpecifics);
+  // flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   // save notification to the drawer
-  await saveNotificationsToDevice(message);
+  // await saveNotificationsToDevice(message);
 }
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -195,7 +195,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-    LocalNotificationService.initialize(context);
+    // LocalNotificationService.initialize(context);
 
     String localeLanguage = language ?? 'en';
     String localeGlobal = global ?? 'US';

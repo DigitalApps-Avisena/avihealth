@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -22,7 +27,10 @@
         android:name="${applicationName}"
         android:label="AviHealth"
         android:icon="@mipmap/launcher_icon">
-
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDYDsKIoCe2pMlaIl6aJvVXILf0eEcp42Y"/>
+<!--        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="false" />-->
+        <!--        <uses-library android:name="com.google.android.maps" />-->
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
             tools:ignore="MissingClass">
             <intent-filter>
@@ -33,9 +41,6 @@
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
             tools:ignore="MissingClass" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAsCQCiksb_9D4e7WH7_WPfcfvnq-1_DoQ"/>
-
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -45,6 +50,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="Instantiatable">
+
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
