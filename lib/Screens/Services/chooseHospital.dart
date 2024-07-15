@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_avisena/Screens/Services/chooseService.dart';
 import 'package:flutter_avisena/const.dart';
+import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class ChooseHospital extends StatefulWidget {
-  ChooseHospital({Key? key, this.name}) : super(key: key);
-  String? name;
+  ChooseHospital({Key? key, required this.name, required this.email, required this.phone, required this.mrn}) : super(key: key);
+  String name;
+  String email;
+  String phone;
+  String mrn;
 
   @override
   State<ChooseHospital> createState() => _ChooseHospitalState();
@@ -17,6 +21,8 @@ class _ChooseHospitalState extends State<ChooseHospital> {
   dynamic _height;
   dynamic _width;
 
+  String? hospital;
+
   bool selected = false;
 
   List<Map<String, dynamic>> categories = [
@@ -24,13 +30,15 @@ class _ChooseHospitalState extends State<ChooseHospital> {
       "image": "assets/images/service_ash.jpeg",
       "name": "Avisena Specialist Hospital",
       "address": "No. 4, Jalan Ikhtisas, Seksyen 14,\n40000 Shah Alam, Selangor D.E, Malaysia.",
-      "press": false
+      "press": false,
+      "hospitalId" : '1'
     },
     {
       "image": "assets/images/service_awch.jpeg",
       "name": "Avisena Women's & Children's Specialist Hospital",
       "address": "No. 3, Jalan Perdagangan 14/4,\nSeksyen 14, 40000 Shah Alam, Selangor, Malaysia.",
-      "press": false
+      "press": false,
+      "hospitalId" : '2'
     },
   ];
 
@@ -49,7 +57,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            "Choose Hospital",
+            'Choose Hospital'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -85,6 +93,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
                 var address = categories[index]['address'];
                 var image = categories[index]['image'];
                 var press = categories[index]['press'];
+                var hospitalId = categories[index]['hospitalId'];
 
                 return InkWell(
                   onTap: () {
@@ -93,6 +102,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
                         categories[i]['press'] = i == index;
                       }
                       selected = true;
+                      hospital = hospitalId;
                     });
                   },
                   child: Padding(
@@ -156,14 +166,24 @@ class _ChooseHospitalState extends State<ChooseHospital> {
           margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
           child: (selected == true) ? ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChooseService(name: widget.name)));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChooseService(
+                    name: widget.name,
+                    email: widget.email,
+                    phone: widget.phone,
+                    mrn: widget.mrn,
+                    hospitalId: hospital!,
+                  ),
+                ),
+              );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Next',
-                  style: TextStyle(
+                  'Next'.tr,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -181,10 +201,10 @@ class _ChooseHospitalState extends State<ChooseHospital> {
             onPressed: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  'Next',
-                  style: TextStyle(
+                  'Next'.tr,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
                 ),

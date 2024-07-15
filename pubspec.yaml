@@ -88,6 +88,7 @@ dependencies:
 
   #dependents
   flutter_profile_picture: ^2.0.0
+  get: ^4.6.5
 
   #googlemap
   google_maps_flutter: 2.2.3

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profilepage.dart';
 import 'package:flutter_avisena/const.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
@@ -208,7 +208,7 @@ class _MyAccountState extends State<MyAccount> {
           centerTitle: true,
           backgroundColor: violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('My Account')!,
+            'My Account'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               fontFamily: 'WorkSans',
@@ -386,7 +386,7 @@ class _MyAccountState extends State<MyAccount> {
               // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDependents(name: widget.name, email: widget.email, phone: widget.phone)));
             },
             child: Text(
-              AppLocalizations.of(context)!.translate('Save')!,
+              'Save'.tr,
               style: const TextStyle(
                 fontWeight: FontWeight.bold
               ),

@@ -79,7 +79,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       "email": emailInput.text,
       "ic": icInput.text,
       "passCode": "Avi@2024",
-      "reqNumber": "5",
+      "reqNumber": "3",
     };
     var receiveData = await ApiService(userData).forgotPasswordCheck(userData);
     print('receiveData == $receiveData');

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependents/add.dart';
 import 'package:flutter_avisena/Screens/HomePage/homepage.dart';
 import 'package:flutter_avisena/const.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,22 +42,17 @@ class _ListDependentsState extends State<ListDependents> {
         Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
         body: {
           'passCode' : 'Avi@2024',
-          'reqNumber' : '8',
+          'reqNumber' : '7',
           'icAccHolder' : '970617016588'
         },
       );
       final responseBody = response.body;
       final responseData = jsonDecode(responseBody);
       final dataCode = responseData['code'];
-      print('ADAM $responseBody');
-      print('Hillman $responseData');
-      print('Tya $dataCode');
       if(dataCode == "F01") {
         setState(() {
           dataList = responseData['list'];
         });
-        print('Didi $dataList');
-        print('Atan');
       } else {
         AwesomeDialog(
           padding: const EdgeInsets.all(20),
@@ -115,7 +110,7 @@ class _ListDependentsState extends State<ListDependents> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('My Dependents')!,
+            'My Dependents'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -221,7 +216,7 @@ class _ListDependentsState extends State<ListDependents> {
                   Icons.add,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.translate('Add New')!,
+                  'Add New'.tr,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
