@@ -5,9 +5,9 @@ import 'package:flutter_avisena/Screens/Dependents/add.dart';
 import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/Screens/HomePage/categories.dart';
 import 'package:flutter_avisena/Screens/Services/chooseHospital.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../components/section_title.dart';
 import '../../const.dart';
@@ -125,11 +125,8 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           margin: EdgeInsets.only(top: _height / 80),
-          // width: _width,
           height: _height / 15,
-          // padding: const EdgeInsets.only(top: 0, right: 10, left: 20),
-          child: Flex(
-            direction: Axis.horizontal,
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(
@@ -138,20 +135,27 @@ class _HomePageState extends State<HomePage> {
                   height: 50,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    borderRadius: new BorderRadius.all(Radius.circular(50.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
                     border: Border.all(width: 1.5, color: const Color(0xFFFFFFFF)),
                     color: Colors.transparent,
                     image: DecorationImage(
-                        image: AssetImage('assets/images/profile_ayu.jpg'),
-                        fit: BoxFit.fill),
+                      image: AssetImage('assets/images/profile_ayu.jpg'),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-                onTap: (){
+                onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProfilePage(name: widget.name, email: widget.email, phone: widget.phone, mrn: widget.mrn),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(
+                        name: widget.name,
+                        email: widget.email,
+                        phone: widget.phone,
+                        mrn: widget.mrn,
+                      ),
+                    ),
+                  );
                 },
               ),
               SizedBox(
@@ -159,23 +163,26 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 alignment: Alignment.center,
-                child: Expanded(
-                  child: (widget.name != null) ? Text(
-                    (widget.name.length > 12) ? "Hi, ${widget.name.substring(0, 12)}..." : "${widget.name}",
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'WorkSans'),
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                  ) : const Text('null'),
-                ),
+                child: (widget.name != null)
+                    ? Text(
+                  (widget.name.length > 12)
+                      ? "Hi, ${widget.name.substring(0, 12)}..."
+                      : "${widget.name}",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'WorkSans',
+                  ),
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                )
+                    : const Text('null'),
               ),
             ],
           ),
         ),
-        bellNotification()
+        bellNotification(),
       ],
     );
   }
@@ -197,22 +204,22 @@ class _HomePageState extends State<HomePage> {
     List<Map<String, dynamic>> categories = [
       {
         "image": "assets/images/shortcut_medical_appointment.png",
-        "text": AppLocalizations.of(context)!.translate('Appointment')!,
+        "text": 'Appointment'.tr,
         "press": ""
       },
       {
         "image": "assets/images/shortcut_doctor.png",
-        "text": AppLocalizations.of(context)!.translate('Doctors')!,
+        "text": 'Doctors'.tr,
         "press": ""
       },
       {
         "image": "assets/images/shortcut_services.png",
-        "text": AppLocalizations.of(context)!.translate('Services')!,
+        "text": 'Services'.tr,
         "press": ChooseHospital(name: widget.name, email: widget.email, phone: widget.phone, mrn: widget.mrn)
       },
       {
         "image": "assets/images/shortcut_dependent.png",
-        "text": AppLocalizations.of(context)!.translate('Dependents')!,
+        "text": 'Dependents'.tr,
         "press": ListDependents(name: widget.name, email: widget.email, phone: widget.phone)
       },
     ];
@@ -269,7 +276,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            AppLocalizations.of(context)!.translate('My Appointments')!,
+            'My Appointments'.tr,
             style: const TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.bold,
@@ -278,7 +285,7 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             child: Text(
-              "${AppLocalizations.of(context)!.translate('More')!} >",
+              "${'More'.tr} >",
               style: TextStyle(
                   fontFamily: 'WorkSans',
                   color: Colors.blue.shade600,
@@ -394,7 +401,7 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         FlatButton(
           child: Text(
-            AppLocalizations.of(context)!.translate('Reschedule')!,
+            'Reschedule'.tr,
             style: const TextStyle(
               fontFamily: 'WorkSans',
               fontSize: 15,
@@ -414,7 +421,7 @@ class _HomePageState extends State<HomePage> {
         ),
         FlatButton(
           child: Text(
-            AppLocalizations.of(context)!.translate('Details')!,
+            'Details'.tr,
             style: const TextStyle(
               fontFamily: 'WorkSans',
               fontSize: 15,
@@ -440,7 +447,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            AppLocalizations.of(context)!.translate('Discover More')!,
+            'Discover More'.tr,
             style: const TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.bold,
@@ -449,7 +456,7 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             child: Text(
-              '${AppLocalizations.of(context)!.translate('More')!} >',
+              '${'More'.tr} >',
               style: TextStyle(
                   fontFamily: 'WorkSans',
                   color: Colors.blue.shade600,
@@ -594,7 +601,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            '${AppLocalizations.of(context)!.translate('Need Help')!} ?',
+            '${'Need Help'.tr} ?',
             style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.bold,

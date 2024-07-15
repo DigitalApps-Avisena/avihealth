@@ -8,8 +8,8 @@ import 'package:flutter_avisena/Screens/ProfilePage/component/language.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/component/my_account.dart';
 import 'package:flutter_avisena/Screens/ProfilePage/profileMenu.dart';
 import 'package:flutter_avisena/components/auth.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/user.dart';
 import '../../const.dart';
@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         backgroundColor: violet,
         title: Text(
-            AppLocalizations.of(context)!.translate("Profile")!,
+            "Profile".tr,
           style: TextStyle(
             fontSize: _width * 0.05,
             fontFamily: 'WorkSans',
@@ -216,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
             height: _height * 0.15,
           ),
           profileMenu(
-            text: AppLocalizations.of(context)!.translate("My Account")!,
+            text: "My Account".tr,
             icon: Icons.person,
             press: () {
               Navigator.push(
@@ -228,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           profileMenu(
-            text: AppLocalizations.of(context)!.translate("Dependents")!,
+            text: "Dependents".tr,
             icon: Icons.family_restroom_rounded,
             press: () {
               Navigator.push(
@@ -254,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           profileMenu(
-            text: AppLocalizations.of(context)!.translate("Language")!,
+            text: "Language".tr,
             icon: Icons.translate_rounded,
             press: () {
               Navigator.push(

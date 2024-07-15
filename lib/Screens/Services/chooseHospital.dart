@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_avisena/Screens/Services/chooseService.dart';
 import 'package:flutter_avisena/const.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class ChooseHospital extends StatefulWidget {
@@ -57,7 +57,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('Choose Hospital')!,
+            'Choose Hospital'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -182,7 +182,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.translate('Next')!,
+                  'Next'.tr,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -203,7 +203,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.translate('Next')!,
+                  'Next'.tr,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),

@@ -1,8 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/const.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:flutter_avisena/components/localization_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 
 class Language extends StatefulWidget {
   Language({Key? key, required this.name, required this.email, required this.phone}) : super(key: key);
@@ -23,10 +24,17 @@ class _LanguageState extends State<Language> {
   dynamic language;
   dynamic global;
 
+  String? _selectedLanguage;
+
   @override
   void initState() {
-    defaultLang();
     super.initState();
+    _loadSelectedLanguage();
+  }
+
+  void _loadSelectedLanguage() async {
+    _selectedLanguage = await storage.read(key: 'language') ?? LocalizationService.langs[0];
+    setState(() {});
   }
 
   List<Map<String, dynamic>> languages = [
@@ -44,22 +52,6 @@ class _LanguageState extends State<Language> {
     }
   ];
 
-  changeLanguage(language, global) async {
-    await storage.write(key: 'language', value: language);
-    await storage.write(key: 'global', value: global);
-  }
-
-  defaultLang() async {
-    var lang = await storage.read(key: 'language');
-    setState(() {
-      if(lang == 'en') {
-        languages[0]['press'] = true;
-      } else {
-        languages[1]['press'] = true;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -70,7 +62,7 @@ class _LanguageState extends State<Language> {
         centerTitle: true,
         backgroundColor: violet,
         title: Text(
-          AppLocalizations.of(context)!.translate('Language')!,
+          'Language'.tr,
           style: TextStyle(
             fontSize: _width * 0.05,
             fontFamily: 'WorkSans',
@@ -86,32 +78,44 @@ class _LanguageState extends State<Language> {
         ),
       ),
       body: ListView.builder(
-        itemCount: languages.length,
+        itemCount: LocalizationService.langs.length,
         itemBuilder: (BuildContext context, int index) {
 
-          var listLanguage = languages[index];
+          var language = LocalizationService.langs[index];
 
           return InkWell(
-            onTap: () {
-              setState(() {
-                for(var i = 0; i < languages.length; i++) {
-                  languages[i]['press'] = i == index;
-                }
-                changeLanguage(listLanguage['language'], listLanguage['global']);
-              });
+            onTap: () async {
+              LocalizationService.instance.changeLocale(LocalizationService.langs[index]);
+              await storage.write(key: 'language', value: LocalizationService.langs[index]);
+              AwesomeDialog(
+                padding: const EdgeInsets.all(20),
+                context: context,
+                dialogType: DialogType.success,
+                animType: AnimType.topSlide,
+                showCloseIcon: true,
+                title: "Language Changed".tr,
+                btnOkColor: violet,
+                btnOkText: "Okay",
+                btnOkOnPress: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Language(name: widget.name, email: widget.email, phone: widget.phone)),
+                  );
+                },
+              ).show();
             },
             child: Card(
               child: Padding(
                 padding: EdgeInsets.all(_width * 0.07),
                 child: Row(
                   children: [
-                    Text(listLanguage['title']),
+                    Text(language),
                     SizedBox(
                       width: _width * 0.1,
                     ),
                     Icon(
                       Icons.task_alt,
-                      color: listLanguage['press'] ? turquoise : Colors.transparent,
+                      color: _selectedLanguage == language ? turquoise : Colors.transparent,
                     ),
                   ],
                 ),

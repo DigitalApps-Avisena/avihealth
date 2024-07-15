@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:flutter_avisena/l10n/localization.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class _ChooseServiceState extends State<ChooseService> {
       Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
       body: {
         'passCode' : 'Avi@2024',
-        'reqNumber' : '2',
+        'reqNumber' : '8',
         'hospitalId' : widget.hospitalId
       },
     );
@@ -82,7 +82,7 @@ class _ChooseServiceState extends State<ChooseService> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('Choose Service')!,
+            'Choose Service'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -204,7 +204,7 @@ class _ChooseServiceState extends State<ChooseService> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.translate('Next')!,
+                  'Next'.tr,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
@@ -225,7 +225,7 @@ class _ChooseServiceState extends State<ChooseService> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.translate('Next')!,
+                  'Next'.tr,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),

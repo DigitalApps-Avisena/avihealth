@@ -4,8 +4,8 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/Dependents/list.dart';
 import 'package:flutter_avisena/const.dart';
-import 'package:flutter_avisena/l10n/localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,8 +33,8 @@ class _AddDependentsState extends State<AddDependents> {
 
   List<TextSpan> _getStyledTextSpans() {
     return [
-      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependent Instruction Mandatory')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans', fontWeight: FontWeight.bold)),
-      TextSpan(text: AppLocalizations.of(context)!.translate('Add Dependent Instruction')!, style: TextStyle(color: Colors.black, fontFamily:'WorkSans')),
+      TextSpan(text: 'Add Dependent Instruction Mandatory'.tr, style: TextStyle(color: Colors.black, fontFamily:'WorkSans', fontWeight: FontWeight.bold)),
+      TextSpan(text: 'Add Dependent Instruction'.tr, style: TextStyle(color: Colors.black, fontFamily:'WorkSans')),
     ];
   }
 
@@ -44,7 +44,7 @@ class _AddDependentsState extends State<AddDependents> {
         Uri.parse('http://10.10.0.11/trakcare/web/his/app/API/general.csp'),
         body: {
           'passCode' : 'Avi@2024',
-          'reqNumber' : '7',
+          'reqNumber' : '5',
           'icAccHolder' : '970617016588',
           'icDependent' : controller.text
         },
@@ -52,18 +52,13 @@ class _AddDependentsState extends State<AddDependents> {
       final responseBody = response.body;
       final responseData = jsonDecode(responseBody);
       final dataCode = responseData['code'];
-      print('A $responseBody');
-      print('B $responseData');
-      print('C $dataCode');
       if(dataCode == 'E01') {
-        print('wohoo');
         Navigator.push(
           context, MaterialPageRoute(
             builder: (context) => ListDependents(name: widget.name, email: widget.email, phone: widget.phone),
           ),
         );
       } else {
-        print('Woopd');
         AwesomeDialog(
           padding: const EdgeInsets.all(20),
           context: context,
@@ -115,7 +110,7 @@ class _AddDependentsState extends State<AddDependents> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            AppLocalizations.of(context)!.translate('Add Dependent')!,
+            'Add Dependent'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -160,7 +155,7 @@ class _AddDependentsState extends State<AddDependents> {
                               width: _width * 0.08,
                             ),
                             Text(
-                              AppLocalizations.of(context)!.translate('Personal Verification List')!,
+                              'Personal Verification List'.tr,
                               style: TextStyle(
                                 fontSize: _width * 0.04,
                               ),
@@ -225,7 +220,7 @@ class _AddDependentsState extends State<AddDependents> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.translate('Submit')!,
+                  'Submit'.tr,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold
