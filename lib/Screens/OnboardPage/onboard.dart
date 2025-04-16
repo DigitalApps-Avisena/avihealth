@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avisena/Screens/LoginPage/login.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../size_config.dart';
 import '../../const.dart';
+import '../HomePage/homepage.dart';
 import 'body.dart';
 
 class OnboardPage extends StatefulWidget {
@@ -14,12 +17,40 @@ class OnboardPage extends StatefulWidget {
 class _OnboardPageState extends State<OnboardPage> {
   int currentIndex = 0;
   late PageController _controller;
+  bool _isGuestMode = false;
 
   @override
   void initState() {
     _controller = PageController(initialPage: 0);
     super.initState();
+    isGuestModeActive();
   }
+
+  _toggleGuestMode(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isGuestMode = value;
+      prefs.setBool('isGuest', value);
+    });
+  }
+
+  Future<bool> isGuestModeActive() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isGuest') ?? false; // Default to false
+  }
+
+
+  void checkGuestMode() async {
+    bool isGuest = await isGuestModeActive();
+    if (!isGuest) {
+      // Navigate to login or home page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => LoginPage(mrn: '', name: '', email: '', phone: '')),
+      );
+    }
+  }
+
 
   @override
   void dispose() {
@@ -56,25 +87,25 @@ class _OnboardPageState extends State<OnboardPage> {
                         contents[i].title,
                         style: TextStyle(
                           fontSize: 24,
-                          fontFamily: 'Roboto',
+                          fontFamily: 'WorkSans',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(height: 20),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          contents[i].description,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Roboto',
-                            color: Colors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 8,
-                          textAlign: TextAlign.center,
-                        ),
-                      )
+                       Padding(
+                         padding: EdgeInsets.all(10.0),
+                         child: Text(
+                           contents[i].description,
+                           style: TextStyle(
+                             fontSize: 15.5,
+                             fontFamily: 'WorkSans',
+                             color: Colors.black,
+                           ),
+                           overflow: TextOverflow.ellipsis,
+                           maxLines: 10,
+                           textAlign: TextAlign.center,
+                         ),
+                       )
                     ],
                   ),
                 );
@@ -93,32 +124,85 @@ class _OnboardPageState extends State<OnboardPage> {
             ),
           ),
           Container(
-            height: 40,
             margin: EdgeInsets.all(40),
-            width: 200,
-            child: FlatButton(
-              child: Text(
-                  currentIndex == contents.length - 1 ? "Continue" : "Next"),
-              onPressed: () {
-                if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => LoginPage(),
+            child: currentIndex == contents.length - 1
+                ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                // Sign Up Button
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: 45,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => LoginPage(mrn: '', name: '', email: '', phone: ''),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text("Sign Up"),
                     ),
-                  );
-                }
-                _controller.nextPage(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
-                );
-              },
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                  ),
+                  // Continue as Guest Button
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: 45,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _toggleGuestMode(true);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => HomePage(name: '', email: '', phone: '', mrn: ''),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: turquoise, // Different color for guest mode
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text("Continue as Guest", textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'WorkSans'
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            )
+                : SizedBox(
+                  width: 140,
+                  height: 45,
+                  child: ElevatedButton(
+                    onPressed: () {
+                    _controller.nextPage(
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.bounceIn,
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor, // Updated property
+                    onPrimary: Colors.white, // Updated property
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                    child: Text("Next"),
               ),
-            ),
+            )
           ),
         ],
       ),

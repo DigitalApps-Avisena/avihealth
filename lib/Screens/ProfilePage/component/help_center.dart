@@ -62,7 +62,7 @@ class HelpCenterState extends State<HelpCenter> {
       body: Column(
         children: [
           Flexible(
-            flex: 2,
+            flex: 5,
             child: GoogleMap(
               onTap: (_center) {},
               onMapCreated: (mapController) {
@@ -87,7 +87,7 @@ class HelpCenterState extends State<HelpCenter> {
             ),
           ),
           SizedBox(
-            height: 30,
+            height: 5,
           ),
           Column(
             children: [
@@ -96,14 +96,16 @@ class HelpCenterState extends State<HelpCenter> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Get in touch with us today. We’re always ready to help.",
-                    style: TextStyle(
-                      fontSize: 18.5,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold,
-                      color: turquoise
-                    ),
-                    ),
+                    Expanded(
+                        child: Text("Get in touch with us today. We’re always ready to help.",
+                          style: TextStyle(
+                              fontSize: 18.5,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                              color: turquoise
+                          ),
+                        ),
+                    )
                   ],
                 ),
               ),
@@ -128,77 +130,80 @@ class HelpCenterState extends State<HelpCenter> {
               flex: 3,
               child: Container(
                 margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton.icon(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          TextButton.icon(
                             onPressed: () {
                               FlutterPhoneDirectCaller.callNumber('+6 03 5515 1888');
-                              },
+                            },
                             icon: Icon(Icons.call, color: Colors.white, size: 20),
                             style: TextButton.styleFrom(
                                 backgroundColor: MaterialStateColor.resolveWith(_getTextColor),
                                 shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)
+                                    borderRadius: BorderRadius.circular(20)
                                 ),
                                 padding: EdgeInsets.all(10.0),
                                 elevation: 10
                             ),
                             label: Text("General Line", style: TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'WorkSans'),
                             ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {
-                            FlutterPhoneDirectCaller.callNumber('+6 03 5515 1966');
-                          },
-                          icon: Icon(Icons.record_voice_over_outlined, color: Colors.white, size: 20),
-                          style: TextButton.styleFrom(
-                              backgroundColor: MaterialStateColor.resolveWith(_getTextColor),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () {
+                              FlutterPhoneDirectCaller.callNumber('+6 03 5515 1966');
+                            },
+                            icon: Icon(Icons.record_voice_over_outlined, color: Colors.white, size: 20),
+                            style: TextButton.styleFrom(
+                                backgroundColor: MaterialStateColor.resolveWith(_getTextColor),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                                padding: EdgeInsets.all(10.0),
+                                elevation: 10
+                            ),
+                            label: Text("Appointment Line", style: TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'WorkSans'),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(padding: EdgeInsets.all(8.0),
+                            child: TextButton.icon(
+                              onPressed: () {
+                                launch('mailto:awcsh.careline@avisena.com.my?subject=This is Subject');
+                              },
+                              icon: Icon(Icons.email_outlined, color: Colors.white, size: 20),
+                              style: TextButton.styleFrom(
+                                  backgroundColor: MaterialStateColor.resolveWith(_getTextColor),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18)
+                                  ),
+                                  padding: EdgeInsets.all(10.0),
+                                  elevation: 10
                               ),
-                              padding: EdgeInsets.all(10.0),
-                              elevation: 10
-                          ),
-                          label: Text("Appointment Line", style: TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'WorkSans'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(padding: EdgeInsets.all(8.0),
-                        child: TextButton.icon(
-                          onPressed: () {
-                            launch('mailto:awcsh.careline@avisena.com.my?subject=This is Subject');
-                          },
-                          icon: Icon(Icons.email_outlined, color: Colors.white, size: 20),
-                          style: TextButton.styleFrom(
-                              backgroundColor: MaterialStateColor.resolveWith(_getTextColor),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18)
+                              label: Text("Email", style: TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'WorkSans'),
                               ),
-                              padding: EdgeInsets.all(10.0),
-                              elevation: 10
+                            ),
                           ),
-                          label: Text("Email", style: TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'WorkSans'),
-                          ),
-                        ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               )
           ),
@@ -210,16 +215,18 @@ class HelpCenterState extends State<HelpCenter> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start, // Aligns text properly if it wraps
                   children: [
                     Icon(Icons.location_on_outlined, color: Color(0xFF2290AA), size: 18),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text("Avisena Women's & Children's Specialist Hospital:",
-                      style: TextStyle(
+                    SizedBox(width: 5),
+                    Expanded( // Ensures text can wrap properly
+                      child: Text(
+                        "Avisena Women's & Children's Specialist Hospital:",
+                        style: TextStyle(
                           fontSize: 16,
-                          fontFamily:'WorkSans',
-                          fontWeight: FontWeight.bold
+                          fontFamily: 'WorkSans',
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
@@ -229,12 +236,13 @@ class HelpCenterState extends State<HelpCenter> {
                 padding: EdgeInsets.only(left: 30),
                 child: Row(
                   children: [
-                    Text("No. 3, Jalan Perdagangan 14/4, Seksyen 14, 40000 Shah Alam, \nSelangor.",
+                    Expanded(
+                      child: Text("No. 3, Jalan Perdagangan 14/4, Seksyen 14, 40000 Shah Alam, Selangor.",
                       style: TextStyle(
-                          fontSize: 15,
-                          fontFamily:'WorkSans',
+                        fontSize: 15,
+                        fontFamily:'WorkSans',
                       ),
-                    ),
+                    ),)
                   ],
                 ),
               ),

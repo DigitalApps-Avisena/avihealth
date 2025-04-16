@@ -35,25 +35,26 @@ class needHelp extends StatelessWidget {
                     ),
               ),
               Container(
-                width: 250,
+                width: 280,
                 margin: EdgeInsets.only(top: 1),
                 padding: EdgeInsets.symmetric(
                     horizontal: 1), //jarak text from start line
                 // decoration: BoxDecoration(color: Colors.white),
                 child: new BackdropFilter(
-                  filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                  filter: new ImageFilter.blur(sigmaX: 15.0, sigmaY: 5.0),
                   child: new Container(
-                    width: 100.0,
-                    height: 200.0,
+                    width: 120,
+                    height: 200,
                     decoration: new BoxDecoration(
                         borderRadius:
-                            new BorderRadius.all(Radius.circular(20.0)),
+                            new BorderRadius.all(Radius.circular(20)),
                         color: Colors.grey.shade200.withOpacity(0.2)),
                   ),
                 ),
               ),
               Container(
-                  padding: EdgeInsets.only(top: 40, right: 25, left: 25),
+                  padding: EdgeInsets.only(top: 40, right: 25, left: 40),
+                  // alignment: Alignment.center, // Centers the text horizontally and vertically
                   child: Text(
                     "$text\n",
                     maxLines: 5,
@@ -61,9 +62,9 @@ class needHelp extends StatelessWidget {
                     style: TextStyle(
                       // shadows: outlinedText(strokeColor: Colors.white, strokeWidth: 1),
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 15,
                       fontFamily: 'WorkSans',
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.normal,
                     ),
                   )),
             ],

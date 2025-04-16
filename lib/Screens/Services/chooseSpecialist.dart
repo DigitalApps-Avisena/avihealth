@@ -7,15 +7,18 @@ import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:http/http.dart' as http;
 
+import '../Appointment/bookingSession.dart';
+
 class ChooseSpecialist extends StatefulWidget {
-  ChooseSpecialist({Key? key, required this.name, required this.email, required this.phone, required this.mrn, required this.hospitalId, required this.clinicName, required this.locationGroup}) : super(key: key);
-  String name;
-  String email;
-  String phone;
-  String mrn;
-  String hospitalId;
-  String clinicName;
-  String locationGroup;
+  ChooseSpecialist({Key? key, required this.name, required this.email, required this.phone, required this.mrn, required this.hospitalId, required this.hospitalName, required this.clinicName, required this.locationGroup}) : super(key: key);
+  String? name;
+  String? email;
+  String? phone;
+  String? mrn;
+  String? hospitalId;
+  String? hospitalName;
+  String? clinicName;
+  String? locationGroup;
 
   @override
   State<ChooseSpecialist> createState() => _ChooseSpecialistState();
@@ -38,32 +41,15 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
   String? selectedLocation;
   String? selectedLocationGroup;
   String? selectedHospitalId;
+  String? selectedhospitalName;
 
-  List<Map<String, dynamic>> categories = [
-    {
-      "image": "assets/images/service_ash.jpeg",
-      "name": "Dato' Dr. Abdul Razak Rahman Hamzah",
-      "role": "Consultant ENT, Head & Neck Surgeon",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_awch.jpeg",
-      "name": "Prof Dato' Dr. Abdullah Sani Mohamed",
-      "role": "Consultant ENT",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_awch.jpeg",
-      "name": "Dr. Ahmad Kusyairi Bin Khalid",
-      "role": "Consultant ENT, Head & Neck Surgeon",
-      "press": false
-    },
-  ];
 
   @override
   void initState() {
     _fetchData();
     super.initState();
+    print("Hospital(Specialist): ${widget.hospitalName}");
+    print("Clinic Name(Specialist): ${widget.clinicName}");
   }
 
   Future<void> _fetchData() async {
@@ -97,7 +83,7 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            'Choose Specialists'.tr,
+            'Specialists'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -160,7 +146,8 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                                   specialist['doctorImage'],
                                 ),
                                 fit: BoxFit.contain
-                              )
+                              ),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           SizedBox(width: _width * 0.03),
@@ -171,9 +158,10 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                                 Text(
                                   specialist['doctorName'],
                                   style: TextStyle(
-                                    fontSize: _width * 0.045,
+                                    fontSize: _width * 0.040,
                                     fontWeight: FontWeight.bold,
-                                    color: isSelected ? Colors.white : turquoise,
+                                    fontFamily: 'WorkSans',
+                                    color: isSelected ? Colors.white : Colors.black,
                                   ),
                                 ),
                                 SizedBox(height: _height * 0.02),
@@ -181,6 +169,7 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                                   specialist['clinicName'],
                                   style: TextStyle(
                                     fontSize: _width * 0.035,
+                                    fontFamily: 'WorkSans',
                                     color: isSelected ? Colors.white : Colors.grey.shade600,
                                   ),
                                 ),
@@ -196,11 +185,27 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
             },
           ),
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar:
+        Container(
           margin: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
-          child: (selected == true) ? ElevatedButton(
+          child: (selected == true) ?
+          ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(name: widget.name, email: '', phone: '', mrn: '')));
+              Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  sessionBooking(
+                                      name: widget.name,
+                                      email: widget.email,
+                                      phone: widget.phone,
+                                      mrn: widget.mrn,
+                                      locationGroup: widget.locationGroup,
+                                      hospitalId: widget.hospitalId,
+                                      hospitalName: widget.hospitalName,
+                                      clinicName: widget.clinicName,
+                                      doctorName: selectedDoctorName!,
+                                      doctorImage: selectedDoctorImage!,
+                                  )));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -221,28 +226,69 @@ class _ChooseSpecialistState extends State<ChooseSpecialist> {
                 borderRadius: BorderRadius.circular(30)
               ),
             ),
-          ) : ElevatedButton(
-            onPressed: () {},
+          )
+              :
+          // ElevatedButton(
+          //   onPressed: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Text(
+          //         'Next'.tr,
+          //         style: const TextStyle(
+          //           fontWeight: FontWeight.bold
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          //   style: ElevatedButton.styleFrom(
+          //     elevation: 5,
+          //     primary: Colors.grey,
+          //     padding: EdgeInsets.all(_width * 0.05),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(30)
+          //     ),
+          //   ),
+          // ),
+          ////////////////////////////////////////////////////////
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          sessionBooking(
+                              name: widget.name,
+                              email: widget.email,
+                              phone: widget.phone,
+                              mrn: widget.mrn,
+                              locationGroup: widget.locationGroup,
+                              hospitalId: widget.hospitalId,
+                              hospitalName: widget.hospitalName,
+                              clinicName: widget.clinicName,
+                              doctorName: "",
+                              doctorImage: "",
+                          )));
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Next'.tr,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold
                   ),
                 ),
               ],
             ),
             style: ElevatedButton.styleFrom(
               elevation: 5,
-              primary: Colors.grey,
+              primary: Constants.violet,
               padding: EdgeInsets.all(_width * 0.05),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
+                  borderRadius: BorderRadius.circular(30)
               ),
             ),
-          ),
+          )
         ),
       ),
     );

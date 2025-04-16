@@ -24,11 +24,11 @@ class CategoryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           Container(
             padding: EdgeInsets.all(
-              (6), //icon size
+              (4), //icon size
             ),
             height: 50,
             width: 70,
@@ -36,12 +36,12 @@ class CategoryCard extends StatelessWidget {
               boxShadow: <BoxShadow>[
                 BoxShadow(
                   offset: const Offset(5, 10),
-                  color: violet.withOpacity(0.23),
+                  color: violet.withOpacity(0.20),
                   blurRadius: 5,
                 ),
               ],
-              color: Color(0xFFf8f8ff),
-              borderRadius: BorderRadius.circular(40),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Image.asset(image),
           ),
@@ -50,7 +50,7 @@ class CategoryCard extends StatelessWidget {
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontFamily: 'WorkSans', fontSize: MediaQuery.of(context).size.width * 0.028, color: Colors.black),
+                fontFamily: 'WorkSans', fontWeight: FontWeight.normal, fontSize: MediaQuery.of(context).size.width * 0.030, color: Colors.black),
             maxLines: 2,
           )
         ],

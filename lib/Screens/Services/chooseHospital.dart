@@ -5,12 +5,15 @@ import 'package:flutter_avisena/const.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
+import '../../const.dart';
+import '../../const.dart';
+
 class ChooseHospital extends StatefulWidget {
   ChooseHospital({Key? key, required this.name, required this.email, required this.phone, required this.mrn}) : super(key: key);
-  String name;
-  String email;
-  String phone;
-  String mrn;
+  String? name;
+  String? email;
+  String? phone;
+  String? mrn;
 
   @override
   State<ChooseHospital> createState() => _ChooseHospitalState();
@@ -22,6 +25,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
   dynamic _width;
 
   String? hospital;
+  String? selectedhospitalName;
 
   bool selected = false;
 
@@ -57,9 +61,9 @@ class _ChooseHospitalState extends State<ChooseHospital> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            'Choose Hospital'.tr,
+            'Hospital'.tr,
             style: TextStyle(
-              fontSize: _width * 0.05,
+              fontSize: _width * 0.04,
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontFamily: 'WorkSans'
@@ -69,18 +73,18 @@ class _ChooseHospitalState extends State<ChooseHospital> {
           leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(
-              Icons.arrow_back_rounded,
+              Icons.arrow_back_ios_new_rounded,
               color: Colors.white,
               size: _width * 0.06
             ),
           ),
           elevation: 10,
         ),
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Container(
-            color: Colors.grey.shade200,
+            color: Colors.white,
             child: GridView.builder(
               itemCount: categories.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -89,7 +93,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
               ),
               itemBuilder: (context, index) {
 
-                var name = categories[index]['name'];
+                var hospitalName = categories[index]['name'];
                 var address = categories[index]['address'];
                 var image = categories[index]['image'];
                 var press = categories[index]['press'];
@@ -103,58 +107,61 @@ class _ChooseHospitalState extends State<ChooseHospital> {
                       }
                       selected = true;
                       hospital = hospitalId;
+                      selectedhospitalName = hospitalName;
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Card(
-                      elevation: 5,
+                      elevation: 15,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)
                       ),
                       color: (press) ? turquoise : Colors.white,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: _height * 0.01,
-                          ),
-                          Container(
-                            height: _height * 0.2,
-                            width: _width * 0.75,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: AssetImage(image),
-                                fit: BoxFit.cover,
-                              )
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: _height * 0.01,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              name,
-                              style: TextStyle(
-                                fontSize: _width * 0.03,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'WorkSans',
-                                color: (press) ? Colors.white : Colors.black
+                            Container(
+                              height: _height * 0.2,
+                              width: _width * 0.80,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                    image: AssetImage(image),
+                                    fit: BoxFit.cover,
+                                  )
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              address,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: _width * 0.03,
-                                fontFamily: 'WorkSans',
-                                color: (press) ? Colors.white : Colors.black
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                hospitalName,
+                                style: TextStyle(
+                                    fontSize: _width * 0.03,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'WorkSans',
+                                    color: (press) ? Colors.white : Colors.black
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                address,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: _width * 0.03,
+                                    fontFamily: 'WorkSans',
+                                    color: (press) ? Colors.white : Colors.black
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ),
                   ),
                 );
@@ -174,6 +181,7 @@ class _ChooseHospitalState extends State<ChooseHospital> {
                     phone: widget.phone,
                     mrn: widget.mrn,
                     hospitalId: hospital!,
+                    hospitalName: selectedhospitalName!,
                   ),
                 ),
               );

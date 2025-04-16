@@ -111,7 +111,7 @@ Route _generateRoute(RouteSettings settings) {
           builder: (_) => OnboardPage(), settings: settings);
     case '/LOGIN':
       return CupertinoPageRoute(
-          builder: (_) => LoginPage(), settings: settings);
+          builder: (_) => LoginPage(mrn: '', name: '', email: '', phone: '',), settings: settings);
   // case '/REGISTER_PAGE':
   //   return CupertinoPageRoute(
   //       builder: (_) => RegisterPage(), settings: settings);

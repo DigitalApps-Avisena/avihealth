@@ -81,7 +81,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       "passCode": "Avi@2024",
       "reqNumber": "3",
     };
-    var receiveData = await ApiService(userData).forgotPasswordCheck(userData);
+    var receiveData = await ApiService().forgotPasswordCheck(userData);
     print('receiveData == $receiveData');
 
     if (receiveData["respond"] == "Update password1 success") {
@@ -99,7 +99,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(mrn: '', name: '', email: '', phone: '',)),
           );
         },
       ).show();

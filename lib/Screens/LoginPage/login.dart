@@ -12,6 +12,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../../Helperfunctions.dart';
@@ -26,9 +27,20 @@ import '../SignUp/SignUpPage.dart';
 import 'package:flutter_avisena/Screens/ForgotPassword/ForgotPasswordPage.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage();
+  LoginPage({
+    Key? key,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.mrn
+  }) : super(key: key);
+
 
   // final VoidCallback loginCallback;
+  String name;
+  String email;
+  String phone;
+  String mrn;
 
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
@@ -48,7 +60,6 @@ class _LoginSignupPageState extends State<LoginPage> {
   List<BiometricType>? availableBiometrics;
 
   bool _passwordVisible = false;
-  // final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
   final emailInput = TextEditingController();
   final passwordInput = TextEditingController();
   late final getDeviceToken;
@@ -63,6 +74,8 @@ class _LoginSignupPageState extends State<LoginPage> {
   String? _errorMessage;
   bool iserror = false;
   var token;
+  bool isFaceIDSupported = false;
+  bool _isGuestMode = false;
 
   @override
   void initState() {
@@ -79,7 +92,17 @@ class _LoginSignupPageState extends State<LoginPage> {
     super.initState();
     checkBiometric();
     getAvailableBiometrics();
+    exitGuestMode();
   }
+
+  void exitGuestMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isGuestMode = false;
+      prefs.setBool('isGuest', false);
+    });
+  }
+
 
   Future<void> checkBiometric() async {
     late bool canCheckBiometric;
@@ -114,22 +137,55 @@ class _LoginSignupPageState extends State<LoginPage> {
     var email = await storage.read(key: 'email');
     var phone = await storage.read(key: 'phone');
     var mrn = await storage.read(key: 'mrn');
+
+    final auth = LocalAuthentication();
+
     try {
+
+      // Check available biometric types
+      final availableBiometrics = await auth.getAvailableBiometrics();
+      bool supportsFaceID = availableBiometrics.contains(BiometricType.face);
+      bool supportsFingerprint = availableBiometrics.contains(BiometricType.fingerprint);
+
+      setState(() {
+        isFaceIDSupported = availableBiometrics.contains(BiometricType.face);
+      });
+
+      // Debug prints or logs (optional)
+      print('Supports Face ID: $supportsFaceID');
+      print('Supports Fingerprint: $supportsFingerprint');
+      print('isFaceIDSupported: $isFaceIDSupported');
+
+      // Prompt for authentication
       final authenticated = await auth.authenticate(
-          localizedReason: 'Authenticate with fingerprint or Face ID',
-          options: const AuthenticationOptions(
-            stickyAuth: true,
-            biometricOnly: false,
-          ));
+        localizedReason: supportsFaceID
+            ? 'Authenticate with Face ID'
+            : 'Authenticate with fingerprint',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+          biometricOnly: true,
+        ),
+      );
 
       if (!mounted) {
         return;
       }
 
       if (authenticated) {
-        if(name != null) {
+        if (name != null) {
+          _isGuestMode == false;
+          exitGuestMode();
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage(name: name, email: email.toString(), phone: phone.toString(), mrn: mrn.toString())));
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(
+                name: name,
+                email: email.toString(),
+                phone: phone.toString(),
+                mrn: mrn.toString(),
+              ),
+            ),
+          );
         } else {
           return AwesomeDialog(
             padding: const EdgeInsets.all(20),
@@ -140,22 +196,29 @@ class _LoginSignupPageState extends State<LoginPage> {
             title: "Biometric Authentication",
             btnOkColor: violet,
             btnOkText: "Okay",
-            desc:
-            "Please login by using email for first time login",
+            desc: "Please login by using email for first time login",
             btnOkOnPress: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(
+                    mrn: widget.mrn,
+                    phone: '',
+                    email: '',
+                    name: '',
+                  ),
+                ),
               );
             },
           ).show();
         }
       }
     } on PlatformException catch (e) {
-      print(e);
+      print('Error during biometric authentication: $e');
       return;
     }
   }
+
 
   _getToken() async {
     if (Platform.isIOS) {
@@ -176,7 +239,7 @@ class _LoginSignupPageState extends State<LoginPage> {
       "passCode": "Avi@2024",
       "reqNumber": "1",
     };
-    var receiveData = await ApiService(userData).loginCheck(userData);
+    var receiveData = await ApiService().loginCheck(userData);
     print('receiveData == $receiveData');
 
     if (receiveData["status"] == "1") {
@@ -222,7 +285,7 @@ class _LoginSignupPageState extends State<LoginPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(name: '', email: '', mrn: '', phone: '',)),
           );
         },
       ).show();
@@ -241,7 +304,7 @@ class _LoginSignupPageState extends State<LoginPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(name: '', email: '', mrn: '', phone: '',)),
           );
         },
       ).show();
@@ -495,7 +558,61 @@ class _LoginSignupPageState extends State<LoginPage> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: screenHeight * 0.07),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          primary: Colors.grey,
+                                        ),
+                                        child: Text(
+                                          'Bypass Here',
+                                          style: TextStyle(
+                                            fontSize: screenWidth * 0.033,
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.w400,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => HomePage(name: widget.name, email: widget.email, phone: widget.phone, mrn: widget.mrn),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          primary: Colors.grey,
+                                        ),
+                                        child: Text(
+                                          'See Onboarding Page',
+                                          style: TextStyle(
+                                            fontSize: screenWidth * 0.033,
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.w400,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => OnboardPage(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  // SizedBox(height: screenHeight * 0.07),
                                   loginButton,
                                   SizedBox(height: screenHeight * 0.03),
                                   Row(
@@ -517,26 +634,56 @@ class _LoginSignupPageState extends State<LoginPage> {
                                       const Expanded(child: Divider()),
                                     ],
                                   ),
-                                  Row(
+                                  SizedBox(
+                                    height: 12,
+                                  ),
+                                  Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          primary: Color(0xFFA92389),
+                                      // TextButton(
+                                      //   style: TextButton.styleFrom(
+                                      //     primary: Color(0xFFA92389),
+                                      //   ),
+                                      //   child: const Text(
+                                      //     'Biometric Login',
+                                      //     style: TextStyle(
+                                      //       fontWeight: FontWeight.w900,
+                                      //       decoration: TextDecoration.underline,
+                                      //     ),
+                                      //   ),
+                                      //   onPressed: authenticateWithBiometrics,
+                                      // ),
+                                      IconButton(
+                                        onPressed: () {
+                                          // Trigger the biometric authentication
+                                          authenticateWithBiometrics();
+                                        },
+                                        icon: isFaceIDSupported
+                                            ? Lottie.asset(
+                                          'assets/icons/faceID.json',
+                                          height: 80,
+                                          width: 80,
+                                        ) :
+                                        Lottie.asset(
+                                          'assets/icons/fingerprint.json',
+                                          height: 45,
+                                          width: 45,
                                         ),
-                                        child: const Text(
-                                          'Biometric Login',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                        onPressed: authenticateWithBiometrics,
+                                        padding: EdgeInsets.zero, // Remove default padding
+                                        constraints: BoxConstraints(
+                                          minWidth: 90, // Set minimum width
+                                          minHeight: 65, // Set minimum height
+                                        ), // Remove default constraints
                                       ),
-                                      Lottie.asset(
-                                        'assets/images/biometric_auth.json',
-                                        height: 40,
-                                        width: 40,
+                                      Text(
+                                        isFaceIDSupported ? "Face ID" : "Fingerprint",
+                                        style: TextStyle(
+                                          color: Constants.violet,
+                                          fontSize: 12, // Adjust text size
+                                          fontFamily: 'WorkSans',
+                                          fontWeight: FontWeight.bold, // Optional
+                                        ),
+                                        textAlign: TextAlign.center, // Align text
                                       ),
                                     ],
                                   ),

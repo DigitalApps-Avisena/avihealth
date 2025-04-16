@@ -294,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Auth().signOut();
               Navigator.push(
                 context, CupertinoPageRoute(
-                  builder: (context) => LoginPage(),
+                  builder: (context) => LoginPage(mrn: '', name: '', email: '', phone: '',),
                 ),
               );
             },

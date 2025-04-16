@@ -9,12 +9,13 @@ import 'package:flutter_avisena/const.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class ChooseService extends StatefulWidget {
-  ChooseService({Key? key, required this.name, required this.email, required this.phone, required this.mrn, required this.hospitalId}) : super(key: key);
-  String name;
-  String email;
-  String phone;
-  String mrn;
-  String hospitalId;
+  ChooseService({Key? key, required this.name, required this.email, required this.phone, required this.mrn, required this.hospitalId, required this.hospitalName}) : super(key: key);
+  String? name;
+  String? email;
+  String? phone;
+  String? mrn;
+  String? hospitalId;
+  String? hospitalName;
 
   @override
   State<ChooseService> createState() => _ChooseServiceState();
@@ -32,24 +33,14 @@ class _ChooseServiceState extends State<ChooseService> {
   String? selectedClinicName;
   String? selectedLocationGroup;
   String? selectedHospitalId;
+  String? selectedhospitalName;
 
-  List<Map<String, dynamic>> categories = [
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Accident & Emergency",
-      "press": false
-    },
-    {
-      "image": "assets/images/service_accidentemergency.jpeg",
-      "text": "Avisena Care (Home Care)",
-      "press": false
-    },
-  ];
 
   @override
   void initState() {
     _fetchData();
     super.initState();
+    print("Hospital(Service) : ${widget.hospitalName}");
   }
 
   Future<void> _fetchData() async {
@@ -82,7 +73,7 @@ class _ChooseServiceState extends State<ChooseService> {
         appBar: AppBar(
           backgroundColor: Constants.violet,
           title: Text(
-            'Choose Service'.tr,
+            'Services'.tr,
             style: TextStyle(
               fontSize: _width * 0.05,
               color: Colors.white,
@@ -94,7 +85,7 @@ class _ChooseServiceState extends State<ChooseService> {
           leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(
-              Icons.arrow_back_rounded,
+              Icons.arrow_back_ios_new_rounded,
               color: Colors.white,
               size: _width * 0.06
             ),
@@ -105,86 +96,122 @@ class _ChooseServiceState extends State<ChooseService> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            color: Colors.white,
+            decoration: BoxDecoration(
+              color: Colors.white, // Background color of the container
+              borderRadius: BorderRadius.circular(20), // Circular border radius
+            ),
             child: GridView.builder(
-              itemCount: clinics.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1, childAspectRatio: _width * 0.004
-              ),
-              itemBuilder: (context, index) {
+            itemCount: clinics.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Number of items per row
+              crossAxisSpacing: 2.0, // Space between items horizontally
+              mainAxisSpacing: 2.0, // Space between items vertically
+              childAspectRatio: 5 / 6, // Adjust the width-to-height ratio of the items
+            ),
+            itemBuilder: (context, index) {
+              final clinic = clinics[index];
+              final isSelected = clinic['clinicName'] == selectedClinicName;
 
-                final clinic = clinics[index];
-                final isSelected = clinic['clinicName'] == selectedClinicName;
-
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedClinicName = clinic['clinicName'];
-                      selectedLocationGroup = clinic['locationGroup'];
-                      selectedHospitalId = clinic['hospitalId'];
-                      selected = true;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      color: isSelected ? turquoise : Colors.white,
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                scale: 50,
-                                image: const AssetImage(
-                                  "assets/images/service_accidentemergency.jpeg",
-                                ),
-                                fit: BoxFit.cover,
-                                opacity: isSelected ? 200 : 1
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedClinicName = clinic['clinicName'];
+                    selectedLocationGroup = clinic['locationGroup'];
+                    selectedHospitalId = clinic['hospitalId'];
+                    selectedhospitalName = widget.hospitalName;
+                    selected = true;
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20), // Match Card's border radius
+                    border: Border.all(
+                      color: isSelected ? Constants.violet : Colors.transparent, // Dynamic border color
+                      width: 2.5, // Border width
+                    ),
+                  ),
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    color: isSelected ? smoothPink.withOpacity(0.6) : Colors.white,
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/services/${clinic['clinicName']}.jpeg",
                               ),
+                              fit: BoxFit.cover,
+                              opacity: isSelected ? 200 : 1,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: _width * 0.02),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: _height / 5),
-                                  color: violet,
+                        ),
+                        // Gradient overlay at the bottom
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20), // Match card border radius
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.black.withOpacity(0.8), // Black shadow at the bottom
+                                Colors.transparent, // Clear at the top
+                              ],
+                              begin: Alignment.bottomCenter, // Gradient starts at the bottom
+                              end: Alignment.topCenter, // Gradient ends at the top
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Container(
+                                  // color: violet,
+                                  margin: EdgeInsets.only(top: _height / 6),
+                                  padding: const EdgeInsets.all(4.0), // Padding inside the colored box
                                   child: Text(
                                     clinic['clinicName'],
                                     style: const TextStyle(
-                                      color: Colors.white
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'WorkSans'
                                     ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 4,
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: _height / 5),
-                                  child: const Icon(
-                                    CupertinoIcons.arrow_right_circle,
-                                    color: Colors.white
-                                  ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: _height / 6),
+                                child: const Icon(
+                                  CupertinoIcons.arrow_right_circle,
+                                  color: Colors.white,
                                 ),
-                              ],
-                            ),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }
-            ),
+                ),
+              );
+            },
           ),
         ),
-        bottomNavigationBar: Container(
+
+      ),
+        bottomNavigationBar:
+        Container(
           margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-          child: (selected == true) ? ElevatedButton(
+          child: (selected == true) ?
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -194,6 +221,7 @@ class _ChooseServiceState extends State<ChooseService> {
                     phone: widget.phone,
                     mrn: widget.mrn,
                     hospitalId: selectedHospitalId!,
+                    hospitalName: widget.hospitalName,
                     clinicName: selectedClinicName!,
                     locationGroup: selectedLocationGroup!,
                   ),
@@ -219,28 +247,68 @@ class _ChooseServiceState extends State<ChooseService> {
                 borderRadius: BorderRadius.circular(30)
               ),
             ),
-          ) : ElevatedButton(
-            onPressed: () {},
+          )
+              :
+          // ElevatedButton(
+          //   onPressed: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Text(
+          //         'Next'.tr,
+          //         style: const TextStyle(
+          //           fontWeight: FontWeight.bold
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          //   style: ElevatedButton.styleFrom(
+          //     elevation: 5,
+          //     primary: Colors.grey,
+          //     padding: EdgeInsets.all(_width * 0.05),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(30)
+          //     ),
+          //   ),
+          // ),
+          //////////////////////////////////////////////////////
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChooseSpecialist(
+                    name: widget.name,
+                    email: widget.email,
+                    phone: widget.phone,
+                    mrn: widget.mrn,
+                    hospitalId: "",
+                    hospitalName: widget.hospitalName,
+                    clinicName: "",
+                    locationGroup:"",
+                  ),
+                ),
+              );
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Next'.tr,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold
                   ),
                 ),
               ],
             ),
             style: ElevatedButton.styleFrom(
               elevation: 5,
-              primary: Colors.grey,
+              primary: Constants.violet,
               padding: EdgeInsets.all(_width * 0.05),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
+                  borderRadius: BorderRadius.circular(30)
               ),
             ),
-          ),
+          )
         ),
       ),
     );

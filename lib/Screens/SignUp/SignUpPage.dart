@@ -81,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
       "email": emailInput.text,
       "phone": phoneInput.text,
     };
-    var receiveData = await ApiService(userData).signUpCheck(userData);
+    var receiveData = await ApiService().signUpCheck(userData);
     print('receiveData == $receiveData');
 
     if (receiveData["status"] == "1") {
@@ -103,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
         btnOkOnPress: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(mrn: receiveData["MRN"], name: receiveData["name"], email: receiveData["email"], phone: receiveData["phone"],)),
           );
         },
       ).show();
@@ -436,7 +436,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    LoginPage(),
+                                                    LoginPage(mrn: '', name: '', email: '', phone: '',),
                                               ));
                                         },
                                       )

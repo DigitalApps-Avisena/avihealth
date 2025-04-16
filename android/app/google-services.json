@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:606703598389:android:39ae7c52292758a4d32a7c",
+        "mobilesdk_app_id": "1:606703598389:android:aea29fbe32bc7705d32a7c",
         "android_client_info": {
-          "package_name": "com.avisena.flutter_avisena"
+          "package_name": "com.avisena.avihealth"
         }
       },
       "oauth_client": [
         {
-          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_id": "606703598389-vpilnlung64hg1q9v0ma488g97etb5hb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -50,7 +50,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_id": "606703598389-k6lj0b14vcujnetl4h429kt46je0ilt2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.avisena.outpatient.avisenaoutpatient",
+            "certificate_hash": "12a610c26e2ab5eacb1eee46ffda0db8bb4d18fb"
+          }
+        },
+        {
+          "client_id": "606703598389-p8ahbi7gvb68uv2ag9lhk0h6c2tgorvg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.avisena.outpatient.avisenaoutpatient",
+            "certificate_hash": "fa3a7f88200743ba2496402a50c33d27bc8b3a95"
+          }
+        },
+        {
+          "client_id": "606703598389-vpilnlung64hg1q9v0ma488g97etb5hb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -81,12 +97,12 @@
       "client_info": {
         "mobilesdk_app_id": "1:606703598389:android:81ba9b8c51810d89d32a7c",
         "android_client_info": {
-          "package_name": "com.avisena.outpatient.avisenaoutpatient"
+          "package_name": "com.example.avisena_healthcare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_id": "606703598389-vpilnlung64hg1q9v0ma488g97etb5hb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -122,7 +138,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "606703598389-bfi0bem9hhui4ek78tiui7gpjjms26fs.apps.googleusercontent.com",
+          "client_id": "606703598389-vpilnlung64hg1q9v0ma488g97etb5hb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

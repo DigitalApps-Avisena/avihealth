@@ -61,7 +61,7 @@ android {
     }
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.avisena.flutter_avisena"
+        applicationId "com.avisena.avihealth"
         minSdkVersion 20
         targetSdkVersion 33
         versionCode 1
@@ -87,7 +87,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'  //with support libraries
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
-
+    implementation 'com.google.android.gms:play-services-basement:18.3.0'
     // required to avoid crash on Android 12 API 31
     // Kotlin + coroutines
     implementation("androidx.work:work-runtime-ktx:2.7.1")

@@ -12,9 +12,9 @@ List<UnbordingContent> contents = [
       title: 'Online Appointment',
       lottie: 'assets/images/onboard_online_appointment_new.json',
       description:
-          "View, manage and book an appointment whenever you need from the "
-          "convenience of your mobile device. With real-time scheduling, "
-          "your booking will be directly saved into our Hospital Information System (HIS). "),
+          "View, manage and book an appointment whenever you need from the convenience of your mobile device."),
+          // "convenience of your mobile device. With real-time scheduling, "
+          // "your booking will be directly saved into our Hospital Information System (HIS). "),
   UnbordingContent(
       title: 'Auto Reminders',
       lottie: 'assets/images/onboard_auto_reminders.json',

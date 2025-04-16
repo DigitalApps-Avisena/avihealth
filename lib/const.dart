@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const violet = const Color(0xFFA92389);
+const smoothPink = const Color(0xFFEAD1DE);
 const turquoise = const Color(0xFF2290AA);
 const kAnimationDuration = Duration(milliseconds: 200);
 

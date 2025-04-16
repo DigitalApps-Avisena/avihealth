@@ -11,13 +11,25 @@ import 'dart:convert';
 import 'dart:math';
 import 'database.dart';
 
-class Auth {
+class Auth with ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late final Map<String, Object> userData;
   String? userId;
   String? accessToken;
   String? devicetoken;
   Dio dio = Dio();
+
+  bool _isGuest = false;
+  bool _isLoggedIn = false;
+
+  bool get isGuest => _isGuest;
+  bool get isLoggedIn => _isLoggedIn;
+
+  void loginAsGuest() {
+    _isGuest = true;
+    _isLoggedIn = true;
+    notifyListeners();
+  }
 
   Future deleteUser(String? email, String? password) async {
     try {

@@ -5,12 +5,13 @@ import 'package:dio/dio.dart';
 // import 'package:http/http.dart' as http;
 
 class ApiService {
+  ApiService();
   String? userId;
   String? accessToken;
   String? devicetoken;
   Dio dio = Dio();
 
-  ApiService(userData);
+  // ApiService(userData);
 
   Future signUpCheck(userData) async {
     try {
@@ -126,6 +127,32 @@ class ApiService {
       });
     } catch (e) {
       // print("error message ${e}");
+    }
+  }
+
+  Future createAppointment(userData) async {
+    try {
+      var url =
+          "http://10.10.0.11/trakcare/web/his/app/API/general.csp";
+      var data;
+      return await dio
+          .post(url,
+          data: userData,
+          options: Options(contentType: Headers.formUrlEncodedContentType))
+          .then((Response response) async {
+        var statusCode = response.statusCode;
+        print("status code ==== $statusCode");
+        if (statusCode! < 200 || statusCode > 400 || json == null) {
+          print("status code ===== $statusCode");
+          throw new Exception("Error while fetching data 1 $statusCode");
+        }
+        data = response.toString();
+        final jsonData = jsonDecode(data);
+        // print('data response is ====== $jsonData');
+        return jsonData;
+      });
+    } catch (e) {
+      print("error message ${e}");
     }
   }
 }

@@ -55,6 +55,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   flutter_svg: ^0.22.0
   url_launcher: ^6.0.12
+  device_apps: ^2.2.0
 
   # firebase
   firebase_messaging: ^11.2.11
@@ -99,6 +100,9 @@ dependencies:
   #sendemail
   flutter_email_sender: ^6.0.3
 
+  #calendar
+  table_calendar: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -127,6 +131,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/services/
     - assets/icons/
     - assets/fonts/
     - assets/languages/
